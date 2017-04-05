@@ -1,53 +1,53 @@
 // Display
-var ntDisplay = require('./modules/display.js');
-
+var display = require('./modules/display.js');
 // Settings
 var settings = require('./modules/settings.js');
+// Standards
+var std = require('./modules/standards.js');
+// Logging
+var log = require('./modules/logging.js');
 
-var settings = new settings();
 
-// minimal Logging
-var log = function(text) {
-    if (settings.DEBUG_LOG)
-        console.log(new Date() + ' MSG: ' + text);
-}
+// init event handling
+var eventHandler = EventHandler();
+//init
+eventHandler.doAction(std.ACTIONS.INIT);
+
+//delete me! im only for testing pupose
+eventHandler.doAction(std.ACTIONS.FIRE);
+
+// Game Loop
+
 
 // EventHandling
-function EvenHandler() {
+function EventHandler() {
     // REGISTER ALL ACTIONS IN HERE (order by majority)
-    this.actions = {
-        FIRE: 1,
-        GETHIT: 2,
-        //================= Low Prio
-        MENUE: 98,
 
-        INIT: 99,
-        SYNCTIME: 100
-    }
     return {
         doAction: function(action) {
             // all Doings to a action (order by majority)
             switch (action) {
-                case actions.FIRE:
+                case std.ACTIONS.FIRE:
                     // reduce Ammo
+                        display.drawAmmo(100);
                     break;
-                case actions.GETHIT:
+                case std.ACTIONS.GETHIT:
                     // reduce Health
                     break;
-                case actions.MENUE:
+                case std.ACTIONS.MENUE:
                     //show menue
 
                     break;
-                case actions.INIT:
+                case std.ACTIONS.INIT:
+                    //initalize display
+                    display = new display.Display(settings.DISPLAY);    
                     //Hello world!
-                    log('DEBUG ON!');
+                    log.line('DEBUG ON!');
+
                     // Print all Settings out
-                    if (settings.DEBUG_LOG){
-                        log('================== Settings: ==================');
-                        //Loop over all Settings
-                        for(vars in settings)
-                            log(vars +': '+ settings[vars]);
-                        log('===============================================');
+                    if (settings.DEBUG_LOG) {
+                        log.array(settings);
+    
                     }
                     break;
                 case actions.SYNCTIME:
@@ -58,10 +58,3 @@ function EvenHandler() {
     }
 
 }
-
-
-var eventHandler = EvenHandler();
-
-eventHandler.doAction(actions.INIT);
-
-

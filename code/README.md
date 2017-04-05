@@ -3,4 +3,4 @@
 ## Install 
 * Install node
 * run piLaz0rTag.js
-* tag!
+* tag! (soon ;-) )

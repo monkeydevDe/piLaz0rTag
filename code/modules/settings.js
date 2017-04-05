@@ -1,14 +1,10 @@
-var Settings = function() {
-
+//get the default values
+var std = require('./standards.js');
+module.exports = {
     //General
-    this.DEBUG_LOG = true;
-    this.DISPLAY = 'MOCK';
-
+    DEBUG_LOG: true,
+    DISPLAY: std.DISPLAY_TYPE.MOCK,
+    //this.DISPLAY = DISPLAY_TYPE.SSD1306I2C;
     //Display settings
-    this.HEIGHT = 64;
-    this.WIDTH = 128;
-    this.LAYOUT = 0;
-
-}
-
-module.exports = Settings;
+    DISPLAY_LAYOUT: 0,
+};
