@@ -7,10 +7,13 @@ var std = require('./modules/standards.js');
 // Logging
 var log = require('./modules/logging.js');
 
+//global vars
+var health;
+var shield;
+var state;
 
 // init event handling
-var eventHandler = EventHandler();
-//init
+var eventHandler = EventHandler(); 
 eventHandler.doAction(std.ACTIONS.INIT);
 
 //delete me! im only for testing pupose
@@ -29,32 +32,32 @@ function EventHandler() {
             switch (action) {
                 case std.ACTIONS.FIRE:
                     // reduce Ammo
-                        display.drawAmmo(100);
+                    display.drawAmmo(100);
                     break;
                 case std.ACTIONS.GETHIT:
                     // reduce Health
                     break;
                 case std.ACTIONS.MENUE:
                     //show menue
-
                     break;
                 case std.ACTIONS.INIT:
                     //initalize display
-                    display = new display.Display(settings.DISPLAY);    
+                    display = new display.Display(settings.DISPLAY);
                     //Hello world!
                     log.line('DEBUG ON!');
 
                     // Print all Settings out
                     if (settings.DEBUG_LOG) {
                         log.array(settings);
-    
                     }
+                    //TODO add: show splashscreen on the Display
+                    //TODO add: show the init Menu {master|slave|gun|update}
+                    
                     break;
                 case actions.SYNCTIME:
+                    log.line("Sync the time to: XXX");
                     break;
             }
         }
-
     }
-
 }
