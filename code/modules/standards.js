@@ -18,7 +18,7 @@ exports.ACTIONS = Object.freeze({
         GETFLAG:5,
 
         //set the starttime
-        GETSTARTTIME:6
+        GETSTARTTIME:6,
 
         //MENU 
         MENUEOPEN: 95,
@@ -27,7 +27,7 @@ exports.ACTIONS = Object.freeze({
         MENUENTER: 98,
 
         //receive
-        SYNCTIME: 99
+        SYNCTIME: 99,
         INIT: 100,
         
     });
