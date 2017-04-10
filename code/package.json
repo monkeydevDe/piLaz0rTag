@@ -1,0 +1,23 @@
+{
+  "name": "pilaz0rtag",
+  "version": "1.0.0",
+  "description": "Lasertag written in node for the raspberry pi *pew* *pew*",
+  "main": "piLaz0rTag.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkeydevDe/piLaz0rTag.git"
+  },
+  "keywords": [
+    "Lasertag",
+    "PI"
+  ],
+  "author": "tuxBurner, NeinsKnull",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monkeydevDe/piLaz0rTag/issues"
+  },
+  "homepage": "https://github.com/monkeydevDe/piLaz0rTag#readme"
+}

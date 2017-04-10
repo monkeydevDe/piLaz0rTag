@@ -64,3 +64,13 @@ Install the node version
 ```bash
 nvm install v7.7.3
 ```
+
+## Disable soundcard
+
+For the **rpi-ws281x-native** library disable the soundcard
+
+**/etc/modprobe.d/snd-blacklist.conf**
+
+```bash
+blacklist snd_bcm2835
+```
