@@ -55,5 +55,12 @@ cd /home/pi/share/
 git clone https://github.com/monkeydevDe/piLaz0rTag.git 
 ```
 
+## Init node modules dependencies
+
+```bash
+cd /home/pi/share/piLaz0rTag/code
+npm install 
+```
+
 now you can mount the samba share and work with the code with your favorite ide.
 

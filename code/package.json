@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/monkeydevDe/piLaz0rTag/issues"
   },
-  "homepage": "https://github.com/monkeydevDe/piLaz0rTag#readme"
+  "homepage": "https://github.com/monkeydevDe/piLaz0rTag#readme",
+  "dependencies": {
+    "rpi-ws281x-native": "^0.8.1"
+  }
 }
