@@ -7,6 +7,8 @@ var std = require('./modules/standards.js');
 // Logging
 var log = require('./modules/logging.js');
 
+var input = require('./modules/input.js')(log,settings);
+
 //global vars
 var health;
 var shield;
@@ -20,6 +22,9 @@ eventHandler.doAction(std.ACTIONS.INIT);
 eventHandler.doAction(std.ACTIONS.FIRE);
 
 // Game Loop
+while(true) {
+    
+}
 
 
 // EventHandling
