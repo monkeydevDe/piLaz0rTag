@@ -7,18 +7,24 @@ var std = require('./modules/standards.js');
 // Logging
 var log = require('./modules/logging.js');
 
+var input = require('./modules/input.js')(log,settings);
+
+//global vars
+var health;
+var shield;
+var state;
 
 // init event handling
-var eventHandler = EventHandler();
-// init menu handling
-var menuHandler = MenuHandler();
-// init
+var eventHandler = EventHandler(); 
 eventHandler.doAction(std.ACTIONS.INIT);
 
 //delete me! im only for testing pupose
 eventHandler.doAction(std.ACTIONS.FIRE);
 
 // Game Loop
+while(true) {
+    
+}
 
 
 // EventHandling
@@ -37,43 +43,26 @@ function EventHandler() {
                     // reduce Health
                     break;
                 case std.ACTIONS.MENUE:
-                    // show menue
-
+                    //show menue
                     break;
                 case std.ACTIONS.INIT:
-                    // initalize display
+                    //initalize display
                     display = new display.Display(settings.DISPLAY);
-                    // report if debugging is true
+                    //Hello world!
                     log.line('DEBUG ON!');
 
-                    // print all Settings out
+                    // Print all Settings out
                     if (settings.DEBUG_LOG) {
                         log.array(settings);
                     }
+                    //TODO add: show splashscreen on the Display
+                    //TODO add: show the init Menu {master|slave|gun|update}
                     
-                    // initalize the inital menu of the game
-                    menuHandler.InitInitalMenu();
                     break;
                 case actions.SYNCTIME:
+                    log.line("Sync the time to: XXX");
                     break;
             }
-        }
-
-    }
-
-}
-
-function MenuHandler() {
-    // andle the visibilty of different menus
-    var visible = false;
-    var itemWithFocus;
-    
-    return {
-        InitInitalMenu: function() {
-            log.line("menuHanlder: init inital menu");
-            itemWithFocus = std.STATES.MASTER;
-            // draw first apperance of the inital menu this should be like "   MASTER > "
-            display.drawMenuSingleEntry(itemWithFocus, false, true);
         }
     }
 }

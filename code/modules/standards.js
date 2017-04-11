@@ -37,6 +37,12 @@ exports.DISPLAY_TYPE = Object.freeze( {
         MOCK:"DISPLAY_MOCK", //default Type of Display for testing purpose
         SSD1306I2C:"DISPLAY_SSD1306I2C" // first Display wich runs with piLazOrTag
     });
+
+// Register all INPUT-TYPES here
+exports.INPUT_TYPE = Object.freeze( {
+  "KEYBOARD" : "keyboard" // when the input comes from the keyboard
+});
+
 //All Device States
 exports.STATES = Object.freeze({
         MASTER: "MASTER",
