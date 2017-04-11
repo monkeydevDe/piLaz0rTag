@@ -57,7 +57,34 @@ function EventHandler() {
                     }
                     //TODO add: show splashscreen on the Display
                     //TODO add: show the init Menu {master|slave|gun|update}
-                    
+                    display.initinitialMenu();
+
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuMinus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuMinus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuMinus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuMinus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuMinus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+                    // DELETE ME! some menu  action for testing purpose
+                    display.menuPlus();
+
+
                     break;
                 case actions.SYNCTIME:
                     log.line("Sync the time to: XXX");
