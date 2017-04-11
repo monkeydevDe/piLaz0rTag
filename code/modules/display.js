@@ -1,7 +1,7 @@
 var log = require('./logging.js');
 var std = require('./standards.js');
 
-//var oled = require('oled-ssd1306-i2c');
+// var oled = require('oled-ssd1306-i2c');
 exports.Display = function(displayType) {
     log.line("Display Type: " + displayType); 
     switch (displayType) {
@@ -15,17 +15,17 @@ exports.Display = function(displayType) {
 
 };
 //
-//Special Display Implementations here
+// Special Display Implementations here
 //
 
-//Implementation of the OLED SS1306 i2c
+// Implementation of the OLED SS1306 i2c
 function Oled_SSD1306() {
     ParentDisplay.call(this, 68, 124, 'OLEDSSD1306');
 }
 Oled_SSD1306.prototype = Object.create(ParentDisplay.prototype);
 
 
-//MOCK DISPLAY Implementation
+// MOCK DISPLAY Implementation
 function MockDisplay() {
     ParentDisplay.call(this, 1, 1, 'mocki');
 };
@@ -33,15 +33,15 @@ function MockDisplay() {
 MockDisplay.prototype = Object.create(ParentDisplay.prototype);
 
 MockDisplay.prototype.drawAmmo = function(ammoValue) {
-    //default prototype as Mock
+    // default prototype as Mock
     log.line("MOCK DISPLAY: Draw Ammunition: " + ammoValue);
 };
 MockDisplay.prototype.drawHealth = function(healthValue) {
-    //default prototype as Mock
+    // default prototype as Mock
     log.line("MOCK DISPLAY: DRAW Health:" + healthValue);
 };
 MockDisplay.prototype.drawMenu = function(menuValue, Postion) {
-    //TODO insert Menu structure
+    // TODO insert Menu structure
     log.line("MOCK DISPLAY: DRAW Menu");
 };
 
@@ -76,7 +76,7 @@ ParentDisplay.prototype.drawSingleMiddelLineCentered = function(line) {
 ParentDisplay.prototype.drawMenuSingleEntry = function(title, showLeftBracket, showRightBracket) {
     // clear Display
     // draw endles menu enclosed with "<" ">"
-    //e.g. < Gun >
+    // e.g. < Gun >
     var strToDisplay;
     if (showLeftBracket) {
         strToDisplay = " < "
