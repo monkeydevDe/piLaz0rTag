@@ -74,3 +74,41 @@ For the **rpi-ws281x-native** library disable the soundcard
 ```bash
 blacklist snd_bcm2835
 ```
+
+## Pikeyd for keyboard
+
+For keyboard input over the gpio pins we are using pikeyd
+
+```bash
+cd /home/pi/share
+git clone  https://github.com/tuxBurner/pikeyd.git
+cd pikeyd/
+git checkout rotary
+make
+```
+
+### Config
+
+**/etc/pikeyd.conf**
+
+```bash
+-- /etc/pikeyd.conf --
+#joy.cfg
+
+#format:
+# [keycode from /usr/include/linux/input.h] [whitespace] [GPIO pin no]
+# Not limited to a single key. A GPIO press will emit all defined keys in order.
+
+KEY_ENTER       26
+KEY_ESC         20
+
+ROT 15 18 KEY_RIGHT KEY_LEFT 1
+```
+
+### Start
+
+-pu means to use the internal pullups
+
+```bash
+sudo ./pikeyd -pu
+```
