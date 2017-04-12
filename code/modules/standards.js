@@ -43,6 +43,11 @@ exports.INPUT_TYPE = Object.freeze( {
   "KEYBOARD" : "keyboard" // when the input comes from the keyboard
 });
 
+// Register all INFRARED-TYPES here
+exports.INFRARED_TYPE = Object.freeze( {
+  "LIRCD" : "lircd" // when the input comes from the keyboard
+});
+
 //All Device States
 exports.STATES = Object.freeze({
         MASTER: "MASTER",

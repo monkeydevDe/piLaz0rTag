@@ -1,3 +1,5 @@
+
+
 // Display
 var display = require('./modules/display.js');
 // Settings
@@ -6,8 +8,12 @@ var settings = require('./modules/settings.js');
 var std = require('./modules/standards.js');
 // Logging
 var log = require('./modules/logging.js');
-
+// input keyboard handling
 var input = require('./modules/input.js')(log,settings);
+// infrared
+const infrared = require('./modules/infrared.js')(log,settings);
+
+//(log,settings);
 
 //global vars
 var health;
@@ -22,9 +28,9 @@ eventHandler.doAction(std.ACTIONS.INIT);
 eventHandler.doAction(std.ACTIONS.FIRE);
 
 // Game Loop
-while(true) {
+//while(true) {
     
-}
+//}
 
 
 // EventHandling
