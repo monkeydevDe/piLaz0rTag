@@ -29,7 +29,7 @@ let templateData = fs.readFileSync('./lircd_template.conf', 'utf-8');
  * How many player are allowed
  * @type {number}
  */
-const amountOfPlayer = 31;
+const amountOfPlayer = Number(31);
 
 /**
  * Available teams
@@ -49,7 +49,13 @@ const shootStrengths = ['25', '50', '75', '100'];
  */
 const hexPadding = 4;
 
+/**
+ * Holds the lines which are inserted into the template ${codes} placeholder
+ * @type {string}
+ */
 let lircdLines = '';
+
+console.info('Generating lircd conf file for players: ' + (amountOfPlayer + 1) + ' teams: ' + teams + " shoot strength: " + shootStrengths);
 
 // iterate over the players
 for(let playerNumber = 0; playerNumber <= amountOfPlayer; playerNumber++) {
@@ -65,7 +71,7 @@ for(let playerNumber = 0; playerNumber <= amountOfPlayer; playerNumber++) {
     let teamColor = teams[teamIdx];
 
     // calculate the team value to the shoot value
-    let teamLircNumber = playerLircNumber +  ((Number(teamIdx)) * 4);
+    let teamLircNumber = playerLircNumber + ((Number(teamIdx)) * 4);
 
     //console.error(playerNumber + ' ' + teamIdx + ' = ' + teamLircNumber);
 
@@ -77,7 +83,6 @@ for(let playerNumber = 0; playerNumber <= amountOfPlayer; playerNumber++) {
       let shootLircNumber = teamLircNumber + (Number(strengthIdx));
 
       //console.error(playerNumber + ' ' + teamIdx + ' ' +strengthIdx+ ' = ' + shootLircNumber);
-
 
       let hex = shootLircNumber.toString(16);
       while(hex.length < hexPadding) {
@@ -97,5 +102,10 @@ for(let playerNumber = 0; playerNumber <= amountOfPlayer; playerNumber++) {
 
 templateData = templateData.replace('${codes}', lircdLines);
 
-console.error(templateData);
+fs.writeFileSync('lircd_generated.conf', templateData);
 
+console.info('Successfully generated lircd_generated.conf');
+
+console.info('To use it do the following: ');
+console.info('sudo cp lircd_generated.conf /etc/lirc/lircd.conf');
+console.info('sudo /etc/init.d/lirc restart');
