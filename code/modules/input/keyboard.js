@@ -7,12 +7,15 @@ exports = module.exports = keyboardInput;
 function keyboardInput (log,settings) {
 
 
-  var keypress = require('keypress');
+  const keypress = require('keypress');
 
   keypress(process.stdin);
 
   process.stdin.on('keypress', function (ch, key) {
-    log.line('got "keypress"', key);
+    log.line('got "keypress" '+key);
      // do something here
   });
+
+  //process.stdin.setRawMode(true);
+  //process.stdin.resume();
 }
