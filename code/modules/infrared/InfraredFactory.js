@@ -6,7 +6,7 @@ class InfraredFactory {
   constructor(log,settings,myEmitter) {
 
     if(settings.INFRARED === "lircd") {
-      log.line("LIRCD infrared is configured.");
+      log.info("LIRCD infrared is configured.");
       const { LircdInfraredHandler } = require('./LircdInfraredHandler.js');
       return new LircdInfraredHandler(log,myEmitter);
     }

@@ -1,16 +1,16 @@
+/**
+ * This handles the infrared sending and receiving.
+ * The concrete implementation must extend from this.
+ */
 class BaseInfraredHandler {
 
   constructor(log, eventHandler) {
     this.log = log;
     this.eventHandler = eventHandler;
-
-    eventHandler.on('ir_shoot', (playerId,teamColor,strength) => {
-      console.log('Received ir code '+ir_code);
-    });
   }
 
-  handleIncomingMsg(ir_msg) {
-    this.eventHandler.emit('ir_received',ir_msg);
+  handleIncomingMsg(irMsg) {
+    this.eventHandler.emitIrReceivedMsg(irMsg);
   }
 
   sendShootMsg(playerId,teamColor,strength) {

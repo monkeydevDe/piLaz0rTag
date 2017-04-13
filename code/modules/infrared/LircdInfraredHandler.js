@@ -8,25 +8,26 @@ class LircdInfraredHandler extends BaseInfraredHandler {
   constructor(log, eventHandler) {
     super(log, eventHandler);
 
-    log.line('Connecting to lirc daemon');
+    log.info('Connecting to lirc daemon');
+
+    // when a callback is called this holds the current instance
+    const instance = this;
 
     this.lirc = require('lirc-client')({
       path: '/var/run/lirc/lircd'
     });
 
-    /*this.lirc.on('connect', function() {
 
-      this.instance.lirc.cmd('VERSION', function(err, res) {
-        log.line('Successfully connected to LIRCD (' + res + ').');
+    this.lirc.on('connect', function() {
+      instance.lirc.cmd('VERSION', function(err, res) {
+        log.info('Successfully connected to LIRCD (' + res + ').');
       });
-    });*/
+    });
 
-    var bla = this;
 
     this.lirc.on('receive', function(remote, button) {
-      /*log.line('Got lirc message: '+button);
-      eventHandler.emit('ir_received',button);*/
-      bla.handleIncomingMsg(button);
+      instance.log.debug('Got lircd message: '+button);
+      instance.handleIncomingMsg(button);
     });
   }
 }

@@ -1,17 +1,17 @@
 // Logging
-const log = require('./modules/logging.js');
+const log = require('./modules/Logger.js');
 
 // https://nodejs.org/api/events.html
 /*const EventEmitter = require('events');
-class MyEmitter extends EventEmitter {}
-const myEmitter = new MyEmitter();*/
+ class MyEmitter extends EventEmitter {}
+ const myEmitter = new MyEmitter();*/
 
 /*myEmitter.on('ir_received', (ir_code) => {
-  console.log('Received ir code '+ir_code);
-});*/
+ console.log('Received ir code '+ir_code);
+ });*/
 
-const { LaserTagEventHandler } = require('./lib/LaserTagEventHandler.js');
-const lasertTageventHandler  = new LaserTagEventHandler();
+const {LaserTagEventHandler} = require('./lib/LaserTagEventHandler.js');
+const lasertTageventHandler = new LaserTagEventHandler(log);
 
 
 // Display
@@ -24,8 +24,8 @@ const std = require('./modules/standards.js');
 const input = require('./modules/input.js')(log, settings);
 
 // infrared
-const { InfraredFactory } = require('./modules/infrared/InfraredFactory.js');
-const infrared  = new InfraredFactory(log,settings,lasertTageventHandler);
+const {InfraredFactory} = require('./modules/infrared/InfraredFactory.js');
+const infrared = new InfraredFactory(log, settings, lasertTageventHandler);
 
 
 //global vars
@@ -68,11 +68,18 @@ function EventHandler() {
           //initalize display
           display = new display.Display(settings.DISPLAY);
           //Hello world!
-          log.line('DEBUG ON!');
+          log.debug('DEBUG ON!');
 
           // Print all Settings out
           if(settings.DEBUG_LOG) {
-            log.array(settings);
+
+            log.info('===============================================');
+            //Loop over all Settings
+            for(vars in settings)
+              log.info(vars + ': ' + settings[vars]);
+            log.info('===============================================');
+
+            //log.array(settings);
           }
           //TODO add: show splashscreen on the Display
           //TODO add: show the init Menu {master|slave|gun|update}
