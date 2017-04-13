@@ -1,17 +1,13 @@
 // Logging
 const log = require('./modules/Logger.js');
 
-// https://nodejs.org/api/events.html
-/*const EventEmitter = require('events');
- class MyEmitter extends EventEmitter {}
- const myEmitter = new MyEmitter();*/
-
-/*myEmitter.on('ir_received', (ir_code) => {
- console.log('Received ir code '+ir_code);
- });*/
-
 const {LaserTagEventHandler} = require('./lib/LaserTagEventHandler.js');
 const lasertTageventHandler = new LaserTagEventHandler(log);
+
+// register here the events we need
+lasertTageventHandler.on('ir_received', (irMsg) => {
+  log.info('Received ir code ' + irMsg);
+});
 
 
 // Display

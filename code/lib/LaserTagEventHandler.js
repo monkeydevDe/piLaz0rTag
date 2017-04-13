@@ -10,12 +10,6 @@ class LaserTagEventHandler extends EventEmitter {
     super();
 
     this.log = log;
-
-    // register here the events we need
-    this.on('ir_received', (irMsg) => {
-      log.info('Received ir code ' + irMsg);
-    });
-
   }
 
   /**

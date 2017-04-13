@@ -75,6 +75,30 @@ For the **rpi-ws281x-native** library disable the soundcard
 blacklist snd_bcm2835
 ```
 
+## Enable usb soundcard
+
+**/etc/asound.conf**
+
+```bash
+pcm.!default {
+    type hw
+    card 1
+}
+ctl.!default {
+    type hw
+    card 1
+}
+```
+
+**/etc/modprobe.d/alsa-base.conf**
+
+```bash
+# Keep snd-usb-audio from beeing loaded as first soundcard
+options snd-usb-audio index=-2
+```
+
+
+
 ## Pikeyd for keyboard
 
 For keyboard input over the gpio pins we are using pikeyd
