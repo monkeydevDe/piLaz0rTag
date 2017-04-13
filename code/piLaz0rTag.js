@@ -2,13 +2,17 @@
 const log = require('./modules/logging.js');
 
 // https://nodejs.org/api/events.html
-const EventEmitter = require('events');
+/*const EventEmitter = require('events');
 class MyEmitter extends EventEmitter {}
-const myEmitter = new MyEmitter();
+const myEmitter = new MyEmitter();*/
 
-myEmitter.on('ir_received', (ir_code) => {
+/*myEmitter.on('ir_received', (ir_code) => {
   console.log('Received ir code '+ir_code);
-});
+});*/
+
+const { LaserTagEventHandler } = require('./lib/LaserTagEventHandler.js');
+const lasertTageventHandler  = new LaserTagEventHandler();
+
 
 // Display
 let display = require('./modules/display.js');
@@ -18,8 +22,10 @@ const settings = require('./modules/settings.js');
 const std = require('./modules/standards.js');
 // input keyboard handling
 const input = require('./modules/input.js')(log, settings);
+
 // infrared
-const infrared = require('./modules/infrared.js')(log, settings,myEmitter);
+const { InfraredFactory } = require('./modules/infrared/InfraredFactory.js');
+const infrared  = new InfraredFactory(log,settings,lasertTageventHandler);
 
 
 //global vars
