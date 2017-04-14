@@ -7,6 +7,13 @@ class BaseInfraredHandler {
   constructor() {
     this.log = require('../../lib/Logger');
     this.eventHandler = require('../../lib/LaserTagEventHandler');
+
+    const instance = this;
+
+    this.eventHandler.on('game_button_shoot',function(){
+      instance.sendShootMsg()
+    });
+    
   }
 
   handleIncomingMsg(irMsg) {

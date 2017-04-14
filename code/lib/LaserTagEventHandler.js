@@ -27,15 +27,31 @@ class LaserTagEventHandler extends EventEmitter {
    * @param socketMsg
    */
   emitWebsocketMsg(socketMsg) {
-    this.emit('websocket_received', socketMsg);
+    this.emitEvent('websocket_received', socketMsg);
   }
 
   /**
    * Is called when the game has to shoot
    */
   emitShoot() {
-    this.log.info('Event: game_shoot');
-    this.emit('game_shoot');
+    this.emitEvent('game_button_shoot');
+  }
+
+  /**
+   * Is called when the game has to reload
+   */
+  emitReload() {
+    this.emitEvent('game_reload');
+  }
+
+  /**
+   * Emits an event
+   * @param eventName the name of the event
+   * @param payload the payload of the event
+   */
+  emitEvent(eventName,payload) {
+    this.log.info('Event: '+eventName);
+    this.emit(eventName,payload);
   }
 }
 

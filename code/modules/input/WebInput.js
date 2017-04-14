@@ -23,6 +23,10 @@ class WebInput extends BaseInput {
         instance.triggerShoot();
       }
 
+      if(msg.type === 'reload') {
+        instance.triggerReload();
+      }
+
 
     });
   }

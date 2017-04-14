@@ -1,7 +1,7 @@
 /**
  * Handles the ir signals via lircd
  */
-const { BaseInfraredHandler } = require('./BaseInfraredHandler.js');
+const {BaseInfraredHandler} = require('./BaseInfraredHandler.js');
 
 class LircdInfraredHandler extends BaseInfraredHandler {
 
@@ -9,8 +9,6 @@ class LircdInfraredHandler extends BaseInfraredHandler {
     super();
 
     this.log.info('Connecting to lirc daemon');
-
-    this.eventHandler = require('../../lib/LaserTagEventHandler');
 
     // when a callback is called this holds the current instance
     const instance = this;
@@ -28,12 +26,16 @@ class LircdInfraredHandler extends BaseInfraredHandler {
 
 
     this.lirc.on('receive', function(remote, button) {
-      instance.log.debug('Got lircd message: '+button);
+      instance.log.debug('Got lircd message: ' + button);
       instance.handleIncomingMsg(button);
     });
+  }
 
-    this.eventHandler.on('game_shoot',function() {
-       instance.log.info('Shhhooooooting');
+  sendShootMsg(playerId, teamColor, strength) {
+    const instance = this;
+    this.log.info('Sending ir data: shoot_31_green_50');
+    this.lirc.cmd('SEND_ONCE', 'pilazortag', 'shoot_31_green_50', function(err) {
+      instance.log.error('An error happened while sending ir data: '+err);
     });
   }
 }

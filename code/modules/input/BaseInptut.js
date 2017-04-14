@@ -10,6 +10,14 @@ class BaseInput {
   triggerShoot() {
     this.eventHandler.emitShoot();
   }
+
+  
+  /**
+   * When to reload
+   */
+  triggerReload() {
+    this.eventHandler.emitReload();
+  }
 }
 
 exports.BaseInput = BaseInput;
