@@ -1,22 +1,13 @@
 // Logging
 const log = require('./lib/Logger.js');
 
-const lasertTageventHandler  = require('./lib/LaserTagEventHandler.js');
-
-// register here the events we need
-lasertTageventHandler.on('ir_received', (irMsg) => {
-  log.info('Received ir code ' + irMsg);
-});
-
-
-
-
 // Display
 let display = require('./modules/display.js');
 // Settings
 const settings = require('./modules/settings.js');
 // Standards
 const std = require('./modules/standards.js');
+
 // input keyboard handling
 const input = require('./modules/input/InputFactory');
 
@@ -74,7 +65,7 @@ function EventHandler() {
           log.debug('DEBUG ON!');
 
           // Print all Settings out
-          if(settings.DEBUG_LOG) {
+          if(settings.DEBUG_LEVEL) {
 
             log.info('===============================================');
             //Loop over all Settings

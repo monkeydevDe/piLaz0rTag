@@ -2,7 +2,7 @@
 var std = require('./standards.js');
 module.exports = {
     //General
-    DEBUG_LOG: true,
+    DEBUG_LEVEL: 'debug',
     DISPLAY: std.DISPLAY_TYPE.MOCK,
     INPUT: std.INPUT_TYPE.WEB,
     INFRARED: std.INFRARED_TYPE.LIRCD,
