@@ -21,9 +21,14 @@
   },
   "homepage": "https://github.com/monkeydevDe/piLaz0rTag#readme",
   "dependencies": {
+    "express": "^4.15.2",
+    "jquery": "^3.2.1",
     "keypress": "^0.2.1",
+    "lirc-client": "^1.0.0",
     "oled_ssd1306_i2c": "https://github.com/NeinsKnull/oled_ssd1306_i2c.git",
-    "rpi-ws281x-native": "^0.8.1"
+    "rpi-ws281x-native": "^0.8.1",
+    "socket.io": "^1.7.3",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
