@@ -5,10 +5,10 @@ const { BaseInfraredHandler } = require('./BaseInfraredHandler.js');
 
 class LircdInfraredHandler extends BaseInfraredHandler {
 
-  constructor(log, eventHandler) {
-    super(log, eventHandler);
+  constructor() {
+    super();
 
-    log.info('Connecting to lirc daemon');
+    this.log.info('Connecting to lirc daemon');
 
     // when a callback is called this holds the current instance
     const instance = this;
@@ -20,7 +20,7 @@ class LircdInfraredHandler extends BaseInfraredHandler {
 
     this.lirc.on('connect', function() {
       instance.lirc.cmd('VERSION', function(err, res) {
-        log.info('Successfully connected to LIRCD (' + res + ').');
+        instance.log.info('Successfully connected to LIRCD (' + res + ').');
       });
     });
 

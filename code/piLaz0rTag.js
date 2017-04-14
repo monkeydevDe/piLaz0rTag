@@ -1,13 +1,14 @@
 // Logging
-const log = require('./modules/Logger.js');
+const log = require('./lib/Logger.js');
 
-const {LaserTagEventHandler} = require('./lib/LaserTagEventHandler.js');
-const lasertTageventHandler = new LaserTagEventHandler(log);
+const lasertTageventHandler  = require('./lib/LaserTagEventHandler.js');
 
 // register here the events we need
 lasertTageventHandler.on('ir_received', (irMsg) => {
   log.info('Received ir code ' + irMsg);
 });
+
+
 
 
 // Display
@@ -20,8 +21,14 @@ const std = require('./modules/standards.js');
 const input = require('./modules/input.js')(log, settings);
 
 // infrared
-const {InfraredFactory} = require('./modules/infrared/InfraredFactory.js');
-const infrared = new InfraredFactory(log, settings, lasertTageventHandler);
+const infrared = require('./modules/infrared/InfraredFactory.js');
+
+// webserver
+const webserver = require('./modules/web/Webserver.js');
+
+
+
+
 
 
 //global vars

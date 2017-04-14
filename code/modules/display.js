@@ -1,4 +1,4 @@
-var log = require('./Logger.js');
+var log = require('./../lib/Logger.js');
 var std = require('./standards.js');
 
 //var oled = require('oled-ssd1306-i2c');

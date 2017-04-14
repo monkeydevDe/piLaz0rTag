@@ -3,12 +3,16 @@
  */
 class InfraredFactory {
 
-  constructor(log,settings,myEmitter) {
+  constructor() {
+
+    const log = require('../../lib/Logger');
+
+    const settings = require('../settings.js');
 
     if(settings.INFRARED === "lircd") {
       log.info("LIRCD infrared is configured.");
       const { LircdInfraredHandler } = require('./LircdInfraredHandler.js');
-      return new LircdInfraredHandler(log,myEmitter);
+      return new LircdInfraredHandler(log);
     }
 
     throw new Error('No infrared handle configured!');
@@ -16,4 +20,4 @@ class InfraredFactory {
   }
 }
 
-exports.InfraredFactory = InfraredFactory;
+module.exports  = new InfraredFactory();

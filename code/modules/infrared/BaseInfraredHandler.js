@@ -4,9 +4,9 @@
  */
 class BaseInfraredHandler {
 
-  constructor(log, eventHandler) {
-    this.log = log;
-    this.eventHandler = eventHandler;
+  constructor() {
+    this.log = require('../../lib/Logger');
+    this.eventHandler = require('../../lib/LaserTagEventHandler');
   }
 
   handleIncomingMsg(irMsg) {
@@ -14,7 +14,7 @@ class BaseInfraredHandler {
   }
 
   sendShootMsg(playerId,teamColor,strength) {
-    console.error("Implement me");
+    this.log.error("Implement me");
   }
 }
 

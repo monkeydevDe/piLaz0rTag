@@ -8,8 +8,9 @@ class LaserTagEventHandler extends EventEmitter {
   constructor(log) {
 
     super();
-
     this.log = log;
+
+    log.info('Started main LaserTagEventHandler');
   }
 
   /**
@@ -21,4 +22,5 @@ class LaserTagEventHandler extends EventEmitter {
   }
 }
 
-exports.LaserTagEventHandler = LaserTagEventHandler;
+const log = require('./Logger.js');
+module.exports = new LaserTagEventHandler(log);
