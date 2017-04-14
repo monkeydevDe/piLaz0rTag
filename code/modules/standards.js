@@ -35,17 +35,19 @@ exports.ACTIONS = Object.freeze({
 //Register all  DISPLAY-TYPES here
 exports.DISPLAY_TYPE = Object.freeze( {
         MOCK:"DISPLAY_MOCK", //default Type of Display for testing purpose
+        WEB : "DISPLAY_WEB", // will send the data via websocket
         SSD1306I2C:"DISPLAY_SSD1306I2C" // first Display wich runs with piLazOrTag
     });
 
 // Register all INPUT-TYPES here
 exports.INPUT_TYPE = Object.freeze( {
-  "KEYBOARD" : "keyboard" // when the input comes from the keyboard
+  "WEB" : "INPUT_WEB", // handle input over a websocket
+  "KEYBOARD" : "INPUT_KEYBOARD" // when the input comes from the keyboard
 });
 
 // Register all INFRARED-TYPES here
 exports.INFRARED_TYPE = Object.freeze( {
-  "LIRCD" : "lircd" // when the input comes from the keyboard
+  "LIRCD" : "IR_LIRCD" // when the input comes from the keyboard
 });
 
 //All Device States

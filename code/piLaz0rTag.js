@@ -18,13 +18,13 @@ const settings = require('./modules/settings.js');
 // Standards
 const std = require('./modules/standards.js');
 // input keyboard handling
-const input = require('./modules/input.js')(log, settings);
+const input = require('./modules/input/InputFactory');
 
 // infrared
-const infrared = require('./modules/infrared/InfraredFactory.js');
+const infrared = require('./modules/infrared/InfraredFactory');
 
 // webserver
-const webserver = require('./modules/web/Webserver.js');
+const webserver = require('./modules/web/Webserver');
 
 
 

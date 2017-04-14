@@ -6,12 +6,16 @@
 class Webserver {
 
   constructor() {
-
-    log.info('Starting webserver');
+    this.log = require('../../lib/Logger.js');
+    this.log.info('Starting webserver');
 
     this.expApp = require('express')();
     this.http = require('http').Server(this.expApp);
     this.socketIo = require('socket.io')(this.http);
+
+    this.socketIo.on('connection', function(socket){
+      log.info('A user connected');
+    });
   }
 
 
@@ -19,5 +23,4 @@ class Webserver {
 }
 
 // run as a singleton is this the right way ?
-const log = require('../../lib/Logger.js');
-exports = new Webserver(log);
+exports = new Webserver();

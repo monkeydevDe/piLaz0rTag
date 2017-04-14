@@ -8,11 +8,12 @@ class InfraredFactory {
     const log = require('../../lib/Logger');
 
     const settings = require('../settings.js');
+    const standards = require('../standards.js');
 
-    if(settings.INFRARED === "lircd") {
+    if(settings.INFRARED === standards.INFRARED_TYPE.LIRCD) {
       log.info("LIRCD infrared is configured.");
       const { LircdInfraredHandler } = require('./LircdInfraredHandler.js');
-      return new LircdInfraredHandler(log);
+      return new LircdInfraredHandler();
     }
 
     throw new Error('No infrared handle configured!');
