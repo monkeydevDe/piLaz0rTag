@@ -136,3 +136,9 @@ ROT 15 18 KEY_RIGHT KEY_LEFT 1
 ```bash
 sudo ./pikeyd -pu
 ```
+
+## Build deps
+
+```bash
+sudo apt-get install libasound2-dev
+```

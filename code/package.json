@@ -24,7 +24,9 @@
     "keypress": "^0.2.1",
     "lirc-client": "^1.0.0",
     "oled_ssd1306_i2c": "https://github.com/NeinsKnull/oled_ssd1306_i2c.git",
+    "player": "^0.6.1",
     "rpi-ws281x-native": "^0.8.1",
+    "soundplayer": "^1.1.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {

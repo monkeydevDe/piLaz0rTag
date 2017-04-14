@@ -23,6 +23,11 @@ const input = require('./modules/input.js')(log, settings);
 const {InfraredFactory} = require('./modules/infrared/InfraredFactory.js');
 const infrared = new InfraredFactory(log, settings, lasertTageventHandler);
 
+// sound
+const {Mp3Sound} = require('./modules/sound/Mp3Sound.js');
+const mp3Sound = new Mp3Sound(log,lasertTageventHandler);
+
+
 
 //global vars
 var health;
