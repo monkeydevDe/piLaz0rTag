@@ -1,16 +1,30 @@
 /**
- * Input over a websocket
+ * Input over a websocket.
+ * This listens on the event that a websocket msg was received.
+ * When the message fits an input type it will do the command.
  *
  */
-class WebInput {
+
+// import the type to this js
+const { BaseInput } = require('./BaseInptut');
+
+class WebInput extends BaseInput {
   constructor() {
 
-    this.webserver = require('../web/Webserver');
+    super();
 
-    this.log = require('../../lib/Logger');
+    const instance = this;
+
+    //let instance = this;
+
+    this.eventHandler.on('websocket_received',function(msg){
+
+      if(msg.type === 'shoot') {
+        instance.triggerShoot();
+      }
 
 
-
+    });
   }
 }
 

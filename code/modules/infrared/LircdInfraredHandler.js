@@ -10,6 +10,8 @@ class LircdInfraredHandler extends BaseInfraredHandler {
 
     this.log.info('Connecting to lirc daemon');
 
+    this.eventHandler = require('../../lib/LaserTagEventHandler');
+
     // when a callback is called this holds the current instance
     const instance = this;
 
@@ -28,6 +30,10 @@ class LircdInfraredHandler extends BaseInfraredHandler {
     this.lirc.on('receive', function(remote, button) {
       instance.log.debug('Got lircd message: '+button);
       instance.handleIncomingMsg(button);
+    });
+
+    this.eventHandler.on('game_shoot',function() {
+       instance.log.info('Shhhooooooting');
     });
   }
 }

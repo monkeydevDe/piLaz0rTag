@@ -4,19 +4,30 @@
     <title>piLaz0rTag socket interface</title>
 
 
+    <script src="jquery/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
+      $(function() {
 
-      io.on('connection', function(socket){
-        console.log('a user connected');
-        socket.on('disconnect', function(){
-          console.log('user disconnected');
+        var socket = io();
+
+        $('.socketMsg').on('click', function() {
+
+          var msgType = $(this).data('messageType');
+          var msgVal = $(this).data('messageValue');
+          socket.emit('socketMessage', {"type" : msgType, "value" : msgVal});
+        });
+
+        socket.on('chat message', function(msg) {
+          $('#messages').append($('<li>').text(msg));
         });
       });
     </script>
 </head>
 <body>
 
+<form>
+    <button class="socketMsg" data-message-type="shoot" data-message-value="" type="button">Shoot</button>
+</form>
 </body>
 </html>

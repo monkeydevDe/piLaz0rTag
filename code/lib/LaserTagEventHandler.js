@@ -20,6 +20,23 @@ class LaserTagEventHandler extends EventEmitter {
   emitIrReceivedMsg(irMsg) {
     this.emit('ir_received', irMsg);
   }
+
+
+  /**
+   * This emits a websocket msg received msg
+   * @param socketMsg
+   */
+  emitWebsocketMsg(socketMsg) {
+    this.emit('websocket_received', socketMsg);
+  }
+
+  /**
+   * Is called when the game has to shoot
+   */
+  emitShoot() {
+    this.log.info('Event: game_shoot');
+    this.emit('game_shoot');
+  }
 }
 
 const log = require('./Logger.js');
