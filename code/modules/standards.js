@@ -56,3 +56,11 @@ exports.STATES = Object.freeze({
         SLAVE: "SLAVE",
         GUN: "GUN"
 });
+
+/**
+ * Webserver configurations.
+ * @type {Object}
+ */
+exports.WEBSERVERCONF = Object.freeze({
+   PORT: 3000
+});

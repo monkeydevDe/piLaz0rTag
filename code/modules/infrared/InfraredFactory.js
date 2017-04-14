@@ -16,7 +16,7 @@ class InfraredFactory {
       return new LircdInfraredHandler();
     }
 
-    throw new Error('No infrared handle configured!');
+    throw new Error('No infrared handler configured!');
 
   }
 }

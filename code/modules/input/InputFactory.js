@@ -16,6 +16,12 @@ class InputFactory {
       return new KeyboardInput();
     }
 
+    if(settings.INPUT === standards.INPUT_TYPE.WEB) {
+      log.info("Web input is configured.");
+      const { WebInput } = require('./WebInput');
+      return new WebInput();
+    }
+
     throw new Error('No input handler configured!');
   }
 }
