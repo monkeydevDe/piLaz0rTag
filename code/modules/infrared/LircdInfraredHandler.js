@@ -35,7 +35,9 @@ class LircdInfraredHandler extends BaseInfraredHandler {
     const instance = this;
     this.log.info('Sending ir data: shoot_31_green_50');
     this.lirc.cmd('SEND_ONCE', 'pilazortag', 'shoot_31_green_50', function(err) {
-      instance.log.error('An error happened while sending ir data: '+err);
+      if(err) {
+        instance.log.error('An error happened while sending ir data: ' + err);
+      }
     });
   }
 }
