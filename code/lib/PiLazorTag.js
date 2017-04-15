@@ -42,6 +42,13 @@ class PiLazorTag {
         instance.setupGame(msg.value);
       }
     });
+
+    this.eventHandler.onStartGame(function() {
+      instance.log.info('PiLaz0rTag: Game is running.');
+      instance.currentState = 'GAME_RUNNING';
+      instance.emitCurrentState();
+      instance.eventHandler.emitDisplayGameUpdate(instance.currentGame);
+    });
   }
 
   /**
@@ -49,11 +56,15 @@ class PiLazorTag {
    * @param gameData
    */
   setupGame(gameData) {
-    const {Player} = require('./game/Player');
 
+    this.log.info('PiLaz0rTag: Starting new game: '+gameData);
+    
+    const {Player} = require('./game/Player');
+    
     let player = new Player(
       gameData.player.id,
       gameData.player.team,
+      gameData.player.lives,
       gameData.player.health,
       gameData.player.respawnTime,
       gameData.player.shootStrength,
@@ -62,10 +73,17 @@ class PiLazorTag {
       gameData.player.reloadTime,
       gameData.player.shootDelay);
 
-      this.currentGame = this.gameFactory.initGame(gameData.mode, player);
-      this.currentState = 'GAME_STARTING';
+    this.currentGame = this.gameFactory.initGame(gameData.mode, player);
+    this.currentState = 'GAME_STARTING';
 
-      this.emitCurrentState();
+    this.emitCurrentState();
+
+    this.log.info('PiLaz0rTag: game is ready and will start in: '+gameData.gameStartTime);
+
+    const instance = this;
+    setTimeout(function() {
+      instance.eventHandler.emitStartGame();
+    }, gameData.gameStartTime);
   }
 
   /**

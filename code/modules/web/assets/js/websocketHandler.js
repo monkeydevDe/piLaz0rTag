@@ -44,6 +44,12 @@ $(function() {
 
       $('.mainDisplay').hide();
 
+      if(msg.data === 'GAME_RUNNING') {
+        $('#gameStatusDisplay').show();
+      }
+
+
+
       if(msg.data === 'SETUP') {
         $('#gameSetupDisplay').show();
       }
