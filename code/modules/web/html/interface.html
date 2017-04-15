@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <!-- Reload time -->
+                <!-- Shoot delay time -->
                 <div class="form-group">
                     <label for="setup_playerShootDelay" class="col-sm-2 control-label">Shoot delay Time in ms: </label>
                     <div class="col-sm-10">
@@ -129,8 +129,23 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button id="setup_btn_start" type="button" class="btn btn-danger">Start Game</button>
+                    </div>
+                </div>
             </form>
+        </div>
+    </div>
+</div>
 
+<div id="gameStartingDisplay" class="mainDisplay" style="display: none;">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">Game starting:</h3>
+        </div>
+        <div class="panel-body">
+            Be patient the game will start soon.
         </div>
     </div>
 </div>

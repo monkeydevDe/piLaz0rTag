@@ -6,7 +6,7 @@
  */
 
 // import the type to this js
-const { BaseInput } = require('./BaseInptut');
+const {BaseInput} = require('./BaseInptut');
 
 class WebInput extends BaseInput {
   constructor() {
@@ -15,9 +15,7 @@ class WebInput extends BaseInput {
 
     const instance = this;
 
-    //let instance = this;
-
-    this.eventHandler.on('websocket_received',function(msg){
+    this.eventHandler.onWebsocketMsg(function(msg) {
 
       if(msg.type === 'shoot') {
         instance.triggerShoot();
@@ -26,8 +24,6 @@ class WebInput extends BaseInput {
       if(msg.type === 'reload') {
         instance.triggerReload();
       }
-
-
     });
   }
 }

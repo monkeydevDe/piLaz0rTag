@@ -24,6 +24,8 @@ class PiLazorTag {
     // the current status of the main game
     this.currentState = 'SETUP';
 
+    this.gameFactory = require('./game/GameFactory');
+
     // when a game is running this holds the instance.
     this.currentGame = null;
 
@@ -34,6 +36,36 @@ class PiLazorTag {
     this.eventHandler.onGetMainState(function() {
       instance.emitCurrentState();
     });
+
+    this.eventHandler.onWebsocketMsg(function(msg) {
+      if(msg.type === 'start_game') {
+        instance.setupGame(msg.value);
+      }
+    });
+  }
+
+  /**
+   * Setups the current game
+   * @param gameData
+   */
+  setupGame(gameData) {
+    const {Player} = require('./game/Player');
+
+    let player = new Player(
+      gameData.player.id,
+      gameData.player.team,
+      gameData.player.health,
+      gameData.player.respawnTime,
+      gameData.player.shootStrength,
+      gameData.player.mags,
+      gameData.player.roundsPerMag,
+      gameData.player.reloadTime,
+      gameData.player.shootDelay);
+
+      this.currentGame = this.gameFactory.initGame(gameData.mode, player);
+      this.currentState = 'GAME_STARTING';
+
+      this.emitCurrentState();
   }
 
   /**

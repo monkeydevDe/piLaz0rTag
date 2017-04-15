@@ -57,6 +57,12 @@ class LaserTagEventHandler extends EventEmitter {
     this.emitEvent('websocket_received', socketMsg);
   }
 
+  onWebsocketMsg(callback) {
+    this.on('websocket_received',function(msg) {
+       callback(msg);
+    });
+  }
+
   /**
    * Is called when the shoot button is triggered
    */

@@ -27,6 +27,11 @@ $(function() {
     socket.emit('socketMessage', {"type" : msgType, "value" : msgVal});
   });
 
+
+  $('#setup_btn_start').on('click',function() {
+    startGame(socket);
+  });
+
   // register event to update display
   socket.on('display', function(msg) {
 
@@ -42,11 +47,37 @@ $(function() {
       if(msg.data === 'SETUP') {
         $('#gameSetupDisplay').show();
       }
+
+      if(msg.data === 'GAME_STARTING') {
+        $('#gameStartingDisplay').show();
+      }
+      
       return;
     }
     
 
   });
+
+  function startGame(socket) {
+    let gameData = {
+      'mode' : $('#setup_gameMode').val(),
+      'gameStartTime' : $('#setup_gameStartTime').val(),
+      'player' : {
+        'id' : $('#setup_playerId').val(),
+        'team' : $('#setup_teamSelect').val(),
+        'shootStrength' : $('#setup_shootStrengthSelect').val(),
+        'health' : $('#setup_playerHealth').val(),
+        'lives' : $('#setup_playerLives').val(),
+        'mags' : $('#setup_playerMags').val(),
+        'roundsPerMag' : $('#setup_playerRoundsPerMag').val(),
+        'respawnTime' : $('#setup_playerRespawnTime').val(),
+        'reloadTime' : $('#setup_playerReloadTime').val(),
+        'shootDelay' : $('#setup_playerShootDelay').val()
+      }
+    }
+
+    socket.emit('socketMessage', {"type" : 'start_game', "value" : gameData});
+  }
 
   /**
    * Handles the data when the game state changed
