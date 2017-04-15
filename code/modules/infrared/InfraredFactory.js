@@ -11,7 +11,7 @@ class InfraredFactory {
     const standards = require('../standards.js');
 
     if(settings.INFRARED === standards.INFRARED_TYPE.LIRCD) {
-      log.info("LIRCD infrared is configured.");
+      log.info("Infrared: LIRCD infrared is configured.");
       const { LircdInfraredHandler } = require('./LircdInfraredHandler.js');
       return new LircdInfraredHandler();
     }

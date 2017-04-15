@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>piLaz0rTag socket interface</title>
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Status:</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>Rounds:</dt>
+            <dd data-bind="text: rounds"></dd>
+            <dt>Mags:</dt>
+            <dd data-bind="text: mags"></dd>
+            <dt>Health:</dt>
+            <dd data-bind="text: health"></dd>
+        </dl>
+    </div>
+</div>
+
+
+
+<div class="well">
+    <button class="socketMsg btn btn-danger" data-message-type="shoot" data-message-value="" type="button">Shoot</button>
+    <button class="socketMsg btn btn-info" data-message-type="reload" data-message-value="" type="button">Reload</button>
+</div>
+
+<script src="jquery/jquery.min.js"></script>
+<script src="knockout/knockout-latest.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="assets/js/websocketHandler.js"></script>
+</body>
+</html>

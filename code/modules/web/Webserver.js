@@ -21,27 +21,26 @@ class Webserver {
     this.socketIo = require('socket.io')(this.http);
     this.eventHandler = require('../../lib/LaserTagEventHandler');
 
-    /**
-     * server the index.html
-     */
-    this.expApp.get('/', function(req, res) {
-      res.send('<h1>Hello world</h1>');
-    });
 
     /**
      * We need a socket interface
      */
-    this.expApp.get('/socket', function(req, res) {
-      res.sendFile(__dirname + '/html/socketInterface.html');
+    this.expApp.get('/', function(req, res) {
+      res.sendFile(__dirname + '/html/interface.html');
     });
 
     this.expApp.use('/jquery', express.static('./node_modules/jquery/dist'));
-
+    this.expApp.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
+    this.expApp.use('/knockout',express.static('./node_modules/knockout/build/output'));
+    this.expApp.use('/assets', express.static(__dirname + '/assets'));
 
     this.socketIo.on('connection', function(socket) {
       instance.log.info('Websocket: A user connected');
+
+      instance.eventHandler.emitGameGetStatus();
+
       socket.on('disconnect', function() {
-        instance.log.info('Websocket: a user disconnected');
+        instance.log.info('Websocket: A user disconnected');
       });
 
       // listen for socket messages
@@ -59,8 +58,24 @@ class Webserver {
     });
   }
 
+  /**
+   * Sends display data over the websocket
+   * @param data
+   */
+  sendDisplayDataOverSocket(data) {
+    this.sendDataOverSocket('display',data);
+  }
 
+  /**
+   * Sends a message over socket with the given type.
+   * @param type
+   * @param data
+   */
+  sendDataOverSocket(type,data) {
+    this.log.debug('Websocket: sending type: '+type);
+    this.socketIo.emit(type, data);
+  }
 }
 
 // run as a singleton is this the right way ?
-exports = new Webserver();
+module.exports = new Webserver();

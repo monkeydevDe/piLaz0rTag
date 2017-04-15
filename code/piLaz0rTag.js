@@ -1,8 +1,6 @@
 // Logging
 const log = require('./lib/Logger.js');
 
-// Display
-let display = require('./modules/display.js');
 // Settings
 const settings = require('./modules/settings.js');
 // Standards
@@ -17,7 +15,11 @@ const infrared = require('./modules/infrared/InfraredFactory');
 // webserver
 const webserver = require('./modules/web/Webserver');
 
+// display
+const display2 = require('./modules/display/DisplayFactory');
 
+
+// simple test game
 const { DeathMatchGame } = require('./lib/game/DeathMatchGame');
 const { Player } = require('./lib/game/Player');
 const player = new Player(1,'red',3,100,75,5,30,3000,500);
@@ -25,25 +27,12 @@ const game = new DeathMatchGame(player,{});
 
 
 
-
-
-
-//global vars
-var health;
-var shield;
-var state;
-
 // init event handling
 var eventHandler = EventHandler();
 eventHandler.doAction(std.ACTIONS.INIT);
 
 //delete me! im only for testing pupose
 eventHandler.doAction(std.ACTIONS.FIRE);
-
-// Game Loop
-//while(true) {
-
-//}
 
 
 // EventHandling
@@ -56,7 +45,7 @@ function EventHandler() {
       switch(action) {
         case std.ACTIONS.FIRE:
           // reduce Ammo
-          display.drawAmmo(100);
+          //display.drawAmmo(100);
           break;
         case std.ACTIONS.GETHIT:
           // reduce Health
@@ -66,7 +55,7 @@ function EventHandler() {
           break;
         case std.ACTIONS.INIT:
           //initalize display
-          display = new display.Display(settings.DISPLAY);
+          //display = new display.Display(settings.DISPLAY);
           //Hello world!
           log.debug('DEBUG ON!');
 

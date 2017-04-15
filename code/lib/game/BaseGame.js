@@ -23,6 +23,16 @@ class BaseGame {
     this.eventHandler.onGameReloadDone(function() {
        instance.reloadDone();
     });
+
+    this.eventHandler.onGameStatus(function() {
+       instance.propergateGameStatus();
+    });
+
+
+  }
+
+  propergateGameStatus() {
+    this.eventHandler.emitDisplayGameUpdate(this);
   }
 
   /**
@@ -56,6 +66,7 @@ class BaseGame {
 
 
     this.eventHandler.emitShoot(this.player);
+    this.propergateGameStatus();
   }
 
   /**
@@ -79,6 +90,8 @@ class BaseGame {
 
     this.log.debug('Game: starting reloading for: '+this.player.reloadTime);
 
+    this.propergateGameStatus();
+
     const instance = this;
     setTimeout(function() {
       instance.eventHandler.emitReloadDone();
@@ -95,6 +108,7 @@ class BaseGame {
     this.player.status.reloading = false;
     this.player.status.roundsInMag = this.player.roundsPerMag;
     this.player.status.mags--;
+    this.propergateGameStatus();
   }
 
 }

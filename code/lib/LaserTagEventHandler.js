@@ -59,6 +59,21 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   /**
+   * Emits the event that the display has to update the game status.
+   * @param game
+   */
+  emitDisplayGameUpdate(game) {
+    this.emitEvent('game_display_game_update',game);
+  }
+
+  /**
+   * Emits the event when some module requests the game status.
+   */
+  emitGameGetStatus() {
+    this.emitEvent('game_get_status');
+  }
+
+  /**
    * Registers an event handler for the event when the user triggers the shoot button
    * @param callback
    */
@@ -67,6 +82,7 @@ class LaserTagEventHandler extends EventEmitter {
       callback(payload);
     });
   }
+
 
   /**
    * Registers an event handler for the event when the user triggers the reload button
@@ -79,13 +95,29 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   /**
-   * Regsiters an event handler for handling that reloading is done
+   * Regsiter an event handler for handling that reloading is done
    * @param callback
    */
   onGameReloadDone(callback) {
     this.on('game_action_reload_done',function(payload) {
       callback(payload);
     });
+  }
+
+  onDisplayGameUpdate(callback) {
+    this.on('game_display_game_update', function(game) {
+       callback(game);
+    });
+  }
+
+  /**
+   * Register event handler on game_get_status
+   * @param callback
+   */
+  onGameStatus(callback) {
+    this.on('game_get_status',function() {
+      callback();
+    })
   }
 
   /**
