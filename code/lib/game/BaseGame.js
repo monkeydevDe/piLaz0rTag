@@ -89,13 +89,10 @@ class BaseGame {
   onHit(strength) {
     this.log.info('Game: got hit with: '+strength);
 
-    if(this.player.status.lives === 0) {
-      this.log.info('Game: Player has no lives left.');
-      return;
-    }
 
-    if(this.player.status.health <= 0) {
-      this.log.info('Game: Player is already dead.');
+    let playerActionStatus = this.player.checkPlayerStatus();
+    if(playerActionStatus == false) {
+      this.log.info('Game: Player is not in the status to get a hit.');
       return;
     }
 
@@ -134,13 +131,9 @@ class BaseGame {
   shoot() {
     this.log.info('Game: Shoot');
 
-    if(this.player.status.health <= 0) {
-      this.log.debug('Game: Player is dead, dead people cant shoot');
-      return;
-    }
-
-    if(this.player.status.reloading == true) {
-      this.log.debug('Game: Player is reloading no shooting possible');
+    let playerActionStatus = this.player.checkPlayerStatusWithReload();
+    if(playerActionStatus == false) {
+      this.log.info('Game: Player is not in the status to perform shooting.');
       return;
     }
 
@@ -173,13 +166,9 @@ class BaseGame {
   reload() {
     this.log.info('Game: Reload');
 
-    if(this.player.status.health <= 0) {
-      this.log.debug('Game: Player is dead, dead people cant reload');
-      return;
-    }
-
-    if(this.player.status.reloading == true) {
-      this.log.debug('Game: Player is already reloading.');
+    let playerActionStatus = this.player.checkPlayerStatusWithReload();
+    if(playerActionStatus == false) {
+      this.log.info('Game: Player is not in the status to perform reloading.');
       return;
     }
 
@@ -201,6 +190,8 @@ class BaseGame {
     },this.player.reloadTime);
     
   }
+
+
 
 
   /**

@@ -35,10 +35,11 @@ $(function() {
     var reloading = data.status.reloading;
 
 
-    var enbaleButton = (respawning == true || reloading == true);
+    var disableButton = (respawning == true || reloading == true);
+    var disableReload = (disableButton || data.status.mags == 0);
 
-    $('#reloadBtn').prop("disabled", enbaleButton);
-    $('#shootBtn').prop("disabled", enbaleButton);
+    $('#reloadBtn').prop("disabled", disableReload);
+    $('#shootBtn').prop("disabled", disableButton);
 
 
     PlayerViewModel.playerId(data.id);
