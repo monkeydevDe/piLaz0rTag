@@ -17,14 +17,34 @@
         <h3 class="panel-title">Status:</h3>
     </div>
     <div class="panel-body">
-        <dl class="dl-horizontal">
-            <dt>Rounds:</dt>
-            <dd><span data-bind="text: rounds"></span> / <span data-bind="text: roundsPerMag"></span></dd>
-            <dt>Mags:</dt>
-            <dd><span data-bind="text: magsAvaible"></span> / <span data-bind="text: nrOfMags"></span></dd>
-            <dt>Health:</dt>
-            <dd><span data-bind="text: health"></span> / <span data-bind="text: totalHealth"></span></dd>
-        </dl>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <dl class="dl-horizontal">
+                    <dt>Rounds:</dt>
+                    <dd><span data-bind="text: rounds"></span> / <span data-bind="text: roundsPerMag"></span></dd>
+                    <dt>Mags:</dt>
+                    <dd><span data-bind="text: magsAvaible"></span> / <span data-bind="text: nrOfMags"></span></dd>
+                    <dt>Health:</dt>
+                    <dd><span data-bind="text: health"></span> / <span data-bind="text: totalHealth"></span></dd>
+                </dl>
+            </div>
+
+            <div class="col-xs-6">
+                <dl class="dl-horizontal">
+                    <dt>Player ID:</dt>
+                    <dd><span data-bind="text: playerId"></span></dd>
+
+                    <dt>Team:</dt>
+                    <dd><span data-bind="text: team"></span></dd>
+
+                    <dt>Shoot Strength:</dt>
+                    <dd><span data-bind="text: shootStrength"></span></dd>
+
+
+                </dl>
+            </div>
+        </div>
     </div>
 </div>
 
