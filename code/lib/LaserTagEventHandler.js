@@ -31,10 +31,17 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   /**
-   * Is called when the game has to shoot
+   * Is called when the shoot button is triggered
    */
-  emitShoot() {
+  emitShootBtn() {
     this.emitEvent('game_button_shoot');
+  }
+
+  /**
+   * Is called when the game has to handle shooting
+   */
+  emitShoot(player) {
+    this.emitEvent('game_action_shoot',player);
   }
 
   /**

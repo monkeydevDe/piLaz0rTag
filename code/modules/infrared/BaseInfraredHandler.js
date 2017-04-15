@@ -10,8 +10,8 @@ class BaseInfraredHandler {
 
     const instance = this;
 
-    this.eventHandler.on('game_button_shoot',function(){
-      instance.sendShootMsg()
+    this.eventHandler.on('game_action_shoot',function(player){
+      instance.sendShootMsg(player.id,player.team,player.shootStrength);
     });
     
   }

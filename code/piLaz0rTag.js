@@ -18,6 +18,12 @@ const infrared = require('./modules/infrared/InfraredFactory');
 const webserver = require('./modules/web/Webserver');
 
 
+const { DeathMatchGame } = require('./lib/game/DeathMatchGame');
+const { Player } = require('./lib/game/Player');
+const player = new Player(1,'red',3,100,75,5,30,30000,500);
+const game = new DeathMatchGame(player,{});
+
+
 
 
 

@@ -8,7 +8,7 @@ class BaseInput {
    * Is called when the input wants to trigger a shoot event.
    */
   triggerShoot() {
-    this.eventHandler.emitShoot();
+    this.eventHandler.emitShootBtn();
   }
 
   
