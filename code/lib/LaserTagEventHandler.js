@@ -13,14 +13,6 @@ class LaserTagEventHandler extends EventEmitter {
     log.info('Event: Started main LaserTagEventHandler');
   }
 
-  /**
-   * This emits the event when a ir message was received
-   * @param irMsg
-   */
-  emitIrReceivedMsg(irMsg) {
-    this.emit('ir_received', irMsg);
-  }
-
 
   /**
    * This emits a websocket msg received msg
@@ -71,6 +63,27 @@ class LaserTagEventHandler extends EventEmitter {
    */
   emitGameGetStatus() {
     this.emitEvent('game_get_status');
+  }
+
+  /**
+   * This event is emitted when the player got a hit message.
+   * The game will watch on this event and will decide what to do with it.
+   * @param playerId
+   * @param playerTeam
+   * @param strength
+   */
+  emitGamePlayerHit(playerId,playerTeam,strength) {
+    this.emitEvent('game_player_hit',{'id' : playerId, 'team' : playerTeam, 'strength' : strength});
+  }
+
+  /**
+   * Register an event handler for the player hit event this should be done by the BaseGame.
+   * @param callback
+   */
+  onGamePlayerHit(callback) {
+    this.on('game_player_hit', function(payload) {
+       callback(payload)
+    });
   }
 
   /**

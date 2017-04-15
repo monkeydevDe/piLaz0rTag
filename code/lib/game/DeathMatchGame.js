@@ -6,6 +6,11 @@ class DeathMatchGame extends BaseGame {
     super(player,opts);
     this.log.info('Game: Starting DeathMatchGame');
   }
+
+
+  _handlePlayerHit(hitData) {
+    this.onHit(hitData.strength);
+  }
 }
 
 exports.DeathMatchGame = DeathMatchGame;

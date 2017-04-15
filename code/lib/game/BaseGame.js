@@ -27,6 +27,23 @@ class BaseGame {
     this.eventHandler.onGameStatus(function() {
        instance.propergateGameStatus();
     });
+
+    this.eventHandler.onGamePlayerHit(function(hitData) {
+       instance.handlePlayerHit(hitData);
+    });
+  }
+
+  handlePlayerHit(hitData) {
+    if(this.player.team == hitData.team && this.player.id == hitData.id) {
+      this.log.info('Game: You hit your self.');
+      return;
+    }
+
+    this._handlePlayerHit(hitData);
+  }
+
+  _handlePlayerHit(hitData) {
+    this.log.error('Game: Implement me handlePlayerHit !');
   }
 
   /**
@@ -34,6 +51,30 @@ class BaseGame {
    */
   propergateGameStatus() {
     this.eventHandler.emitDisplayGameUpdate(this);
+  }
+
+  /**
+   * This is called when the game decided that the player is damaged.
+   * @param strength
+   */
+  onHit(strength) {
+    this.log.info('Game: got hit with: '+strength);
+
+    if(this.player.status.health <= 0) {
+      this.log.info('Game: Player is already dead.');
+      return;
+    }
+
+    this.player.status.health-=strength;
+    if(this.player.status.health < 0) {
+      this.player.status.health = 0;
+    }
+
+    if(this.player.status.health <= 0) {
+      // emit death
+    }
+
+    this.propergateGameStatus();
   }
 
   /**
