@@ -37,7 +37,7 @@ class Webserver {
     this.socketIo.on('connection', function(socket) {
       instance.log.info('Websocket: A user connected');
 
-      instance.eventHandler.emitGameGetStatus();
+      instance.eventHandler.emitGetMainState();
 
       socket.on('disconnect', function() {
         instance.log.info('Websocket: A user disconnected');
@@ -60,10 +60,17 @@ class Webserver {
 
   /**
    * Sends display data over the websocket
-   * @param data
+   * @param the type of the message like gamestatus, changestatus etc
+   * @param data the payload data
    */
-  sendDisplayDataOverSocket(data) {
-    this.sendDataOverSocket('display',data);
+  sendDisplayDataOverSocket(type,data) {
+
+    let socketData = {
+      'type' : type,
+      'data' : data
+    }
+
+    this.sendDataOverSocket('display',socketData);
   }
 
   /**

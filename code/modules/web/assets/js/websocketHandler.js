@@ -28,8 +28,31 @@ $(function() {
   });
 
   // register event to update display
-  socket.on('display', function(data) {
+  socket.on('display', function(msg) {
+
+    if(msg.type === 'game_status') {
+      handleGameDisplayStatus(msg.data);
+      return;
+    }
+
+    if(msg.type === 'state_changed') {
+
+      $('.mainDisplay').hide();
+
+      if(msg.data === 'SETUP') {
+        $('#gameSetupDisplay').show();
+      }
+      return;
+    }
     
+
+  });
+
+  /**
+   * Handles the data when the game state changed
+   * @param data
+   */
+  function handleGameDisplayStatus(data) {
     // check if to enable disable certain buttons
     var respawning = data.status.respawning;
     var reloading = data.status.reloading;
@@ -54,5 +77,5 @@ $(function() {
     PlayerViewModel.lives(data.status.lives);
     PlayerViewModel.totalLives(data.lives);
     PlayerViewModel.respawning(data.status.respawning);
-  });
+  }
 });

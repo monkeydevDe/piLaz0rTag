@@ -13,6 +13,41 @@ class LaserTagEventHandler extends EventEmitter {
     log.info('Event: Started main LaserTagEventHandler');
   }
 
+  /**
+   * When the main class changes its state
+   * @param state
+   */
+  emitCurrentMainStateChange(state) {
+    this.emitEvent('main_state_change', state);
+  }
+
+  /**
+   * Handler for handling main state changed.
+   * @param callback
+   */
+  onCurrentMainStateChange(callback) {
+    this.on('main_state_change',function(state) {
+      callback(state);
+    })
+  }
+
+  /**
+   * When the main class changes its state
+   * @param state
+   */
+  emitGetMainState() {
+    this.emitEvent('main_get_state');
+  }
+
+  /**
+   * Handler for handling main state changed.
+   * @param callback
+   */
+  onGetMainState(callback) {
+    this.on('main_get_state',function() {
+      callback();
+    })
+  }
 
   /**
    * This emits a websocket msg received msg

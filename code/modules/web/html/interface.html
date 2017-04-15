@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,52 +11,179 @@
 </head>
 <body>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Status:</h3>
-    </div>
-    <div class="panel-body">
+<div id="gameSetupDisplay" class="mainDisplay" style="display: none;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Game Setup:</h3>
+        </div>
+        <div class="panel-body">
 
-        <div class="row">
-            <div class="col-xs-6">
-                <dl class="dl-horizontal">
-                    <dt>Rounds:</dt>
-                    <dd><span data-bind="text: rounds"></span> / <span data-bind="text: roundsPerMag"></span></dd>
-                    <dt>Mags:</dt>
-                    <dd><span data-bind="text: magsAvaible"></span> / <span data-bind="text: nrOfMags"></span></dd>
-                    <dt>Health:</dt>
-                    <dd><span data-bind="text: health"></span> / <span data-bind="text: totalHealth"></span></dd>
-                    <dt>Lives:</dt>
-                    <dd><span data-bind="text: lives"></span> / <span data-bind="text: totalLives"></span></dd>
-                </dl>
-            </div>
+            <form class="form-horizontal">
 
-            <div class="col-xs-6">
-                <dl class="dl-horizontal">
-                    <dt>Player ID:</dt>
-                    <dd><span data-bind="text: playerId"></span></dd>
+                <!-- GAME MODE -->
+                <div class="form-group">
+                    <label for="setup_gameMode" class="col-sm-2 control-label">Game mode: </label>
+                    <div class="col-sm-10">
+                        <select id="setup_gameMode" class="form-control">
+                            <option value="DeathMatch">DeathMatch</option>
+                            <option value="TeamDeathMatch">TeamDeathMatch</option>
+                        </select>
+                    </div>
+                </div>
 
-                    <dt>Team:</dt>
-                    <dd><span data-bind="text: team"></span></dd>
+                <!-- Team-->
+                <div class="form-group">
+                    <label for="setup_teamSelect" class="col-sm-2 control-label">Team: </label>
+                    <div class="col-sm-10">
+                        <select id="setup_teamSelect" class="form-control">
+                            <option value="green">green</option>
+                            <option value="red">red</option>
+                            <option value="red">yellow</option>
+                            <option value="red">blue</option>
+                        </select>
+                    </div>
+                </div>
 
-                    <dt>Shoot Strength:</dt>
-                    <dd><span data-bind="text: shootStrength"></span></dd>
+                <!-- Player id -->
+                <div class="form-group">
+                    <label for="setup_playerId" class="col-sm-2 control-label">Player Id: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerId" class="form-control" type="number" value="1" min="1" max="31"/>
+                    </div>
+                </div>
 
-                    <dt>Respawning:</dt>
-                    <dd><span data-bind="text: respawning"></span></dd>
+                <!-- Shoot Strength-->
+                <div class="form-group">
+                    <label for="setup_shootStrengthSelect" class="col-sm-2 control-label">Shoot Strength: </label>
+                    <div class="col-sm-10">
+                        <select id="setup_shootStrengthSelect" class="form-control">
+                            <option value="100">100</option>
+                            <option value="75">75</option>
+                            <option value="50">50</option>
+                            <option value="25">25</option>
+                        </select>
+                    </div>
+                </div>
 
+                <!-- Health -->
+                <div class="form-group">
+                    <label for="setup_playerHealth" class="col-sm-2 control-label">Health: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerHealth" class="form-control" type="number" value="100" min="25"/>
+                    </div>
+                </div>
 
-                </dl>
-            </div>
+                <!-- Lives -->
+                <div class="form-group">
+                    <label for="setup_playerLives" class="col-sm-2 control-label">Lives: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerLives" class="form-control" type="number" value="3" min="1"/>
+                    </div>
+                </div>
+
+                <!-- Mags -->
+                <div class="form-group">
+                    <label for="setup_playerMags" class="col-sm-2 control-label">Magazines: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerMags" class="form-control" type="number" value="3" min="1"/>
+                    </div>
+                </div>
+
+                <!-- Rounds per mag -->
+                <div class="form-group">
+                    <label for="setup_playerRoundsPerMag" class="col-sm-2 control-label">Rounds per magazine: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerRoundsPerMag" class="form-control" type="number" value="30" min="1"/>
+                    </div>
+                </div>
+
+                <!-- Respawn time -->
+                <div class="form-group">
+                    <label for="setup_playerRespawnTime" class="col-sm-2 control-label">Respawn Time in ms: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerRespawnTime" class="form-control" type="number" value="5000" min="1"/>
+                    </div>
+                </div>
+
+                <!-- Reload time -->
+                <div class="form-group">
+                    <label for="setup_playerReloadTime" class="col-sm-2 control-label">Reload Time in ms: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerReloadTime" class="form-control" type="number" value="3000" min="1"/>
+                    </div>
+                </div>
+
+                <!-- Reload time -->
+                <div class="form-group">
+                    <label for="setup_playerShootDelay" class="col-sm-2 control-label">Shoot delay Time in ms: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_playerShootDelay" class="form-control" type="number" value="300" min="1"/>
+                    </div>
+                </div>
+
+                <!-- Game start time -->
+                <div class="form-group">
+                    <label for="setup_gameStartTime" class="col-sm-2 control-label">Game start time ms: </label>
+                    <div class="col-sm-10">
+                        <input id="setup_gameStartTime" class="form-control" type="number" value="1000" min="1"/>
+                    </div>
+                </div>
+
+            </form>
+
         </div>
     </div>
 </div>
 
+<div id="gameStatusDisplay" class="mainDisplay" style="display: none;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Status:</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <dl class="dl-horizontal">
+                        <dt>Rounds:</dt>
+                        <dd><span data-bind="text: rounds"></span> / <span data-bind="text: roundsPerMag"></span></dd>
+                        <dt>Mags:</dt>
+                        <dd><span data-bind="text: magsAvaible"></span> / <span data-bind="text: nrOfMags"></span></dd>
+                        <dt>Health:</dt>
+                        <dd><span data-bind="text: health"></span> / <span data-bind="text: totalHealth"></span></dd>
+                        <dt>Lives:</dt>
+                        <dd><span data-bind="text: lives"></span> / <span data-bind="text: totalLives"></span></dd>
+                    </dl>
+                </div>
+
+                <div class="col-xs-6">
+                    <dl class="dl-horizontal">
+                        <dt>Player ID:</dt>
+                        <dd><span data-bind="text: playerId"></span></dd>
+
+                        <dt>Team:</dt>
+                        <dd><span data-bind="text: team"></span></dd>
+
+                        <dt>Shoot Strength:</dt>
+                        <dd><span data-bind="text: shootStrength"></span></dd>
+
+                        <dt>Respawning:</dt>
+                        <dd><span data-bind="text: respawning"></span></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-<div class="well">
-    <button id="shootBtn" class="socketMsg btn btn-danger" data-message-type="shoot" data-message-value="" type="button">Shoot</button>
-    <button id="reloadBtn" class="socketMsg btn btn-info" data-message-type="reload" data-message-value="" type="button">Reload</button>
+    <div class="well">
+        <button id="shootBtn" class="socketMsg btn btn-danger" data-message-type="shoot" data-message-value=""
+                type="button">Shoot
+        </button>
+        <button id="reloadBtn" class="socketMsg btn btn-info" data-message-type="reload" data-message-value=""
+                type="button">Reload
+        </button>
+    </div>
 </div>
 
 <script src="jquery/jquery.min.js"></script>
