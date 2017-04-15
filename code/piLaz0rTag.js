@@ -20,10 +20,10 @@ const display = require('./modules/display/DisplayFactory');
 
 
 // simple test game
-const { DeathMatchGame } = require('./lib/game/DeathMatchGame');
+const { TeamDeathMatchGame } = require('./lib/game/TeamDeathMatchGame');
 const { Player } = require('./lib/game/Player');
 const player = new Player(1,'red',3,100,5000,75,5,30,3000,500);
-const game = new DeathMatchGame(player,{});
+const game = new TeamDeathMatchGame(player,{});
 
 
 // init event handling
