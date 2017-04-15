@@ -31,8 +31,16 @@ class BaseGame {
     this.eventHandler.onGamePlayerHit(function(hitData) {
        instance.handlePlayerHit(hitData);
     });
+
+    this.eventHandler.onRespawningDone(function() {
+       instance.handleRespawnDone();
+    });
   }
 
+  /**
+   * This is called when we received an player hit message.
+   * @param hitData
+   */
   handlePlayerHit(hitData) {
     if(this.player.team == hitData.team && this.player.id == hitData.id) {
       this.log.info('Game: You hit your self.');
@@ -42,6 +50,27 @@ class BaseGame {
     this._handlePlayerHit(hitData);
   }
 
+  /**
+   * This is called when the player is respawend.
+   */
+  handleRespawnDone() {
+
+    this.log.info('Game: Player respawning done.');
+
+    // reset game status
+    this.player.status.health = this.player.health;
+    this.player.status.roundsInMag = this.player.roundsPerMag;
+    this.player.status.mags = this.player.mags;
+    this.player.status.respawning = false;
+
+    this.propergateGameStatus();
+  }
+
+  /**
+   * Internal hit handler which has to be implemented in the game itself.
+   * @param hitData
+   * @private
+   */
   _handlePlayerHit(hitData) {
     this.log.error('Game: Implement me handlePlayerHit !');
   }
@@ -60,6 +89,11 @@ class BaseGame {
   onHit(strength) {
     this.log.info('Game: got hit with: '+strength);
 
+    if(this.player.status.lives === 0) {
+      this.log.info('Game: Player has no lives left.');
+      return;
+    }
+
     if(this.player.status.health <= 0) {
       this.log.info('Game: Player is already dead.');
       return;
@@ -70,8 +104,25 @@ class BaseGame {
       this.player.status.health = 0;
     }
 
+    this.log.info('Game: Player health is: '+this.player.status.health);
+
     if(this.player.status.health <= 0) {
-      // emit death
+      // player has still some lives left let him respawn
+      if(this.player.status.lives > 0) {
+
+        // remove a live from the player
+        this.player.status.lives--;
+        this.log.info('Game: Player lives: '+this.player.status.lives);
+
+        this.player.status.respawning = true;
+        const instance = this;
+
+        this.log.info('Game: Respawn player in: '+this.player.respawnTime);
+
+        setTimeout(function() {
+          instance.eventHandler.emitRespawningDone();
+        },this.player.respawnTime);
+      }
     }
 
     this.propergateGameStatus();
@@ -82,6 +133,11 @@ class BaseGame {
    */
   shoot() {
     this.log.info('Game: Shoot');
+
+    if(this.player.status.health <= 0) {
+      this.log.debug('Game: Player is dead, dead people cant shoot');
+      return;
+    }
 
     if(this.player.status.reloading == true) {
       this.log.debug('Game: Player is reloading no shooting possible');
@@ -116,6 +172,11 @@ class BaseGame {
    */
   reload() {
     this.log.info('Game: Reload');
+
+    if(this.player.status.health <= 0) {
+      this.log.debug('Game: Player is dead, dead people cant reload');
+      return;
+    }
 
     if(this.player.status.reloading == true) {
       this.log.debug('Game: Player is already reloading.');

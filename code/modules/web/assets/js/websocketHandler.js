@@ -10,7 +10,10 @@ $(function() {
     totalHealth: ko.observable(0),
     playerId: ko.observable(0),
     team: ko.observable(''),
-    shootStrength: ko.observable(0)
+    shootStrength: ko.observable(0),
+    lives: ko.observable(0),
+    totalLives: ko.observable(0),
+    respawning: ko.observable(false)
   };
   ko.applyBindings(PlayerViewModel);
 
@@ -28,9 +31,14 @@ $(function() {
   socket.on('display', function(data) {
     
     // check if to enable disable certain buttons
-    var enableReloadBtn = data.status.reloading;
-    $('#reloadBtn').prop("disabled", enableReloadBtn);
-    $('#shootBtn').prop("disabled", enableReloadBtn);
+    var respawning = data.status.respawning;
+    var reloading = data.status.reloading;
+
+
+    var enbaleButton = (respawning == true || reloading == true);
+
+    $('#reloadBtn').prop("disabled", enbaleButton);
+    $('#shootBtn').prop("disabled", enbaleButton);
 
 
     PlayerViewModel.playerId(data.id);
@@ -42,5 +50,8 @@ $(function() {
     PlayerViewModel.nrOfMags(data.mags);
     PlayerViewModel.health(data.status.health);
     PlayerViewModel.totalHealth(data.health);
+    PlayerViewModel.lives(data.status.lives);
+    PlayerViewModel.totalLives(data.lives);
+    PlayerViewModel.respawning(data.status.respawning);
   });
 });

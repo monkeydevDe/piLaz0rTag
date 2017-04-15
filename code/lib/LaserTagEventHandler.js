@@ -51,6 +51,23 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   /**
+   * Is called when respawning is done
+   */
+  emitRespawningDone() {
+    this.emitEvent('game_player_respawning_done');
+  }
+
+  /**
+   * Event handler when the respawning is done.
+   * @param callback
+   */
+  onRespawningDone(callback) {
+    this.on('game_player_respawning_done',function() {
+      callback();
+    });
+  }
+
+  /**
    * Emits the event that the display has to update the game status.
    * @param game
    */
