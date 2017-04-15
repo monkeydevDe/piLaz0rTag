@@ -39,8 +39,20 @@ class PiLazorTag {
 
     this.eventHandler.onWebsocketMsg(function(msg) {
       if(msg.type === 'start_game') {
-        instance.setupGame(msg.value);
+        instance.eventHandler.emitSetupGame(msg.value);
       }
+
+      if(msg.type === 'stop_game') {
+        instance.eventHandler.emitStopGame();
+      }
+    });
+
+    this.eventHandler.onSetupGame(function(gameSetupData){
+      instance.setupGame(gameSetupData);
+    });
+
+    this.eventHandler.onStopGame(function() {
+       instance.stopGame();
     });
 
     this.eventHandler.onStartGame(function() {
@@ -49,6 +61,15 @@ class PiLazorTag {
       instance.emitCurrentState();
       instance.eventHandler.emitDisplayGameUpdate(instance.currentGame);
     });
+  }
+
+  /**
+   * This will stop the current game and will go to SETUP
+   */
+  stopGame() {
+    this.currentGame = null;
+    this.currentState = 'SETUP';
+    this.emitCurrentState();
   }
 
   /**
@@ -91,10 +112,6 @@ class PiLazorTag {
    */
   emitCurrentState() {
     this.eventHandler.emitCurrentMainStateChange(this.currentState);
-  }
-
-  getMainStatus() {
-    return this.currentState;
   }
 
 }

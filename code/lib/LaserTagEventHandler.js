@@ -105,6 +105,32 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   /**
+   * Is called when the game is starting
+   */
+  emitSetupGame(gameSetupData) {
+    this.emitEvent('game_setup',gameSetupData);
+  }
+
+  onSetupGame(callback) {
+    this.on('game_setup',function(gameData) {
+      callback(gameData);
+    });
+  }
+
+  /**
+   * Is called when the game is to stop
+   */
+  emitStopGame() {
+    this.emitEvent('game_stop');
+  }
+
+  onStopGame(callback) {
+    this.on('game_stop',function() {
+      callback();
+    });
+  }
+
+  /**
    * Is called when respawning is done
    */
   emitRespawningDone() {
