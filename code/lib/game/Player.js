@@ -2,6 +2,9 @@ class Player {
 
 
   constructor(id,team,lives,health,respawnTime,shootStrength,mags,roundsPerMag,reloadTime,shootDelay) {
+
+    this.log = require('../Logger');
+
     this.id = id;
     this.team = team;
     this.health = health;

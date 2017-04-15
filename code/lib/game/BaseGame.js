@@ -89,7 +89,6 @@ class BaseGame {
   onHit(strength) {
     this.log.info('Game: got hit with: '+strength);
 
-
     let playerActionStatus = this.player.checkPlayerStatus();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to get a hit.');
@@ -121,6 +120,7 @@ class BaseGame {
         },this.player.respawnTime);
       }
     }
+    
 
     this.propergateGameStatus();
   }
