@@ -46,7 +46,7 @@ class Webserver {
 
       // listen for socket messages
       socket.on('socketMessage', function(msg) {
-        instance.log.info('Websocket msg: ' + msg.type + ' with value: ' + msg.value);
+        instance.log.debug('Websocket msg: ' + msg.type + ' with value: ' + msg.value);
         // emit the message over the application so the listeners can handle this
         instance.eventHandler.emitWebsocketMsg(msg);
       });

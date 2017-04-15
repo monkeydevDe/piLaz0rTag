@@ -16,7 +16,7 @@ class BaseInput {
    * When to reload
    */
   triggerReload() {
-    this.eventHandler.emitReload();
+    this.eventHandler.emitReloadBtn();
   }
 }
 

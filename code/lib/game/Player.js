@@ -12,7 +12,7 @@ class Player {
 
     this.status = {
       'health' : this.health,
-      'mags' : this.mags,
+      'mags' : mags,
       'lives' : this.lives,
       'roundsInMag' : this.roundsPerMag,
       'reloading' : false,
