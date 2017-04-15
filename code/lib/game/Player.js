@@ -5,6 +5,7 @@ class Player {
     this.id = id;
     this.team = team;
     this.health = health;
+    this.mags = mags;
     this.shootStrength = shootStrength;
     this.roundsPerMag = roundsPerMag;
     this.reloadTime = reloadTime;
