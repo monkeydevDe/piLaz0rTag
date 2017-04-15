@@ -83,6 +83,17 @@ class LaserTagEventHandler extends EventEmitter {
     });
   }
 
+  /**
+   * When the game actually wants to shoot.
+   * We need to send ir signal and so on.
+   * @param callback
+   */
+  onGameShoot(callback) {
+    this.on('game_action_shoot',function(player){
+      callback(player);
+    });
+  }
+
 
   /**
    * Registers an event handler for the event when the user triggers the reload button

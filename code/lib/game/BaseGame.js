@@ -27,10 +27,11 @@ class BaseGame {
     this.eventHandler.onGameStatus(function() {
        instance.propergateGameStatus();
     });
-
-
   }
 
+  /**
+   * This will emit all events which handle the game status.
+   */
   propergateGameStatus() {
     this.eventHandler.emitDisplayGameUpdate(this);
   }

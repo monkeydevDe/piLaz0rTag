@@ -10,12 +10,15 @@ class BaseInfraredHandler {
 
     const instance = this;
 
-    this.eventHandler.on('game_action_shoot',function(player){
+    this.eventHandler.onGameShoot(function(player){
       instance.sendShootMsg(player.id,player.team,player.shootStrength);
     });
-    
   }
 
+  /**
+   * This is called when the ir handler implementation received an ir signal.
+   * @param irMsg
+   */
   handleIncomingMsg(irMsg) {
     this.eventHandler.emitIrReceivedMsg(irMsg);
   }
