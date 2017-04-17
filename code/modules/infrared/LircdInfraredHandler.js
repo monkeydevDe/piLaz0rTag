@@ -24,7 +24,6 @@ class LircdInfraredHandler extends BaseInfraredHandler {
       });
     });
 
-
     this.lirc.on('receive', function(remote, button) {
       instance.log.debug('Got lircd message: ' + button);
       instance.handleIncomingMsg(button);
@@ -33,8 +32,9 @@ class LircdInfraredHandler extends BaseInfraredHandler {
 
   sendShootMsg(playerId, teamColor, strength) {
     const instance = this;
-    this.log.info('Sending ir data: shoot_31_green_50');
-    this.lirc.cmd('SEND_ONCE', 'pilazortag', 'shoot_31_green_50', function(err) {
+    let irData = 'shoot_'+playerId+'_'+teamColor+'_'+strength;
+    this.log.info('Sending ir data: '+irData);
+    this.lirc.cmd('SEND_ONCE', 'pilazortag', irData, function(err) {
       if(err) {
         instance.log.error('An error happened while sending ir data: ' + err);
       }

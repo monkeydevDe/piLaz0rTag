@@ -47,7 +47,8 @@ exports.INPUT_TYPE = Object.freeze( {
 
 // Register all INFRARED-TYPES here
 exports.INFRARED_TYPE = Object.freeze( {
-  "LIRCD" : "IR_LIRCD" // when the input comes from the keyboard
+  "LIRCD" : "IR_LIRCD", // when the input comes from the keyboard
+  "IRMOCK" : "IRMOCK" // Mock of LIRC Deamon
 });
 
 //All Device States

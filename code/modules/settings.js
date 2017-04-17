@@ -3,7 +3,7 @@ var std = require('./standards.js');
 module.exports = {
     //General
     DEBUG_LEVEL: 'debug',
-    DISPLAY: std.DISPLAY_TYPE.MOCK,
+    DISPLAY: std.DISPLAY_TYPE.WEB,
     INPUT: std.INPUT_TYPE.WEB,
     INFRARED: std.INFRARED_TYPE.LIRCD,
     //this.DISPLAY = DISPLAY_TYPE.SSD1306I2C;
