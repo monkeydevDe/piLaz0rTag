@@ -15,7 +15,7 @@ class IrMockHandler extends BaseInfraredHandler {
   }
       
   sendShootMsg(playerId, teamColor, strength) {
-
+      const instance = this;
       instance.log.info('IR Mock handler: shoot ' + playerId + teamColor + strength);
   };
 }
