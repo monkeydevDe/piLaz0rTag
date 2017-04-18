@@ -1,4 +1,4 @@
-update=Di 18 Apr 2017 09:19:50 CEST
+update=Di 18 Apr 2017 19:20:51 CEST
 version=1
 last_client=kicad
 [pcbnew]
@@ -59,5 +59,4 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=/home/tuxburner/Desktop/kicad.lib/rur
-LibName32=/home/tuxburner/Desktop/WS2812B.pretty/Schematic-Symbol/ws2812b
+LibName31=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/pl8923
