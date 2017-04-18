@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:piLaz0rTag_receiver-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -125,7 +126,7 @@ Wire Wire Line
 	2450 4450 2450 4100
 $Comp
 L PL8923 LED1
-U 1 1 58F55958
+U 1 1 58F5C0BB
 P 4200 1150
 F 0 "LED1" H 4200 750 60  0000 C CNN
 F 1 "PL8923" H 4200 1550 60  0000 C CNN
