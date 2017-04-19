@@ -14,6 +14,11 @@ class LedFactory {
       return require('./MockLedHandler');
     }
 
+    if(settings.LED === standards.LED_TYPE.WS2812) {
+      log.info("Led: WS2812 Led is configured.");
+      return require('./WS2812LedHandler');
+    }
+
     throw new Error('No Led configured!');
 
   }
