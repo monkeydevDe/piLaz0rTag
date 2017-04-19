@@ -17,7 +17,8 @@ module.exports = {
     PORT: 6969,
     BRIGHTNESS: 255,
     MUZZLE_FLASH_LEDS : [0],
-    MUZZLE_FLASH_COLOR : '0xFF0000',
+    MUZZLE_FLASH_COLOR_ON : '0xFF0000',
+    MUZZLE_FLASH_COLOR_OFF : '0x000000',
     HIT_LEDS : [1],
     TEAM_COLORS: {
       green: '0x00FF00',
