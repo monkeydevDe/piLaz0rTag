@@ -12,7 +12,7 @@ class BaseGame {
     const instance = this;
 
     // register shoot handling when the user hits the button :)
-    this.eventHandler.onGameButtonShoot(function() {
+    this.eventHandler.buttonEvents.SHOOT_BTN.on(function() {
       instance.shoot();
     });
 
@@ -72,7 +72,7 @@ class BaseGame {
    * @private
    */
   _handlePlayerHit(hitData) {
-    this.log.error('Game: Implement me handlePlayerHit !');
+    this.log.error('Game: Implement me: '+this._handlePlayerHit.name);
   }
 
   /**
@@ -96,6 +96,7 @@ class BaseGame {
     }
 
     this.player.status.health-=strength;
+    this.eventHandler.events.PLAYER_LOST_HEALTH.emit();
     if(this.player.status.health < 0) {
       this.player.status.health = 0;
     }
@@ -156,7 +157,7 @@ class BaseGame {
     this.player.status.roundsInMag--;
 
 
-    this.eventHandler.emitShoot(this.player);
+    this.eventHandler.gameEvents.SHOOT.emit(this.player);
     this.propergateGameStatus();
   }
 

@@ -13,33 +13,46 @@ class WS2812LedsServer {
 
     this.ws281x.render(this.pixelData);
 
-    var instance = this;
+    const instance = this;
     process.on('SIGINT', function () {
       instance.ws281x.reset();
       process.nextTick(function () { process.exit(0); });
     });
 
     this.net = require('net');
+    this.log = require('../../../lib/Logger');
 
-    var HOST = '127.0.0.1';
-    var PORT = 6969;
+    const HOST = '127.0.0.1';
+    const PORT = 6969;
+
+    this.log.info('Net: starting server on: '+HOST+':'+PORT);
 
     this.net.createServer(function(sock) {
 
       // We have a connection - a socket object is assigned to the connection automatically
-      console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+      instance.log.info('Net: Connect from: ' + sock.remoteAddress +':'+ sock.remotePort);
 
       // Add a 'data' event handler to this instance of socket
       sock.on('data', function(data) {
 
         const stringData = data.toString();
 
+        instance.log.debug('Net: Data from '+ sock.remoteAddress +' received: '+stringData);
+
         const splitData = stringData.split(',');
-        if(splitData.length % 2 != 0) {
+        if(splitData.length % 2 == 0) {
           return;
         }
+        
 
-        for(var i = 0; i < splitData.length; i+=2) {
+        var command = splitData.shift();
+
+        instance.log.debug('Led: Got command: '+command);
+
+        
+
+
+        for(var i = 1; i < splitData.length; i+=2) {
           let ledNum = splitData[i];
           let ledColor = splitData[i+1];
           instance.pixelData[ledNum] = ledColor;
@@ -48,7 +61,7 @@ class WS2812LedsServer {
         instance.ws281x.render(instance.pixelData);
 
 
-        console.log('DATA ' + sock.remoteAddress + ': ' + data);
+
         // Write the data back to the socket, the client will receive it as data from the server
         sock.write('OK');
 

@@ -37,7 +37,8 @@ class Webserver {
     this.socketIo.on('connection', function(socket) {
       instance.log.info('Websocket: A user connected');
 
-      instance.eventHandler.emitGetMainState();
+      // tell that we need the current main state to display the correct mask in the websocket
+      instance.eventHandler.mainEvents.GET_STATE.emit();
 
       socket.on('disconnect', function() {
         instance.log.info('Websocket: A user disconnected');
@@ -47,10 +48,8 @@ class Webserver {
       socket.on('socketMessage', function(msg) {
         instance.log.debug('Websocket msg: ' + msg.type + ' with value: ' + msg.value);
 
-        console.error(msg);
-
         // emit the message over the application so the listeners can handle this
-        instance.eventHandler.emitWebsocketMsg(msg);
+        instance.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.emit(msg);
       });
     });
 

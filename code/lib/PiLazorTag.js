@@ -20,6 +20,7 @@ class PiLazorTag {
     this.infrared = require('../modules/infrared/InfraredFactory');
     this.webserver = require('../modules/web/Webserver');
     this.display = require('../modules/display/DisplayFactory');
+    this.led = require('../modules/leds/LedFactory');
 
     // the current status of the main game
     this.currentState = 'SETUP';
@@ -33,12 +34,12 @@ class PiLazorTag {
 
     this.emitCurrentState();
 
-    this.eventHandler.onGetMainState(function() {
+    this.eventHandler.mainEvents.GET_STATE.on(function() {
       instance.emitCurrentState();
     });
 
     //TODO: move this away from here for example implement a gameMsgHandler could be needed for bluetooth
-    this.eventHandler.onWebsocketMsg(function(msg) {
+    this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
       if(msg.type === 'start_game') {
         instance.eventHandler.emitSetupGame(msg.value);
       }
@@ -112,7 +113,7 @@ class PiLazorTag {
    * Emits the event with the current state
    */
   emitCurrentState() {
-    this.eventHandler.emitCurrentMainStateChange(this.currentState);
+    this.eventHandler.mainEvents.STATE_CHANGED.emit(this.currentState);
   }
 
 }

@@ -1,4 +1,5 @@
 const EventEmitter = require('events');
+const {Event} = require('./Event');
 
 /**
  * The event handler for the lasertag game.
@@ -8,73 +9,62 @@ class LaserTagEventHandler extends EventEmitter {
   constructor(log) {
 
     super();
-    this.log = log;
+    this.log = require('./Logger.js');
+    this.log.info('Event: Started main LaserTagEventHandler');
 
-    log.info('Event: Started main LaserTagEventHandler');
+
+    /**
+     * Register the events which handle the main loop like DISPLAY_SETUP game mode etc
+     * @type {{STATE_CHANGED: null, GET_STATE: null}}
+     */
+    this.mainEvents = {
+      //When the main class changes its state payload is the state of the game
+      STATE_CHANGED: null,
+      // When something needs the main state this event can be emitted and has to listen fo the STATE_CHANGED
+      GET_STATE: null
+    };
+    this._createEvents('MAIN', this.mainEvents);
+
+    /**
+     * Register the events for websocket stuff
+     * @type {{SOCKET_MESSAGE_RECEIVED: null}}
+     */
+    this.webSocketEvents = {
+      // When the websocket received a message of the type: socketMessage
+      SOCKET_MESSAGE_RECEIVED: null
+    }
+    this._createEvents('WS', this.webSocketEvents);
+
+    /**
+     * Register events when a button is triggered by the input
+     * @type {{SHOOT: null}}
+     */
+    this.buttonEvents = {
+      // when the shoot button is triggerd
+      SHOOT_BTN: null
+    }
+    this._createEvents('BUTTON', this.buttonEvents);
+
+
+    this.gameEvents = {
+      // when to actual shoot we have to send an ir signal etc.
+      SHOOT: null
+    }
+    this._createEvents('GAME', this.gameEvents);
+    
   }
 
   /**
-   * When the main class changes its state
-   * @param state
+   * Creates the actual events for the given prefix and events list
+   * @param prefix the prefix for the event name
+   * @param events the list of events to register
+   * @private
    */
-  emitCurrentMainStateChange(state) {
-    this.emitEvent('main_state_change', state);
-  }
-
-  /**
-   * Handler for handling main state changed.
-   * @param callback
-   */
-  onCurrentMainStateChange(callback) {
-    this.on('main_state_change',function(state) {
-      callback(state);
-    })
-  }
-
-  /**
-   * When the main class changes its state
-   * @param state
-   */
-  emitGetMainState() {
-    this.emitEvent('main_get_state');
-  }
-
-  /**
-   * Handler for handling main state changed.
-   * @param callback
-   */
-  onGetMainState(callback) {
-    this.on('main_get_state',function() {
-      callback();
-    })
-  }
-
-  /**
-   * This emits a websocket msg received msg
-   * @param socketMsg
-   */
-  emitWebsocketMsg(socketMsg) {
-    this.emitEvent('websocket_received', socketMsg);
-  }
-
-  onWebsocketMsg(callback) {
-    this.on('websocket_received',function(msg) {
-       callback(msg);
-    });
-  }
-
-  /**
-   * Is called when the shoot button is triggered
-   */
-  emitShootBtn() {
-    this.emitEvent('game_button_shoot');
-  }
-
-  /**
-   * Is called when the game has to handle shooting
-   */
-  emitShoot(player) {
-    this.emitEvent('game_action_shoot',player);
+  _createEvents(prefix, events) {
+    for(let eventName in events) {
+      this.log.error(eventName);
+      events[eventName] = new Event(prefix + '_' + eventName, this);
+    }
   }
 
   /**
@@ -99,8 +89,8 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   onStartGame(callback) {
-    this.on('game_start',function() {
-       callback();
+    this.on('game_start', function() {
+      callback();
     });
   }
 
@@ -108,11 +98,11 @@ class LaserTagEventHandler extends EventEmitter {
    * Is called when the game is starting
    */
   emitSetupGame(gameSetupData) {
-    this.emitEvent('game_setup',gameSetupData);
+    this.emitEvent('game_setup', gameSetupData);
   }
 
   onSetupGame(callback) {
-    this.on('game_setup',function(gameData) {
+    this.on('game_setup', function(gameData) {
       callback(gameData);
     });
   }
@@ -125,7 +115,7 @@ class LaserTagEventHandler extends EventEmitter {
   }
 
   onStopGame(callback) {
-    this.on('game_stop',function() {
+    this.on('game_stop', function() {
       callback();
     });
   }
@@ -142,7 +132,7 @@ class LaserTagEventHandler extends EventEmitter {
    * @param callback
    */
   onRespawningDone(callback) {
-    this.on('game_player_respawning_done',function() {
+    this.on('game_player_respawning_done', function() {
       callback();
     });
   }
@@ -152,15 +142,9 @@ class LaserTagEventHandler extends EventEmitter {
    * @param game
    */
   emitDisplayGameUpdate(game) {
-    this.emitEvent('game_display_game_update',game);
+    this.emitEvent('game_display_game_update', game);
   }
 
-  /**
-   * Emits the event when some module requests the game status.
-   */
-  emitGameGetStatus() {
-    this.emitEvent('game_get_status');
-  }
 
   /**
    * This event is emitted when the player got a hit message.
@@ -169,8 +153,8 @@ class LaserTagEventHandler extends EventEmitter {
    * @param playerTeam
    * @param strength
    */
-  emitGamePlayerHit(playerId,playerTeam,strength) {
-    this.emitEvent('game_player_hit',{'id' : playerId, 'team' : playerTeam, 'strength' : strength});
+  emitGamePlayerHit(playerId, playerTeam, strength) {
+    this.emitEvent('game_player_hit', {'id': playerId, 'team': playerTeam, 'strength': strength});
   }
 
   /**
@@ -179,30 +163,11 @@ class LaserTagEventHandler extends EventEmitter {
    */
   onGamePlayerHit(callback) {
     this.on('game_player_hit', function(payload) {
-       callback(payload)
+      callback(payload)
     });
   }
 
-  /**
-   * Registers an event handler for the event when the user triggers the shoot button
-   * @param callback
-   */
-  onGameButtonShoot(callback) {
-    this.on('game_button_shoot',function(payload) {
-      callback(payload);
-    });
-  }
 
-  /**
-   * When the game actually wants to shoot.
-   * We need to send ir signal and so on.
-   * @param callback
-   */
-  onGameShoot(callback) {
-    this.on('game_action_shoot',function(player){
-      callback(player);
-    });
-  }
 
 
   /**
@@ -210,7 +175,7 @@ class LaserTagEventHandler extends EventEmitter {
    * @param callback
    */
   onGameButtonReload(callback) {
-    this.on('game_button_reload',function(payload) {
+    this.on('game_button_reload', function(payload) {
       callback(payload);
     });
   }
@@ -220,14 +185,14 @@ class LaserTagEventHandler extends EventEmitter {
    * @param callback
    */
   onGameReloadDone(callback) {
-    this.on('game_action_reload_done',function(payload) {
+    this.on('game_action_reload_done', function(payload) {
       callback(payload);
     });
   }
 
   onDisplayGameUpdate(callback) {
     this.on('game_display_game_update', function(game) {
-       callback(game);
+      callback(game);
     });
   }
 
@@ -236,7 +201,7 @@ class LaserTagEventHandler extends EventEmitter {
    * @param callback
    */
   onGameStatus(callback) {
-    this.on('game_get_status',function() {
+    this.on('game_get_status', function() {
       callback();
     })
   }
@@ -246,12 +211,11 @@ class LaserTagEventHandler extends EventEmitter {
    * @param eventName the name of the event
    * @param payload the payload of the event
    */
-  emitEvent(eventName,payload) {
-    this.log.info('Event: '+eventName);
-    this.emit(eventName,payload);
+  emitEvent(eventName, payload) {
+    this.log.info('Event: ' + eventName);
+    this.emit(eventName, payload);
   }
-  
+
 }
 
-const log = require('./Logger.js');
-module.exports = new LaserTagEventHandler(log);
+module.exports = new LaserTagEventHandler();

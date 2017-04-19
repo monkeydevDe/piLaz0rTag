@@ -11,7 +11,7 @@ class BaseDisplay {
       instance.handleUpdateGameStatus(game);
     });
 
-    this.eventHandler.onCurrentMainStateChange(function(state) {
+    this.eventHandler.mainEvents.STATE_CHANGED.on(function(state) {
        instance.handleMainStateChanged(state);
     });
   }
@@ -21,7 +21,7 @@ class BaseDisplay {
    * @param game the current game running
    */
   handleUpdateGameStatus(game) {
-    this.log.error('Display: Implement me handleUpdateGameStatus.');
+    this.log.error('Display: Implement me: '+this.handleUpdateGameStatus.name);
   }
 
   /**
@@ -29,7 +29,7 @@ class BaseDisplay {
    * @param state for example SETUP/GAME etc
    */
   handleMainStateChanged(state) {
-    this.log.error('Display: Implement me handleMainStateChanged.');
+    this.log.error('Display: Implement me: '+this.handleMainStateChanged.name);
   }
 }
 

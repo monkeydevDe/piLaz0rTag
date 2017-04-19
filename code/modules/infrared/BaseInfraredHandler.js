@@ -11,7 +11,7 @@ class BaseInfraredHandler extends BaseClass {
     super();
     const instance = this;
     // register the event when the game wants to trigger a shot over the ir
-    this.eventHandler.onGameShoot(function(player){
+    this.eventHandler.gameEvents.SHOOT.on(function(player){
       instance.sendShootMsg(player.id,player.team,player.shootStrength);
     });
   }
@@ -32,7 +32,7 @@ class BaseInfraredHandler extends BaseClass {
   }
 
   sendShootMsg(playerId,teamColor,strength) {
-    this.log.error("Infrared: Implement me");
+    this.log.error("Infrared: Implement me: "+this.sendShootMsg.name);
   }
 }
 

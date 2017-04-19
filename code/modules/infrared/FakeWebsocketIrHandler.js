@@ -16,7 +16,7 @@ class FakeWebsocketIrHandler extends BaseInfraredHandler {
 
     const instance = this;
 
-    this.eventHandler.onWebsocketMsg(function(socketMsg) {
+    this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(socketMsg) {
       if(socketMsg.type === 'fake_ir_receive') {
         instance.handleIncomingMsg(socketMsg.value);
       }

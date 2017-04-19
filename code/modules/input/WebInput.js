@@ -15,7 +15,7 @@ class WebInput extends BaseInput {
 
     const instance = this;
 
-    this.eventHandler.onWebsocketMsg(function(msg) {
+    this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
 
       if(msg.type === 'shoot') {
         instance.triggerShoot();

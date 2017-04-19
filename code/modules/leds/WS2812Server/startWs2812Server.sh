@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo -i /home/pi/share/piLaz0rTag/code/node_modules/.bin/nodemon --ignore modules/web/assets --watch /home/pi/share/piLaz0rTag/code/modules/leds/WS2812Server /home/pi/share/piLaz0rTag/code/modules/leds/WS2812Server/WS2812LedsServer.js

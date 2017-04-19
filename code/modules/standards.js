@@ -39,6 +39,12 @@ exports.DISPLAY_TYPE = Object.freeze( {
         SSD1306I2C:"DISPLAY_SSD1306I2C" // first Display wich runs with piLazOrTag
     });
 
+//Register all  LED-TYPES here
+exports.LED_TYPE = Object.freeze( {
+  MOCK :"LED_MOCK", //default Type of led for testing purpose
+  WS2812 : "LED_WS2812", // ws2812 led
+});
+
 // Register all INPUT-TYPES here
 exports.INPUT_TYPE = Object.freeze( {
   "WEB" : "INPUT_WEB", // handle input over a websocket

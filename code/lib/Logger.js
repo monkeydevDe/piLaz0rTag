@@ -4,5 +4,11 @@ const settings = require('../modules/settings');
 
 winston.level =   settings.DEBUG_LEVEL;
 
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, {
+  colorize: true,
+  prettyPrint: true,
+  timestamp: true
+});
 
 module.exports = winston;
