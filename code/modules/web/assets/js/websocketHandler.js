@@ -1,8 +1,7 @@
-
 $(function() {
 
   var PlayerViewModel = {
-    rounds : ko.observable(0),
+    rounds: ko.observable(0),
     roundsPerMag: ko.observable(0),
     magsAvaible: ko.observable(0),
     nrOfMags: ko.observable(0),
@@ -24,13 +23,24 @@ $(function() {
   $('.socketMsg').on('click', function() {
     var msgType = $(this).data('messageType');
     var msgVal = $(this).data('messageValue');
-    socket.emit('socketMessage', {"type" : msgType, "value" : msgVal});
+    socket.emit('socketMessage', {"type": msgType, "value": msgVal});
   });
 
 
-  $('#setup_btn_start').on('click',function() {
+  $('#setup_btn_start').on('click', function() {
     startGame(socket);
   });
+
+  /**
+   * Creates and sends a fake_ir_receive message to the webserver
+   */
+  $('#dev_fake_ir_btn').on('click', function() {
+    let playerId = $('#dev_fake_ir_player').val();
+    let teamId = $('#dev_fake_ir_team').val();
+    let strength = $('#dev_fake_ir_strength').val();
+    let msg = 'shoot_' + playerId + '_' + teamId + '_' + strength;
+    socket.emit('socketMessage',{"type" : 'fake_ir_receive', "value" : msg});
+  })
 
   // register event to update display
   socket.on('display', function(msg) {
@@ -49,7 +59,6 @@ $(function() {
       }
 
 
-
       if(msg.data === 'SETUP') {
         $('#gameSetupDisplay').show();
       }
@@ -57,32 +66,32 @@ $(function() {
       if(msg.data === 'GAME_STARTING') {
         $('#gameStartingDisplay').show();
       }
-      
+
       return;
     }
-    
+
 
   });
 
   function startGame(socket) {
     let gameData = {
-      'mode' : $('#setup_gameMode').val(),
-      'gameStartTime' : $('#setup_gameStartTime').val(),
-      'player' : {
-        'id' : $('#setup_playerId').val(),
-        'team' : $('#setup_teamSelect').val(),
-        'shootStrength' : $('#setup_shootStrengthSelect').val(),
-        'health' : $('#setup_playerHealth').val(),
-        'lives' : $('#setup_playerLives').val(),
-        'mags' : $('#setup_playerMags').val(),
-        'roundsPerMag' : $('#setup_playerRoundsPerMag').val(),
-        'respawnTime' : $('#setup_playerRespawnTime').val(),
-        'reloadTime' : $('#setup_playerReloadTime').val(),
-        'shootDelay' : $('#setup_playerShootDelay').val()
+      'mode': $('#setup_gameMode').val(),
+      'gameStartTime': $('#setup_gameStartTime').val(),
+      'player': {
+        'id': $('#setup_playerId').val(),
+        'team': $('#setup_teamSelect').val(),
+        'shootStrength': $('#setup_shootStrengthSelect').val(),
+        'health': $('#setup_playerHealth').val(),
+        'lives': $('#setup_playerLives').val(),
+        'mags': $('#setup_playerMags').val(),
+        'roundsPerMag': $('#setup_playerRoundsPerMag').val(),
+        'respawnTime': $('#setup_playerRespawnTime').val(),
+        'reloadTime': $('#setup_playerReloadTime').val(),
+        'shootDelay': $('#setup_playerShootDelay').val()
       }
     }
 
-    socket.emit('socketMessage', {"type" : 'start_game', "value" : gameData});
+    socket.emit('socketMessage', {"type": 'start_game', "value": gameData});
   }
 
   /**

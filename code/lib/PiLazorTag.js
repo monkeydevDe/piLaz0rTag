@@ -37,6 +37,7 @@ class PiLazorTag {
       instance.emitCurrentState();
     });
 
+    //TODO: move this away from here for example implement a gameMsgHandler could be needed for bluetooth
     this.eventHandler.onWebsocketMsg(function(msg) {
       if(msg.type === 'start_game') {
         instance.eventHandler.emitSetupGame(msg.value);

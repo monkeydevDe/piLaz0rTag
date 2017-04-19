@@ -2,14 +2,15 @@
  * This handles the infrared sending and receiving.
  * The concrete implementation must extend from this.
  */
-class BaseInfraredHandler {
+
+const { BaseClass } = require('../../lib/BaseClass');
+
+class BaseInfraredHandler extends BaseClass {
 
   constructor() {
-    this.log = require('../../lib/Logger');
-    this.eventHandler = require('../../lib/LaserTagEventHandler');
-
+    super();
     const instance = this;
-
+    // register the event when the game wants to trigger a shot over the ir
     this.eventHandler.onGameShoot(function(player){
       instance.sendShootMsg(player.id,player.team,player.shootStrength);
     });
@@ -20,7 +21,6 @@ class BaseInfraredHandler {
    * @param irMsg
    */
   handleIncomingMsg(irMsg) {
-
     if(irMsg.startsWith('shoot_') == true) {
       this.log.debug('Infrared: Got shoot message: '+irMsg);
       var data = irMsg.split('_');
@@ -29,7 +29,6 @@ class BaseInfraredHandler {
     }
 
     this.log.error('Infrared: Got not parseable ir message: '+irMsg);
-
   }
 
   sendShootMsg(playerId,teamColor,strength) {

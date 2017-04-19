@@ -1,7 +1,7 @@
 /**
  * Handles the ir signals via lircd
  */
-const {BaseInfraredHandler} = require('./BaseInfraredHandler.js');
+const { BaseInfraredHandler } = require('./BaseInfraredHandler');
 
 class LircdInfraredHandler extends BaseInfraredHandler {
 

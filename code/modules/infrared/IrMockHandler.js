@@ -9,9 +9,6 @@ class IrMockHandler extends BaseInfraredHandler {
     super();
 
     this.log.info('Mocking Infrared handling');
-
-    // when a callback is called this holds the current instance
-    const instance = this;
   }
       
   sendShootMsg(playerId, teamColor, strength) {
