@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP PI_HEADER
+D Connector, double row, 02x40, pin header
+K connector
+$ENDCMP
+#
+#End Doc Library

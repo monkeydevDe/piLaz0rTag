@@ -1,4 +1,4 @@
-update=Di 18 Apr 2017 09:49:28 CEST
+update=Di 18 Apr 2017 19:18:32 CEST
 version=1
 last_client=kicad
 [pcbnew]
@@ -58,5 +58,4 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
-LibName30=/home/tuxburner/Desktop/kicadlibs/kicad.lib/rur
-LibName31=/home/tuxburner/Desktop/kicadlibs/kicad-libs/shardy
+LibName30=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/pl8923
