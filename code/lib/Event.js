@@ -6,10 +6,12 @@ class Event {
   constructor(name, mainEventHandler) {
 
     this.log = require('./Logger');
-    this.log.debug('Event: Register event: '+name);
-
     this.name = name;
     this.mainEventHandler = mainEventHandler;
+
+    if(this.mainEventHandler.settings.DEBUG_EVENTS === true) {
+      this.log.debug('Event: Register event: ' + name);
+    }
   }
 
   /**
@@ -28,7 +30,9 @@ class Event {
    * @param payload the payload to send with the event
    */
   emit(payload) {
-    this.log.debug('Event: emit: ' + this.name + ' payload: ' + payload);
+    if(this.mainEventHandler.settings.DEBUG_EVENTS === true) {
+      this.log.debug('Event: emit: ' + this.name + ' payload: ' + payload);
+    }
     this.mainEventHandler.emit(this.name, payload);
   }
 }

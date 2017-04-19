@@ -6,11 +6,13 @@ const {Event} = require('./Event');
  */
 class LaserTagEventHandler extends EventEmitter {
 
-  constructor(log) {
-
+  constructor(){
     super();
     this.log = require('./Logger.js');
+    this.settings = require('../modules/settings');
+
     this.log.info('Event: Started main LaserTagEventHandler');
+
 
     /**
      * Register the events which handle the main loop like DISPLAY_SETUP game mode etc
