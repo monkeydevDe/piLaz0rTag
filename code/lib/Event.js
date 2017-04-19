@@ -1,8 +1,12 @@
+/**
+ * This class is for creating an event in the {{@LaserTagEventHandler}}
+ */
 class Event {
 
   constructor(name, mainEventHandler) {
 
     this.log = require('./Logger');
+    this.log.debug('Event: Register event: '+name);
 
     this.name = name;
     this.mainEventHandler = mainEventHandler;

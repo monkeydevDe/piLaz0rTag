@@ -7,7 +7,7 @@ class BaseDisplay {
     const instance = this;
 
     // register on the display game update event
-    this.eventHandler.onDisplayGameUpdate(function(game) {
+    this.eventHandler.gameEvents.GAME_DATA_UPDATE.on(function(game) {
       instance.handleUpdateGameStatus(game);
     });
 

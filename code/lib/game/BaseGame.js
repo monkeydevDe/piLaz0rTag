@@ -16,23 +16,23 @@ class BaseGame {
       instance.shoot();
     });
 
-    this.eventHandler.onGameButtonReload(function() {
+    this.eventHandler.buttonEvents.RELOAD_BTN.on(function() {
        instance.reload();
     });
 
-    this.eventHandler.onGameReloadDone(function() {
+    this.eventHandler.gameEvents.RELOAD_FINISHED.on(function() {
        instance.reloadDone();
     });
 
-    this.eventHandler.onGameStatus(function() {
+    this.eventHandler.gameEvents.GET_STATUS.on(function() {
        instance.propergateGameStatus();
     });
 
-    this.eventHandler.onGamePlayerHit(function(hitData) {
+    this.eventHandler.gameEvents.IR_HIT_MESSAGE.on(function(hitData) {
        instance.handlePlayerHit(hitData);
     });
 
-    this.eventHandler.onRespawningDone(function() {
+    this.eventHandler.gameEvents.PLAYER_RESPAWNED.on(function() {
        instance.handleRespawnDone();
     });
   }
@@ -43,7 +43,7 @@ class BaseGame {
    */
   handlePlayerHit(hitData) {
     if(this.player.team == hitData.team && this.player.id == hitData.id) {
-      this.log.info('Game: You hit your self.');
+      this.log.info('Game: You hit your self. Do nothing :)');
       return;
     }
 
@@ -79,7 +79,7 @@ class BaseGame {
    * This will emit all events which handle the game status.
    */
   propergateGameStatus() {
-    this.eventHandler.emitDisplayGameUpdate(this);
+    this.eventHandler.gameEvents.GAME_DATA_UPDATE.emit(this);
   }
 
   /**
@@ -96,7 +96,6 @@ class BaseGame {
     }
 
     this.player.status.health-=strength;
-    this.eventHandler.events.PLAYER_LOST_HEALTH.emit();
     if(this.player.status.health < 0) {
       this.player.status.health = 0;
     }
@@ -117,7 +116,7 @@ class BaseGame {
         this.log.info('Game: Respawn player in: '+this.player.respawnTime);
 
         setTimeout(function() {
-          instance.eventHandler.emitRespawningDone();
+          instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
         },this.player.respawnTime);
       }
     }
@@ -187,7 +186,7 @@ class BaseGame {
 
     const instance = this;
     setTimeout(function() {
-      instance.eventHandler.emitReloadDone();
+      instance.eventHandler.gameEvents.RELOAD_FINISHED.emit();
     },this.player.reloadTime);
     
   }

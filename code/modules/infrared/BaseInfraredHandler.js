@@ -24,7 +24,7 @@ class BaseInfraredHandler extends BaseClass {
     if(irMsg.startsWith('shoot_') == true) {
       this.log.debug('Infrared: Got shoot message: '+irMsg);
       var data = irMsg.split('_');
-      this.eventHandler.emitGamePlayerHit(data[1],data[2],data[3]);
+      this.eventHandler.gameEvents.IR_HIT_MESSAGE.emit({'id': data[1], 'team': data[2], 'strength': data[3]});
       return;
     }
 

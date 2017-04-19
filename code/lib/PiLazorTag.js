@@ -41,27 +41,27 @@ class PiLazorTag {
     //TODO: move this away from here for example implement a gameMsgHandler could be needed for bluetooth
     this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
       if(msg.type === 'start_game') {
-        instance.eventHandler.emitSetupGame(msg.value);
+        instance.eventHandler.mainEvents.GAME_SETUP.emit(msg.value);
       }
 
       if(msg.type === 'stop_game') {
-        instance.eventHandler.emitStopGame();
+        instance.eventHandler.mainEvents.GAME_STOP.emit();
       }
     });
 
-    this.eventHandler.onSetupGame(function(gameSetupData){
+    this.eventHandler.mainEvents.GAME_SETUP.on(function(gameSetupData){
       instance.setupGame(gameSetupData);
     });
 
-    this.eventHandler.onStopGame(function() {
+    this.eventHandler.mainEvents.GAME_STOP.on(function() {
        instance.stopGame();
     });
 
-    this.eventHandler.onStartGame(function() {
+    this.eventHandler.mainEvents.GAME_STARTED.on(function() {
       instance.log.info('PiLaz0rTag: Game is running.');
       instance.currentState = 'GAME_RUNNING';
       instance.emitCurrentState();
-      instance.eventHandler.emitDisplayGameUpdate(instance.currentGame);
+      instance.currentGame.propergateGameStatus();
     });
   }
 
@@ -105,7 +105,7 @@ class PiLazorTag {
 
     const instance = this;
     setTimeout(function() {
-      instance.eventHandler.emitStartGame();
+      instance.eventHandler.mainEvents.GAME_STARTED.emit();
     }, gameData.gameStartTime);
   }
 
