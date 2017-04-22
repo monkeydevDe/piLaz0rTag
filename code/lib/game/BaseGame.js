@@ -57,6 +57,8 @@ class BaseGame {
 
     this.log.info('Game: Player respawning done.');
 
+    this.eventHandler.ledEvents.STOP_BLINK.emit();
+
     // reset game status
     this.player.status.health = this.player.health;
     this.player.status.roundsInMag = this.player.roundsPerMag;
@@ -111,10 +113,11 @@ class BaseGame {
         this.log.info('Game: Player lives: '+this.player.status.lives);
 
         this.player.status.respawning = true;
-        const instance = this;
-
         this.log.info('Game: Respawn player in: '+this.player.respawnTime);
 
+        this.eventHandler.ledEvents.START_BLINK.emit({type: 'respawn', game: this});
+
+        const instance = this;
         setTimeout(function() {
           instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
         },this.player.respawnTime);

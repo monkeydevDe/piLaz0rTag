@@ -69,7 +69,14 @@ class LaserTagEventHandler extends EventEmitter {
       GAME_DATA_UPDATE: null,
     }
     this._createEvents('GAME', this.gameEvents);
-    
+
+    // events for the leds
+    this.ledEvents = {
+      START_BLINK: null,
+      STOP_BLINK: null
+    }
+    this._createEvents('LED',this.ledEvents);
+
   }
 
   /**
