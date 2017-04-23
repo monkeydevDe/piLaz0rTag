@@ -12,16 +12,20 @@ class BaseLedHandler extends BaseClass {
 
     this.blinkInterval = null;
     this.blinkIntervalPos = 0;
+    this.blinktRepeat = -1;
 
     // here all intervals are configured the pattern is on duration and off duration
     this.intervals = {
       // interval when the player got hit
-      hit : [150,150],
-      // interval when the player died
-      death : [250,150,150,150],
-
+      hit : {
+        interval: [250,150],
+        repeat: 3
+      },
       // interval when the player is respawning
-      respawn : [250,250,150,150]
+      respawn : {
+        interval : [250,150,150,250],
+        repeat: -1
+      }
     };
 
     const instance = this;
@@ -36,6 +40,7 @@ class BaseLedHandler extends BaseClass {
 
     this.eventHandler.ledEvents.STOP_BLINK.on(function() {
       instance.blinkInterval = null;
+      instance.setStatusOnReceiverLeds(null,false);
     });
 
   }
@@ -61,15 +66,17 @@ class BaseLedHandler extends BaseClass {
       this.log.debug('Led: already blinking.')
     }
 
-    this.log.debug('Led: Going to blink for: '+type);
+    this.log.info('Led: Going to blink for: '+type);
 
     // check if we have the given type
-    this.blinkInterval = this.intervals[type];
-    if(this.blinkInterval === null || this.blinkInterval === undefined) {
+    let intType = this.intervals[type];
+    if(intType === null || intType === undefined) {
       this.log.error('Led: could not find interval of type: '+type);
       return;
     }
 
+    this.blinkInterval=intType.interval;
+    this.blinktRepeat=intType.repeat;
     this.blinkIntervalPos = 0;
 
     this._handleInterval(game);
@@ -77,13 +84,23 @@ class BaseLedHandler extends BaseClass {
 
   _handleInterval(game) {
 
-    // the interval was canceled1 so stop
+    // the interval was canceled so stop
     if(this.blinkInterval === null) {
+      return;
+    }
+
+    if(this.blinktRepeat === 0) {
+      this.setStatusOnReceiverLeds(game,false);
+      this.blinkInterval = null;
       return;
     }
 
     // check if we have to start in the interval over again
     if(this.blinkIntervalPos >= this.blinkInterval.length) {
+      // do not blink forever ?
+      if(this.blinktRepeat !== -1) {
+        this.blinktRepeat--;
+      }
       this.blinkIntervalPos = 0;
     }
 

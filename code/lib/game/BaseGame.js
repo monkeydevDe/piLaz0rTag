@@ -122,6 +122,8 @@ class BaseGame {
           instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
         },this.player.respawnTime);
       }
+    } else {
+      this.eventHandler.ledEvents.START_BLINK.emit({type: 'hit', game: this});
     }
     
 

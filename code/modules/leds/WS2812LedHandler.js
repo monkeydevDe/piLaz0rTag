@@ -86,7 +86,7 @@ class WS2812LedHandler extends BaseLedHandler {
   }
 
   setStatusOnReceiverLeds(game,on) {
-    let colorToSet = (on === true) ? '0xFF0000' : '0x000000';
+    let colorToSet = (on === true) ? this.settings.WS2812_CFG.TEAM_COLORS[game.player.team] : '0x000000';
     let data = '';
     for(let idx in this.settings.WS2812_CFG.HIT_LEDS) {
       data+=','+this.settings.WS2812_CFG.HIT_LEDS[idx]+','+colorToSet;
