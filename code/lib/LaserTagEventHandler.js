@@ -73,7 +73,8 @@ class LaserTagEventHandler extends EventEmitter {
     // events for the leds
     this.ledEvents = {
       START_BLINK: null,
-      STOP_BLINK: null
+      STOP_BLINK: null,
+      SET: null
     }
     this._createEvents('LED',this.ledEvents);
 

@@ -18,7 +18,7 @@ class BaseLedHandler extends BaseClass {
     this.intervals = {
       // interval when the player got hit
       hit : {
-        interval: [250,150],
+        interval: [250,250],
         repeat: 3
       },
       // interval when the player is respawning
@@ -30,7 +30,7 @@ class BaseLedHandler extends BaseClass {
 
     const instance = this;
     // when shooting flash the muzzle
-    this.eventHandler.gameEvents.SHOOT.on(function(player) {
+    this.eventHandler.gameEvents.SHOOT.on(function() {
       instance.flashMuzzleLed();
     });
 
@@ -38,9 +38,14 @@ class BaseLedHandler extends BaseClass {
       instance.blinkReceiverLed(blinkData.type,blinkData.game);
     });
 
-    this.eventHandler.ledEvents.STOP_BLINK.on(function() {
+    this.eventHandler.ledEvents.STOP_BLINK.on(function(game) {
       instance.blinkInterval = null;
-      instance.setStatusOnReceiverLeds(null,false);
+      instance.setStatusOnReceiverLeds(game);
+    });
+
+    this.eventHandler.ledEvents.SET.on(function(game) {
+      instance.blinkInterval = null;
+      instance.setStatusOnReceiverLeds(game);
     });
 
   }
@@ -90,8 +95,7 @@ class BaseLedHandler extends BaseClass {
     }
 
     if(this.blinktRepeat === 0) {
-      this.setStatusOnReceiverLeds(game,false);
-      this.blinkInterval = null;
+      this.eventHandler.ledEvents.STOP_BLINK.emit(game);
       return;
     }
 
@@ -126,7 +130,7 @@ class BaseLedHandler extends BaseClass {
   /**
    * This must be implemented in the extending class.
    * @param game the game
-   * @param on if to turn on or of
+   * @param on when set not the game.player.status.led.on is used
    */
   setStatusOnReceiverLeds(game,on) {
     this.log.error('Led: Implement me: '+ this.setStatusOnReceiverLeds.name);

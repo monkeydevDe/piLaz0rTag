@@ -57,8 +57,8 @@ class BaseGame {
 
     this.log.info('Game: Player respawning done.');
 
-    this.eventHandler.ledEvents.STOP_BLINK.emit();
-
+    this.eventHandler.ledEvents.STOP_BLINK.emit(this);
+    
     // reset game status
     this.player.status.health = this.player.health;
     this.player.status.roundsInMag = this.player.roundsPerMag;
