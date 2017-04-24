@@ -9,6 +9,8 @@ class BaseGame {
     this.opts = opts;
     this.player = player;
 
+    this.eventHandler.ledEvents.SET.emit(this);
+
     const instance = this;
 
     // register shoot handling when the user hits the button :)
@@ -195,8 +197,6 @@ class BaseGame {
     },this.player.reloadTime);
     
   }
-
-
 
 
   /**
