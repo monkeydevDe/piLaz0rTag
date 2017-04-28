@@ -1,5 +1,4 @@
 //get the default values
-var std = require('./standards.js');
 module.exports = {
   //General
   DEBUG_LEVEL: 'debug',
@@ -12,7 +11,7 @@ module.exports = {
   //this.DISPLAY = DISPLAY_TYPE.SSD1306I2C;
   //Display settings
   DISPLAY_LAYOUT: 0,
-  WEBSERVER_PORT: std.WEBSERVERCONF.PORT,
+  WEBSERVER_PORT: 3000,
   WS2812_CFG : {
     HOST: '127.0.0.1',
     PORT: 6969,
