@@ -1,9 +1,16 @@
-class PiLazorTag {
+/**
+ * The actual main class of the PiLazorTag
+ */
+const {BaseClass} = require('./BaseClass');
+
+class PiLazorTag extends BaseClass {
 
   constructor() {
 
-    this.log = require('./Logger');
+    super();
+
     this.settings = require('../modules/settings');
+
 
     this.log.info('PiLazorTag: Starting main game handler.');
     if(this.settings.DEBUG_LEVEL) {
@@ -14,14 +21,11 @@ class PiLazorTag {
       this.log.info('===============================================');
     }
 
+    this.moduleRegistry = require('./ModulesRegistry');
 
-    this.eventHandler = require('./LaserTagEventHandler');
-    this.input = require('../modules/input/InputFactory');
-    this.infrared = require('../modules/infrared/InfraredFactory');
     this.webserver = require('../modules/web/Webserver');
-    this.display = require('../modules/display/DisplayFactory');
-    this.led = require('../modules/leds/LedFactory');
-    this.rumble = require('../modules/rumble/RumbleFactory');
+
+    
 
     // the current status of the main game
     this.currentState = 'SETUP';

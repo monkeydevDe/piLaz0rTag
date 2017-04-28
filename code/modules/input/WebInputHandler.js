@@ -4,11 +4,9 @@
  * When the message fits an input type it will do the command.
  *
  */
+const { BaseInputHandler } = require('./BaseInputHandler');
 
-// import the type to this js
-const {BaseInput} = require('./BaseInptut');
-
-class WebInput extends BaseInput {
+class WebInputHandler extends BaseInputHandler {
   constructor() {
 
     super();
@@ -28,4 +26,4 @@ class WebInput extends BaseInput {
   }
 }
 
-exports.WebInput = WebInput;
+module.exports.WebInputHandler = new WebInputHandler();

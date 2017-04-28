@@ -1,7 +1,8 @@
-class BaseInput {
+const { BaseClass } = require('../../lib/BaseClass');
+
+class BaseInputHandler extends BaseClass {
   constructor() {
-    this.eventHandler = require('../../lib/LaserTagEventHandler');
-    this.log = require('../../lib/Logger');
+    super();
   }
 
   /**
@@ -20,4 +21,4 @@ class BaseInput {
   }
 }
 
-exports.BaseInput = BaseInput;
+exports.BaseInputHandler = BaseInputHandler;

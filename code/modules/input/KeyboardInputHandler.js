@@ -2,11 +2,14 @@
  * Input over a keyboard device
  * https://www.sitepoint.com/node-js-best-practices-from-the-node-gurus/
  */
-class KeyboardInput {
+const { BaseInputHandler } = require('./BaseInputHandler');
+
+class KeyboardInputHandler extends BaseInputHandler {
   constructor() {
 
+    super();
+
     const keypress = require('keypress');
-    const log = require('../../lib/Logger');
 
     keypress(process.stdin);
 
@@ -17,4 +20,4 @@ class KeyboardInput {
   }
 }
 
-exports.KeyboardInput = KeyboardInput;
+module.exports.KeyboardInputHandler = new KeyboardInputHandler();

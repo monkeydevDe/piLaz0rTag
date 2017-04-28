@@ -1,9 +1,10 @@
-class BaseDisplay {
+
+const { BaseClass } = require('../../lib/BaseClass');
+
+class BaseDisplay extends BaseClass {
 
   constructor() {
-    this.log = require('../../lib/Logger');
-    this.eventHandler = require('../../lib/LaserTagEventHandler');
-
+    super();
     const instance = this;
 
     // register on the display game update event
