@@ -22,10 +22,11 @@ class BaseRumbleHandler extends BaseClass {
    */
   rumbleShoot() {
 
+    this.log.debug('Rumble: shoot rumble');
+
     this._turnOn();
 
     const instance = this;
-
     setTimeout(function() {
       instance._turnOff();
     }, 150);

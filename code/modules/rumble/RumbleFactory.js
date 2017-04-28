@@ -14,12 +14,12 @@ class RumbleFactory {
       return require('./MockRumbleHandler');
     }
 
-    /*if(settings.RUMBLE === standards.RUMBLE_TYPE.MOTOR) {
+    if(settings.RUMBLE === standards.RUMBLE_TYPE.MOTOR) {
       log.info("Rumble: Motor is configured.");
-      return require('./WS2812LedHandler');
-    } */
+      return require('./MotorRumbleHandler');
+    }
 
-    throw new Error('No Led configured!');
+    throw new Error('No Rumble configured!');
 
   }
 }

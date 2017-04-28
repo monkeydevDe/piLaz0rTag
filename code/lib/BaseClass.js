@@ -6,6 +6,20 @@ class BaseClass {
   constructor() {
     this.log = require('./Logger');
     this.eventHandler = require('./LaserTagEventHandler');
+
+    const instance = this;
+    process.on('SIGINT', function () {
+      instance._cleanUpInternal();
+    });
+  }
+
+  /**
+   * This is called when the process dies.
+   * You can do some clean up here like unexporting pins etc.
+   * @private
+   */
+  _cleanUpInternal() {
+    // override in the extending class
   }
 }
 
