@@ -28,6 +28,12 @@ exports.INFRARED_TYPE = Object.freeze( {
   "IRWSFAKE" : "IRWSFAKE" // Websocket ir handler where you can send receive ir messages over web for DEV.
 });
 
+// Register all INFRARED-TYPES here
+exports.RUMBLE_TYPE = Object.freeze( {
+  "MOTOR" : "RUMBLE_MOTOR", // when to use a motor as a rumble device
+  "MOCK" : "RUMBLE_MOCK" // Mock for rumble
+});
+
 //All Device States
 exports.STATES = Object.freeze({
         MASTER: "MASTER",

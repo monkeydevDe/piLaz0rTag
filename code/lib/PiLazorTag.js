@@ -21,6 +21,7 @@ class PiLazorTag {
     this.webserver = require('../modules/web/Webserver');
     this.display = require('../modules/display/DisplayFactory');
     this.led = require('../modules/leds/LedFactory');
+    this.rumble = require('../modules/rumble/RumbleFactory');
 
     // the current status of the main game
     this.currentState = 'SETUP';

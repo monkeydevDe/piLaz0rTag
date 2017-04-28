@@ -8,6 +8,7 @@ module.exports = {
   INPUT: std.INPUT_TYPE.WEB,
   INFRARED: std.INFRARED_TYPE.IRWSFAKE,
   LED: std.LED_TYPE.MOCK,
+  RUMBLE: std.RUMBLE_TYPE.MOCK,
   //this.DISPLAY = DISPLAY_TYPE.SSD1306I2C;
   //Display settings
   DISPLAY_LAYOUT: 0,
@@ -26,5 +27,8 @@ module.exports = {
       blue: '0x0000FF',
       yellow: '0xFFFF00'
     }
+  },
+  RUMBLE_MOTOR_CFG : {
+    PIN: 24
   }
 };

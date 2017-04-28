@@ -28,6 +28,7 @@
     "knockout": "^3.4.2",
     "lirc-client": "^1.0.0",
     "oled_ssd1306_i2c": "https://github.com/NeinsKnull/oled_ssd1306_i2c.git",
+    "pi-gpio": "0.0.8",
     "rpi-ws281x-native": "^0.8.1",
     "socket.io": "^1.7.3",
     "winston": "^2.3.1"
