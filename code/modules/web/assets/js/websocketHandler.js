@@ -40,7 +40,13 @@ $(function() {
     let strength = $('#dev_fake_ir_strength').val();
     let msg = 'shoot_' + playerId + '_' + teamId + '_' + strength;
     socket.emit('socketMessage',{"type" : 'fake_ir_receive', "value" : msg});
-  })
+  });
+
+  socket.on('rumble', function(data) {
+    if(data.on == true) {
+      window.navigator.vibrate(250);
+    }
+  });
 
   // register event to update display
   socket.on('display', function(msg) {

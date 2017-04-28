@@ -31,6 +31,7 @@ exports.INFRARED_TYPE = Object.freeze( {
 // Register all INFRARED-TYPES here
 exports.RUMBLE_TYPE = Object.freeze( {
   "MOTOR" : "RUMBLE_MOTOR", // when to use a motor as a rumble device
+  "WEB" : "RUMBLE_WEB", // when to use mobile vibrating api
   "MOCK" : "RUMBLE_MOCK" // Mock for rumble
 });
 

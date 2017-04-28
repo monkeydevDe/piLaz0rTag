@@ -3,23 +3,19 @@
  * Handles all webserver stuff.
  */
 
-class Webserver {
+
+const {BaseClass} = require('../../lib/BaseClass');
+
+class Webserver extends BaseClass {
 
   constructor() {
-
-    const instance = this;
-
-    this.log = require('../../lib/Logger.js');
+    super();
     this.log.info('Starting webserver');
-
     let settings = require('../settings');
-
-
     let express = require('express');
     this.expApp = require('express')();
     this.http = require('http').Server(this.expApp);
     this.socketIo = require('socket.io')(this.http);
-    this.eventHandler = require('../../lib/LaserTagEventHandler');
 
 
     /**
@@ -34,6 +30,7 @@ class Webserver {
     this.expApp.use('/knockout',express.static('./node_modules/knockout/build/output'));
     this.expApp.use('/assets', express.static(__dirname + '/assets'));
 
+    const instance = this;
     this.socketIo.on('connection', function(socket) {
       instance.log.info('Websocket: A user connected');
 
