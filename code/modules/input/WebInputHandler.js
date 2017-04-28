@@ -26,4 +26,4 @@ class WebInputHandler extends BaseInputHandler {
   }
 }
 
-module.exports.WebInputHandler = new WebInputHandler();
+module.exports = new WebInputHandler();

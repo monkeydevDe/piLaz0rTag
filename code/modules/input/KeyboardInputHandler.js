@@ -20,4 +20,4 @@ class KeyboardInputHandler extends BaseInputHandler {
   }
 }
 
-module.exports.KeyboardInputHandler = new KeyboardInputHandler();
+module.exports = new KeyboardInputHandler();

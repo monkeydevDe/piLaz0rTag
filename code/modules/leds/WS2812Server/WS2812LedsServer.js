@@ -6,7 +6,7 @@ class WS2812LedsServer {
     this.ws281x = require('rpi-ws281x-native');
     this.net = require('net');
     this.log = require('../../../lib/Logger');
-    this.settings = require('../../settings');
+    this.settings = require('../../../lib/Settings');
 
     this.numLeds = this.settings.WS2812_CFG.MUZZLE_FLASH_LEDS.length + this.settings.WS2812_CFG.HIT_LEDS.length;
 

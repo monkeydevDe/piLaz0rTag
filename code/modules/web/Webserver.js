@@ -11,7 +11,6 @@ class Webserver extends BaseClass {
   constructor() {
     super();
     this.log.info('Starting webserver');
-    let settings = require('../settings');
     let express = require('express');
     this.expApp = require('express')();
     this.http = require('http').Server(this.expApp);
@@ -52,8 +51,8 @@ class Webserver extends BaseClass {
 
 
     // start the webserver
-    this.http.listen(settings.WEBSERVER_PORT, function() {
-      instance.log.info('Webserver listens on *:' + settings.WEBSERVER_PORT);
+    this.http.listen(this.settings.WEBSERVER_PORT, function() {
+      instance.log.info('Webserver listens on *:' + instance.settings.WEBSERVER_PORT);
     });
   }
 

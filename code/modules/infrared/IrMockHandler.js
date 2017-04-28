@@ -17,4 +17,4 @@ class IrMockHandler extends BaseInfraredHandler {
   };
 }
 
-module.exports.IrMockHandler = new IrMockHandler();
+module.exports = new IrMockHandler();

@@ -16,4 +16,4 @@ class MockRumbleHandler extends BaseRumbleHandler {
 
 }
 
-module.exports.MockRumbleHandler = new MockRumbleHandler();
+module.exports = new MockRumbleHandler();

@@ -28,4 +28,4 @@ class FakeWebsocketIrHandler extends BaseInfraredHandler {
   }
 }
 
-module.exports.FakeWebsocketIrHandler = new FakeWebsocketIrHandler();
+module.exports = new FakeWebsocketIrHandler();

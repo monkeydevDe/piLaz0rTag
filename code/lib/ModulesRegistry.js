@@ -9,8 +9,6 @@ class ModulesRegistry extends BaseClass {
   constructor() {
     super();
 
-    this.settings = require('../modules/settings');
-
     this.modules = {};
 
     this.modulesCfg = [
@@ -67,7 +65,7 @@ class ModulesRegistry extends BaseClass {
    */
   _loadModule(moduleCfg) {
 
-    const configuredType = this.settings[moduleCfg.settingsPreFix];
+    const configuredType = this.settings.modules[moduleCfg.settingsPreFix];
 
     this.log.info('ModulesRegistry: Module: ' + moduleCfg.name + ' is configured with the type: ' + configuredType);
 
@@ -86,4 +84,4 @@ class ModulesRegistry extends BaseClass {
 
 }
 
-module.exports.ModulesRegistry = new ModulesRegistry();
+module.exports = new ModulesRegistry();

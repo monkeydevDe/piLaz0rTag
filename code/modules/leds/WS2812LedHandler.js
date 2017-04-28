@@ -14,8 +14,6 @@ class WS2812LedHandler extends BaseLedHandler {
 
     this.net = require('net');
 
-    this.settings = require('../settings');
-
     this._connectToServer();
 
 

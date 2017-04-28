@@ -1,6 +1,6 @@
 const winston = require('winston')
 
-const settings = require('../modules/settings');
+const settings = require('./Settings');
 
 winston.level =   settings.DEBUG_LEVEL;
 

@@ -6,6 +6,7 @@ class BaseClass {
   constructor() {
     this.log = require('./Logger');
     this.eventHandler = require('./LaserTagEventHandler');
+    this.settings = require('./Settings');
 
     const instance = this;
     process.on('SIGINT', function () {

@@ -9,9 +9,6 @@ class PiLazorTag extends BaseClass {
 
     super();
 
-    this.settings = require('../modules/settings');
-
-
     this.log.info('PiLazorTag: Starting main game handler.');
     if(this.settings.DEBUG_LEVEL) {
       this.log.info('===============================================');

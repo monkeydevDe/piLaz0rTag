@@ -9,7 +9,7 @@ class LaserTagEventHandler extends EventEmitter {
   constructor(){
     super();
     this.log = require('./Logger.js');
-    this.settings = require('../modules/settings');
+    this.settings = require('./Settings');
 
     this.log.info('Event: Started main LaserTagEventHandler');
 

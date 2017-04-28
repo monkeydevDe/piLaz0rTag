@@ -17,4 +17,4 @@ class WebSocketRumbleHandler extends BaseRumbleHandler {
 
 }
 
-module.exports.WebSocketRumbleHandler = new WebSocketRumbleHandler();
+module.exports = new WebSocketRumbleHandler();

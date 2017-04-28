@@ -4,7 +4,6 @@ class MotorRumbleHandler extends BaseRumbleHandler {
 
   constructor() {
     super();
-    this.settings = require('../settings');
     const Gpio = require('onoff').Gpio;
     this.log.info('MotorRumbleHandler: Using motorpin: '+this.settings.RUMBLE_MOTOR_CFG.PIN);
     this.motor1Pin =new Gpio(this.settings.RUMBLE_MOTOR_CFG.PIN, 'out');
@@ -25,4 +24,4 @@ class MotorRumbleHandler extends BaseRumbleHandler {
 
 }
 
-module.exports.MotorRumbleHandler = new MotorRumbleHandler();
+module.exports = new MotorRumbleHandler();

@@ -42,5 +42,5 @@ class LircdInfraredHandler extends BaseInfraredHandler {
   }
 }
 
-module.exports.LircdInfraredHandler = new LircdInfraredHandler();
+module.exports = new LircdInfraredHandler();
 
