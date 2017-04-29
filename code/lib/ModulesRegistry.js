@@ -48,6 +48,12 @@ class ModulesRegistry extends BaseClass {
         types: {
           WEB : 'WebSocketDisplay', // handle input over a websocket
         }
+      },{
+        name : 'sound',
+        settingsPreFix: 'SOUND',
+        types: {
+          LOCAL : 'LocalSoundHandler', // play via local sound card
+        }
       }
     ];
 

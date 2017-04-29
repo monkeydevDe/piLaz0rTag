@@ -118,6 +118,7 @@ class BaseGame {
         this.log.info('Game: Respawn player in: '+this.player.respawnTime);
 
         this.eventHandler.ledEvents.START_BLINK.emit({type: 'respawn', game: this});
+        this.eventHandler.gameEvents.PLAYER_DIED.emit();
 
         const instance = this;
         setTimeout(function() {
@@ -126,6 +127,7 @@ class BaseGame {
       }
     } else {
       this.eventHandler.ledEvents.START_BLINK.emit({type: 'hit', game: this});
+      this.eventHandler.gameEvents.PLAYER_HIT.emit();
     }
     
 
@@ -146,11 +148,13 @@ class BaseGame {
 
     if(this.player.status.shot == true) {
       this.log.debug('Game: Player is shooting no shooting possible');
+      this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.emit();
       return;
     }
 
-    if(this.player.status.mags === 0 && player.status.roundsInMag === 0) {
+    if(this.player.status.mags === 0 && this.player.status.roundsInMag === 0) {
       this.log.debug('Game: no bullets and mags left');
+      this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.emit();
       return;
     }
 

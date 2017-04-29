@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/monkeydevDe/piLaz0rTag#readme",
   "dependencies": {
+    "aplay": "^1.1.0",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
     "jquery": "^3.2.1",

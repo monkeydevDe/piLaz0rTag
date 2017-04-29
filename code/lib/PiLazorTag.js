@@ -13,8 +13,8 @@ class PiLazorTag extends BaseClass {
     if(this.settings.DEBUG_LEVEL) {
       this.log.info('===============================================');
       //Loop over all Settings
-      for(let vars in this.settings)
-        this.log.info(vars + ': ' + this.settings[vars]);
+      for(let vars in this.settings.modules)
+        this.log.info(vars + ': ' + this.settings.modules[vars]);
       this.log.info('===============================================');
     }
 

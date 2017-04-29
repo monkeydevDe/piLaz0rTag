@@ -12,6 +12,10 @@ class MockLedHandler extends BaseLedHandler {
   _internalMuzzleLed(on) {
     this.log.debug('Mock Led: Muzzle: '+on);
   }
+
+  setStatusOnReceiverLeds(game,on) {
+    
+  }
 }
 
 module.exports = new MockLedHandler();

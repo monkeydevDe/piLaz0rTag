@@ -77,24 +77,26 @@ blacklist snd_bcm2835
 
 ## Enable usb soundcard
 
+
+
 **/etc/asound.conf**
 
 ```bash
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
-}
+#pcm.!default {
+#    type hw
+#    card 1
+#}
+#ctl.!default {
+#    type hw
+#    card 1
+#}
 ```
 
 **/etc/modprobe.d/alsa-base.conf**
 
 ```bash
 # Keep snd-usb-audio from beeing loaded as first soundcard
-options snd-usb-audio index=-2
+options snd-usb-audio index=0
 ```
 
 

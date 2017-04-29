@@ -63,6 +63,12 @@ class LaserTagEventHandler extends EventEmitter {
       RELOAD_FINISHED: null,
       // Is called when the player respawning is done
       PLAYER_RESPAWNED: null,
+      // Is emitted when the player died
+      PLAYER_DIED: null,
+      // Is emitted when the mag is empty
+      PLAYER_EMPTY_MAG: null,
+      // Is emitted when the player got hit
+      PLAYER_HIT: null,
       // Is called when the player received a ir hit message payload: {'id': playerId, 'team': playerTeam, 'strength': strength}
       IR_HIT_MESSAGE: null,
       // Is called when the data in the game has changed like health, magazine, lives etc

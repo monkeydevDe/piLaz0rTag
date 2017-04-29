@@ -8,13 +8,13 @@ class Settings {
     this.DEBUG_EVENTS = false;
 
     this.modules = {
-      DISPLAY : 'WEB',
-      INPUT : 'WEB',
-      INFRARED : 'WSFAKE',
-      LED : 'MOCK',
-      RUMBLE : 'MOCK'
+      DISPLAY: 'WEB',
+      INPUT: 'WEB',
+      INFRARED: 'WSFAKE',
+      LED: 'MOCK',
+      RUMBLE: 'MOCK',
+      SOUND: 'LOCAL'
     };
-
 
     this.WEBSERVER_PORT = 3000;
     this.WS2812_CFG = {
