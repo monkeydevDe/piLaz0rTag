@@ -148,7 +148,6 @@ class BaseGame {
 
     if(this.player.status.shot == true) {
       this.log.debug('Game: Player is shooting no shooting possible');
-      this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.emit();
       return;
     }
 
@@ -160,7 +159,7 @@ class BaseGame {
 
     if(this.player.status.roundsInMag === 0) {
       this.log.debug('Game: no bullets left in current mag');
-      // TODO: emit game_info_emptymag
+      this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.emit();
       return;
     }
 
