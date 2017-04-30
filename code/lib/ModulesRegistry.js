@@ -76,7 +76,8 @@ class ModulesRegistry extends BaseClass {
         const classToLoad = moduleType.className;
 
         if(classToLoad === undefined) {
-          throw new Error('ModulesRegistry: no type or not avaible for: ' + moduleCfg.name + ' ' + moduleType);
+          this.log.error('ModulesRegistry: no type or not avaible for: ' + moduleCfg.name + ' ' + moduleType);
+          return;
         }
 
         const pathToRequire = '../modules/'+moduleCfg.name+'/'+classToLoad;
