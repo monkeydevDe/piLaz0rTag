@@ -93,3 +93,4 @@ typings/
 # End of https://www.gitignore.io/api/node,macos
 /piLaz0rTag.iml
 /.idea/
+data/userCfg.json

@@ -1,0 +1,5 @@
+{
+  "modules": {
+    "DISPLAY": "SSD1306"
+  }
+}

@@ -1,19 +1,35 @@
 class Settings {
   constructor() {
 
+
+
     const fs = require('fs');
+
+    const userCfgPath = '../data/userCfg.json';
+    const userCfgExists = fs.existsSync(userCfgPath);
+
+    let userCfg = {};
+
+    if(userCfgExists) {
+      userCfg = require('../'+userCfgPath);
+    }
+
+    console.error(userCfg.modules);
+    
+
+
 
     //General
     this.DEBUG_LEVEL = 'debug';
     this.DEBUG_EVENTS = false;
 
     this.modules = {
-      DISPLAY: 'WEB',
-      INPUT: 'WEB',
-      INFRARED: 'WSFAKE',
-      LED: 'MOCK',
-      RUMBLE: 'MOCK',
-      SOUND: 'LOCAL'
+      DISPLAY: userCfg.modules.DISPLAY || 'WEB',
+      INPUT: userCfg.modules.INPUT || 'WEB',
+      INFRARED: userCfg.modules.INFRARED || 'WSFAKE',
+      LED: userCfg.modules.LED || 'MOCK',
+      RUMBLE: userCfg.modules.RUMBLE || 'MOCK',
+      SOUND: userCfg.modules.SOUND || 'LOCAL'
     };
 
     this.WEBSERVER_PORT = 3000;
