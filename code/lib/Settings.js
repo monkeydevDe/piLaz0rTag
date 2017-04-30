@@ -8,14 +8,14 @@ class Settings {
     const userCfgPath = '../data/userCfg.json';
     const userCfgExists = fs.existsSync(userCfgPath);
 
-    let userCfg = {};
+    let userCfg = { modules: {}};
 
     if(userCfgExists) {
       userCfg = require('../'+userCfgPath);
     }
 
     console.error(userCfg.modules);
-    
+
 
 
 
@@ -63,7 +63,3 @@ class Settings {
 }
 
 module.exports = new Settings();
-
-
-
-

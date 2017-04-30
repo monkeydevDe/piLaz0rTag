@@ -28,12 +28,14 @@
     "keypress": "^0.2.1",
     "knockout": "^3.4.2",
     "lirc-client": "^1.0.0",
+    "socket.io": "^1.7.3",
+    "winston": "^2.3.1"
+  },
+  "optionalDependencies" : {
     "oled_ssd1306_i2c": "https://github.com/NeinsKnull/oled_ssd1306_i2c.git#FIX-callback-issue",
     "onoff": "^1.1.2",
     "pi-gpio": "0.0.8",
-    "rpi-ws281x-native": "^0.8.1",
-    "socket.io": "^1.7.3",
-    "winston": "^2.3.1"
+    "rpi-ws281x-native": "^0.8.1"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
