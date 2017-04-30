@@ -78,20 +78,6 @@ blacklist snd_bcm2835
 ## Enable usb soundcard
 
 
-
-**/etc/asound.conf**
-
-```bash
-#pcm.!default {
-#    type hw
-#    card 1
-#}
-#ctl.!default {
-#    type hw
-#    card 1
-#}
-```
-
 **/etc/modprobe.d/alsa-base.conf**
 
 ```bash
@@ -137,4 +123,12 @@ ROT 15 18 KEY_RIGHT KEY_LEFT 1
 
 ```bash
 sudo ./pikeyd -pu
+```
+
+## I2C
+
+In **/boot/config.txt**
+
+```
+dtparam=i2c_arm=on
 ```

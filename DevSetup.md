@@ -64,3 +64,9 @@ npm install
 
 now you can mount the samba share and work with the code with your favorite ide.
 
+## For i2c install the tools
+
+```bash
+sudo apt-get install -y i2c-tools
+```
+
