@@ -47,6 +47,7 @@ class ModulesRegistry extends BaseClass {
         settingsPreFix: 'DISPLAY',
         types: {
           WEB : 'WebSocketDisplay', // handle input over a websocket
+          SSD1306: 'SSD1306Display' // OLED Display
         }
       },{
         name : 'sound',
