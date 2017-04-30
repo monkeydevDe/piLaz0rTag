@@ -22,6 +22,7 @@
   "homepage": "https://github.com/monkeydevDe/piLaz0rTag#readme",
   "dependencies": {
     "aplay": "^1.1.0",
+    "block-ui": "^2.70.1",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
     "jquery": "^3.2.1",
@@ -31,7 +32,7 @@
     "socket.io": "^1.7.3",
     "winston": "^2.3.1"
   },
-  "optionalDependencies" : {
+  "optionalDependencies": {
     "oled_ssd1306_i2c": "https://github.com/NeinsKnull/oled_ssd1306_i2c.git#FIX-callback-issue",
     "onoff": "^1.1.2",
     "pi-gpio": "0.0.8",

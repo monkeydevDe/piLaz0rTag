@@ -19,6 +19,14 @@ $(function() {
 
   var socket = io();
 
+  socket.on( 'disconnect', function () {
+    $.blockUI({message: '<h1><span class="glyphicon glyphicon-refresh"></span> Connection lost. Wait until reconnect</h1>'});
+  });
+
+  socket.on( 'connect', function () {
+    $.unblockUI();
+  });
+
   // bind click event to buttons to emit data over the websocket
   $('.socketMsg').on('click', function() {
     var msgType = $(this).data('messageType');
