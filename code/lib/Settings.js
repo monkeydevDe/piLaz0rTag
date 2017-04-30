@@ -33,6 +33,7 @@ class Settings {
     };
 
     this.WEBSERVER_PORT = 3000;
+
     this.WS2812_CFG = {
       HOST: '127.0.0.1',
       PORT: 6969,
@@ -48,9 +49,16 @@ class Settings {
         yellow: '0xFFFF00'
       }
     };
+
+    this.SSD1306_CFG = {
+      width: 128,
+      height: 64,
+      address: 0x3C
+    };
+
     this.RUMBLE_MOTOR_CFG = {
       PIN: 24
-    }
+    };
   }
 }
 
