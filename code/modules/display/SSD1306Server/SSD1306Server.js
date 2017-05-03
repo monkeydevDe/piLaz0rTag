@@ -15,8 +15,11 @@ class SSD1306Server {
     this.socketHost = 'http://localhost:'+this.settings.WEBSERVER_PORT;
 
     this.socketIo = require('socket.io-client')(this.socketHost);
+    
+    this.lastPlayerState = null;
 
-    const instance = this;
+
+    let instance = this;
     this.socketIo.on('connect', function(){
       instance.log.info('SSD1306Server: Connected to '+instance.socketHost);
     });
@@ -34,7 +37,7 @@ class SSD1306Server {
 
     this.oledDisplay = new Oled(this.settings.SSD1306_CFG);
     this.oledDisplay.update();
-    this.oledDisplay.dimDisplay(true);
+    //this.oledDisplay.dimDisplay(true);
   }
 
   _handleMainStateChanged(state) {
@@ -44,11 +47,23 @@ class SSD1306Server {
   }
 
   _handleUpdateGameStatus(player) {
-    this.oledDisplay.clearDisplay();
-    this.oledDisplay.setCursor(0, 0);
-    this.oledDisplay.writeString(this.font, 1, 'Mags: '+player.status.mags + '/'+player.mags, 1, false);
-    this.oledDisplay.setCursor(0, 20);
-    this.oledDisplay.writeString(this.font, 1, 'Rounds: '+player.status.roundsInMag+ '/'+player.roundsPerMag, 1, false);
+                                
+    if(this.lastPlayerState === null) {
+      let instance = this;
+      setTimeout(function() {
+        instance.oledDisplay.clearDisplay();
+        instance.oledDisplay.setCursor(0, 0);
+        instance.oledDisplay.writeString(instance.font, 1, 'Mags: '+instance.lastPlayerState.status.mags + '/'+instance.lastPlayerState.mags, 1, false);
+        instance.oledDisplay.setCursor(0, 15);
+        instance.oledDisplay.writeString(instance.font, 1, 'Rounds: '+instance.lastPlayerState.status.roundsInMag+ '/'+instance.lastPlayerState.roundsPerMag, 1, false);
+        instance.lastPlayerState = null;    
+      },300);
+    }
+
+    this.lastPlayerState = player;
+    
+    
+    
   }
 
   

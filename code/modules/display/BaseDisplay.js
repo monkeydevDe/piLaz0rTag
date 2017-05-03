@@ -5,7 +5,7 @@ class BaseDisplay extends BaseClass {
 
   constructor() {
     super();
-    const instance = this;
+    let instance = this;
 
     // register on the display game update event
     this.eventHandler.gameEvents.GAME_DATA_UPDATE.on(function(game) {

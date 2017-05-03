@@ -14,11 +14,6 @@ class Settings {
       userCfg = require('../'+userCfgPath);
     }
 
-    console.error(userCfg.modules);
-
-
-
-
     //General
     this.DEBUG_LEVEL = 'debug';
     this.DEBUG_EVENTS = false;

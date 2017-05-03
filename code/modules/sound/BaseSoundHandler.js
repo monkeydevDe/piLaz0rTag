@@ -5,7 +5,7 @@ class BaseSoundHandler extends BaseClass {
   constructor() {
     super();
 
-    const instance = this;
+    let instance = this;
     this.eventHandler.gameEvents.SHOOT.on(function() {
       instance._playSound('shot');
     })

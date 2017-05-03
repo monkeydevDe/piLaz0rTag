@@ -5,6 +5,8 @@ class Event {
 
   constructor(name, mainEventHandler) {
 
+    this.cleanUpFunctions = Array();
+
     this.log = require('./Logger');
     this.name = name;
     this.mainEventHandler = mainEventHandler;
@@ -17,11 +19,31 @@ class Event {
   /**
    * Registers a handler function to this event
    * @param callback the function handling this event.
+   * @param cleanUpFunction when true this listener is added to the clean up array.
    */
-  on(callback) {
-    this.mainEventHandler.on(this.name, function(payload) {
+  on(callback, cleanUpFunction = false) {
+    let onCall = function(payload) {
       callback(payload);
-    });
+    };
+
+    if(cleanUpFunction === true) {
+      this.cleanUpFunctions.push(onCall);
+    }
+
+    this.mainEventHandler.on(this.name, onCall);
+
+    return this;
+  }
+
+  /**
+   * Removes all event listeners which are marked to be removed when this is called.
+   * Mainly we have to do this with listeners which are removed and constructed during the game.
+   * Basegame for example
+   */
+  removeCleanupListeners() {
+    for(let idx in this.cleanUpFunctions) {
+      this.mainEventHandler.removeListener(this.name, this.cleanUpFunctions[idx]);
+    }
   }
 
 

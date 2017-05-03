@@ -11,7 +11,7 @@ class WebInputHandler extends BaseInputHandler {
 
     super();
 
-    const instance = this;
+    let instance = this;
 
     this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
 

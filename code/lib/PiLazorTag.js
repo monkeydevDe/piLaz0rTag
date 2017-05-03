@@ -2,6 +2,7 @@
  * The actual main class of the PiLazorTag
  */
 const {BaseClass} = require('./BaseClass');
+const {Player} = require('./game/Player');
 
 class PiLazorTag extends BaseClass {
 
@@ -32,7 +33,7 @@ class PiLazorTag extends BaseClass {
     // when a game is running this holds the instance.
     this.currentGame = null;
 
-    const instance = this;
+    let instance = this;
 
     this.emitCurrentState();
 
@@ -71,7 +72,9 @@ class PiLazorTag extends BaseClass {
    * This will stop the current game and will go to SETUP
    */
   stopGame() {
+    this.currentGame.cleanUpEvents();
     this.currentGame = null;
+    delete this.currentGame;
     this.currentState = 'SETUP';
     this.emitCurrentState();
   }
@@ -84,9 +87,7 @@ class PiLazorTag extends BaseClass {
 
     this.log.info('PiLaz0rTag: Starting new game: '+gameData);
     
-    const {Player} = require('./game/Player');
-    
-    let player = new Player(
+    const player = new Player(
       gameData.player.id,
       gameData.player.team,
       gameData.player.lives,
@@ -105,7 +106,7 @@ class PiLazorTag extends BaseClass {
 
     this.log.info('PiLaz0rTag: game is ready and will start in: '+gameData.gameStartTime);
 
-    const instance = this;
+    let instance = this;
     setTimeout(function() {
       instance.eventHandler.mainEvents.GAME_STARTED.emit();
     }, gameData.gameStartTime);
