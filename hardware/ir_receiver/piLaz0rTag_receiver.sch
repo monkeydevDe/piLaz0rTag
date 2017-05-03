@@ -29,8 +29,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:rur
-LIBS:ws2812b
+LIBS:pl8923
 LIBS:piLaz0rTag_receiver-cache
 EELAYER 25 0
 EELAYER END
@@ -130,7 +129,7 @@ U 1 1 58F5C0BB
 P 4200 1150
 F 0 "LED1" H 4200 750 60  0000 C CNN
 F 1 "PL8923" H 4200 1550 60  0000 C CNN
-F 2 "LEDs:LED_D5.0mm-4" V 4150 1150 60  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_1x04_Pitch2.54mm" V 4150 1150 60  0001 C CNN
 F 3 "" V 4150 1150 60  0000 C CNN
 	1    4200 1150
 	1    0    0    -1  
