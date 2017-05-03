@@ -73,5 +73,5 @@ sudo apt-get install -y i2c-tools
 Search for i2c devices
 
 ```bash
-sudo i2cdetect -y 1
+ ****
 ```
