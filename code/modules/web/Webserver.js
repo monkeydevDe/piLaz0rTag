@@ -30,7 +30,7 @@ class Webserver extends BaseClass {
     this.expApp.use('/knockout',express.static('./node_modules/knockout/build/output'));
     this.expApp.use('/assets', express.static(__dirname + '/assets'));
 
-    const instance = this;
+    let instance = this;
     this.socketIo.on('connection', function(socket) {
       instance.log.info('Websocket: A user connected');
 

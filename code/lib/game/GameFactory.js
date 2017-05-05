@@ -1,14 +1,15 @@
+const { TeamDeathMatchGame } = require('./TeamDeathMatchGame');
+const { DeathMatchGame } = require('./DeathMatchGame');
+
 class GameFactory {
 
   initGame(type,player) {
 
     if(type === 'DeathMatch') {
-      const { DeathMatchGame } = require('./DeathMatchGame');
       return new DeathMatchGame(player);
     }
 
     if(type === 'TeamDeathMatch') {
-      const { TeamDeathMatchGame } = require('./TeamDeathMatchGame');
       return new TeamDeathMatchGame(player);
     }
 

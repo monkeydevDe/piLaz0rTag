@@ -8,7 +8,7 @@ class BaseClass {
     this.eventHandler = require('./LaserTagEventHandler');
     this.settings = require('./Settings');
 
-    const instance = this;
+    let instance = this;
     process.on('SIGINT', function () {
       instance._cleanUpInternal();
     });

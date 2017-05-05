@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/pi/share/piLaz0rTag/code/node_modules/.bin/nodemon --ignore modules/web/assets --watch /home/pi/share/piLaz0rTag/code/modules/display/SSD1306Server /home/pi/share/piLaz0rTag/code/modules/display/SSD1306Server/SSD1306Server.js

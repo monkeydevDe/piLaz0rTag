@@ -28,7 +28,7 @@ class WS2812LedHandler extends BaseLedHandler {
 
     this.client = new this.net.Socket();
 
-    const instance = this;
+    let instance = this;
 
     this.client.connect(this.settings.WS2812_CFG.PORT, this.settings.WS2812_CFG.HOST, function() {
       instance.log.info('WS2812LED: Connected: ' + instance.settings.WS2812_CFG.HOST + ':' + instance.settings.WS2812_CFG.PORT);
@@ -52,7 +52,7 @@ class WS2812LedHandler extends BaseLedHandler {
   }
 
   _handleNotConnected() {
-    const instance = this;
+    let instance = this;
     this.serverConnected = false;
     setTimeout(function() {
       instance._connectToServer();
@@ -67,7 +67,7 @@ class WS2812LedHandler extends BaseLedHandler {
   _initServerProcess() {
     let exec = require('child_process').exec;
     this.serverProcess = exec(__dirname+'/WS2812Server/startWs2812Server.sh');
-    const instance = this;
+    let instance = this;
     this.serverProcess.stderr.on('data', function(data) {
       instance.log.error('WS2812LED Server error: '+data);
     });

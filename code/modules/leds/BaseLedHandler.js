@@ -28,7 +28,7 @@ class BaseLedHandler extends BaseClass {
       }
     };
 
-    const instance = this;
+    let instance = this;
     // when shooting flash the muzzle
     this.eventHandler.gameEvents.SHOOT.on(function() {
       instance.flashMuzzleLed();
@@ -55,7 +55,7 @@ class BaseLedHandler extends BaseClass {
    */
   flashMuzzleLed() {
     this._internalMuzzleLed(true);
-    const instance = this;
+    let instance = this;
     setTimeout(function() {
       instance._internalMuzzleLed(false)
     }, 150);
@@ -119,7 +119,7 @@ class BaseLedHandler extends BaseClass {
 
     this.setStatusOnReceiverLeds(game,ledOn);
 
-    const instance = this;
+    let instance = this;
     setTimeout(function() {
       instance._handleInterval(game);
     },duration)

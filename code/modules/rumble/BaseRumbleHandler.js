@@ -10,7 +10,7 @@ class BaseRumbleHandler extends BaseClass {
     super();
 
 
-    const instance = this;
+    let instance = this;
     // when shooting flash the muzzle
     this.eventHandler.gameEvents.SHOOT.on(function() {
       instance.rumbleShoot();
@@ -26,7 +26,7 @@ class BaseRumbleHandler extends BaseClass {
 
     this._turnOn();
 
-    const instance = this;
+    let instance = this;
     setTimeout(function() {
       instance._turnOff();
     }, 150);

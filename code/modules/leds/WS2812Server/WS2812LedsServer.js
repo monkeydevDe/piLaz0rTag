@@ -20,7 +20,7 @@ class WS2812LedsServer {
 
     this.ws281x.render(this.pixelData);
 
-    const instance = this;
+    let instance = this;
     process.on('SIGINT', function() {
       instance.ws281x.reset();
       process.nextTick(function() {

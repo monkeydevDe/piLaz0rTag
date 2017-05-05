@@ -1,42 +1,64 @@
 /**
  * The actual game handling everything
  */
-class BaseGame {
+
+const { BaseClass } = require('../BaseClass');
+
+class BaseGame extends BaseClass {
 
   constructor(player, opts) {
-    this.log = require('../Logger');
-    this.eventHandler = require('../LaserTagEventHandler');
+    super();
     this.opts = opts;
+
+    this.id = new Date();
     this.player = player;
+    this.eventsToClean = [];
 
     this.eventHandler.ledEvents.SET.emit(this);
 
-    const instance = this;
+    let instance = this;
 
     // register shoot handling when the user hits the button :)
-    this.eventHandler.buttonEvents.SHOOT_BTN.on(function() {
+    this.addEventToGame(this.eventHandler.buttonEvents.SHOOT_BTN.on(function() {
       instance.shoot();
-    });
+    },true));
 
-    this.eventHandler.buttonEvents.RELOAD_BTN.on(function() {
+    this.addEventToGame(this.eventHandler.buttonEvents.RELOAD_BTN.on(function() {
        instance.reload();
-    });
+    },true));
 
-    this.eventHandler.gameEvents.RELOAD_FINISHED.on(function() {
+    this.addEventToGame(this.eventHandler.gameEvents.RELOAD_FINISHED.on(function() {
        instance.reloadDone();
-    });
+    },true));
 
-    this.eventHandler.gameEvents.GET_STATUS.on(function() {
+    this.addEventToGame(this.eventHandler.gameEvents.GET_STATUS.on(function() {
        instance.propergateGameStatus();
-    });
+    },true));
 
-    this.eventHandler.gameEvents.IR_HIT_MESSAGE.on(function(hitData) {
+    this.addEventToGame(this.eventHandler.gameEvents.IR_HIT_MESSAGE.on(function(hitData) {
        instance.handlePlayerHit(hitData);
-    });
+    },true));
 
-    this.eventHandler.gameEvents.PLAYER_RESPAWNED.on(function() {
+    this.addEventToGame(this.eventHandler.gameEvents.PLAYER_RESPAWNED.on(function() {
        instance.handleRespawnDone();
-    });
+    },true));
+  }
+
+  /**
+   * Call this when registering an event so it can be removed when the game is stopped.
+   * @param event
+   */
+  addEventToGame(event) {
+    this.eventsToClean.push(event);
+  }
+
+  /**
+   * Cleans up all events so the game can vanish :)
+   */
+  cleanUpEvents() {
+    for(let idx in this.eventsToClean) {
+      this.eventsToClean[idx].removeCleanupListeners();
+    }
   }
 
   /**
@@ -120,7 +142,7 @@ class BaseGame {
         this.eventHandler.ledEvents.START_BLINK.emit({type: 'respawn', game: this});
         this.eventHandler.gameEvents.PLAYER_DIED.emit();
 
-        const instance = this;
+        let instance = this;
         setTimeout(function() {
           instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
         },this.player.respawnTime);
@@ -194,7 +216,7 @@ class BaseGame {
 
     this.propergateGameStatus();
 
-    const instance = this;
+    let instance = this;
     setTimeout(function() {
       instance.eventHandler.gameEvents.RELOAD_FINISHED.emit();
     },this.player.reloadTime);

@@ -11,7 +11,7 @@ class LircdInfraredHandler extends BaseInfraredHandler {
     this.log.info('Connecting to lirc daemon');
 
     // when a callback is called this holds the current instance
-    const instance = this;
+    let instance = this;
 
     this.lirc = require('lirc-client')({
       path: '/var/run/lirc/lircd'
@@ -31,7 +31,7 @@ class LircdInfraredHandler extends BaseInfraredHandler {
   }
 
   sendShootMsg(playerId, teamColor, strength) {
-    const instance = this;
+    let instance = this;
     let irData = 'shoot_'+playerId+'_'+teamColor+'_'+strength;
     this.log.info('Sending ir data: '+irData);
     this.lirc.cmd('SEND_ONCE', 'pilazortag', irData, function(err) {

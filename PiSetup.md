@@ -131,4 +131,5 @@ In **/boot/config.txt**
 
 ```
 dtparam=i2c_arm=on
+dtparam=i2c_baudrate=1000000
 ```
