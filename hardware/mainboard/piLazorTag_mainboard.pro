@@ -1,4 +1,4 @@
-update=22/05/2015 07:44:53
+update=Sa 06 Mai 2017 11:13:03 CEST
 version=1
 last_client=kicad
 [general]
@@ -60,3 +60,4 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
+LibName30=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/L293D

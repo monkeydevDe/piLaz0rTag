@@ -30,5 +30,5 @@ The schematics are done with the awesome Tool: http://fritzing.org for the proto
 * 74AHCT125: https://github.com/propane-and-electrons/kicad-libs
 * https://github.com/cfobel/sparkfun_kicad_lib
 * https://github.com/benwis/SparkFun-Kicad-Libraries (includes moste of the sparkfun stuff)
-
+* https://www.snapeda.com/parts/L293D/STMicroelectronics/view-part/
 * Search for parts: https://easyeda.com/search/level%20bidirectional

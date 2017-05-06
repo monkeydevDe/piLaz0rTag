@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name L293D)(type Legacy)(uri /home/tuxburner/workspace/piLaz0rTag/hardware/kicad/L293D.mod)(options "")(descr ""))
+)

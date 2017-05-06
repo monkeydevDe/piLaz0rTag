@@ -1,0 +1,42 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# L293D
+#
+DEF L293D IC 0 40 Y Y 1 L N
+F0 "IC" -400 840 50 H V L CNN
+F1 "L293D" -400 -900 50 H V L CNN
+F2 "DIL16" 0 0 50 H I L CNN
+F3 "STMicroelectronics" 0 0 50 H I L CNN "MF"
+F4 "Driver; 36V; Power DIP; 600mA Low LevelO/P; 1.2A O/P High Level; 4 Drivers; 7V" 0 0 50 H I L CNN "Description"
+F5 "2.62 USD" 0 0 50 H I L CNN "Price"
+F6 "L293D" 0 0 50 H I L CNN "MP"
+F7 "Good" 0 0 50 H I L CNN "Availability"
+F8 "DIP-16 STMicroelectronics" 0 0 50 H I L CNN "Package"
+DRAW
+P 2 0 0 10 -400 800 -400 -800 N
+P 2 0 0 10 -400 -800 400 -800 N
+P 2 0 0 10 400 -800 400 800 N
+P 2 0 0 10 400 800 -400 800 N
+X 1-2EN 1 -600 700 200 R 40 40 0 0 I 
+X 1A 2 -600 500 200 R 40 40 0 0 I 
+X 1Y 3 -600 300 200 R 40 40 0 0 O 
+X GND1 4 -600 100 200 R 40 40 0 0 I 
+X GND2 5 -600 -100 200 R 40 40 0 0 I 
+X 2Y 6 -600 -300 200 R 40 40 0 0 O 
+X 2A 7 -600 -500 200 R 40 40 0 0 I 
+X VCC2 8 -600 -700 200 R 40 40 0 0 I 
+X VCC1 16 600 700 200 L 40 40 0 0 I 
+X 4A 15 600 500 200 L 40 40 0 0 I 
+X 4Y 14 600 300 200 L 40 40 0 0 O 
+X GND3 13 600 100 200 L 40 40 0 0 I 
+X GND4 12 600 -100 200 L 40 40 0 0 I 
+X 3Y 11 600 -300 200 L 40 40 0 0 O 
+X 3A 10 600 -500 200 L 40 40 0 0 I 
+X 3-4EN 9 600 -700 200 L 40 40 0 0 I 
+ENDDRAW
+ENDDEF
+#
+# End Library
