@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name L293D)(type Legacy)(uri /home/tuxburner/workspace/piLaz0rTag/hardware/kicad/L293D.mod)(options "")(descr ""))
+  (lib (name SparkFun-Boards)(type KiCad)(uri /home/tuxburner/workspace/piLaz0rTag/hardware/kicad/SparkFun-Kicad-Libraries/SparkFun-Boards.pretty)(options "")(descr ""))
 )
