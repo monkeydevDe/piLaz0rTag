@@ -11,7 +11,7 @@ sudo apt-get install lirc
 edit **/boot/config.txt**
 
 ```bash
-dtoverlay=lirc-rpi,gpio_in_pin=23,gpio_out_pin=22
+dtoverlay=lirc-rpi,gpio_in_pin=23,gpio_out_pin=24
 ```
 
 edit **/etc/lirc/hardware.conf**
@@ -53,7 +53,7 @@ sudo /etc/init.d/lirc start
 
 https://github.com/creationix/nvm
 
-Install the nvm as user **pi** 
+Install the nvm as user **pi**
 
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash

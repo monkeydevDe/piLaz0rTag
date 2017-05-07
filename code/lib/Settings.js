@@ -52,7 +52,7 @@ class Settings {
     };
 
     this.RUMBLE_MOTOR_CFG = {
-      PIN: 24
+      PIN: 21
     };
   }
 }
