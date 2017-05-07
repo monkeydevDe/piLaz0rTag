@@ -94,3 +94,4 @@ typings/
 /piLaz0rTag.iml
 /.idea/
 data/userCfg.json
+overlayfiles/mygpio-overlay.dtb
