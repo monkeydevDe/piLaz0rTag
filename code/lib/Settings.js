@@ -54,6 +54,16 @@ class Settings {
     this.RUMBLE_MOTOR_CFG = {
       PIN: 21
     };
+
+    // for the gpio input module
+    this.GPIO_INPUT_CFG = {
+      TRIGGER_GPIO: 11,
+      RELOAD_GPIO: 5,
+      UP_GPIO: 6,
+      DOWN_GPIO: 13,
+      FUNC1_GPIO: 19,
+      FUNC2_GPIO: 26
+    }
   }
 }
 

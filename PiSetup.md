@@ -1,5 +1,28 @@
 # Pi Setup
 
+## Internal PullUps for gpio input
+
+Install the compiler
+
+```bash
+sudo apt-get install device-tree-compiler
+```
+
+Generate the device overlay file
+```bash
+cd  overlayfiles
+rm mygpio-overlay.dtb 
+dtc -@ -I dts -O dtb -o mygpio-overlay.dtb mygpio-overlay.dts
+sudo cp mygpio-overlay.dtb  /boot/overlays/
+```
+
+Add following line to */boot/config.txt*
+
+```bash
+device_tree_overlay=overlays/mygpio-overlay.dtb
+```
+
+
 ## LIRC
 
 http://alexba.in/blog/2013/01/06/setting-up-lirc-on-the-raspberrypi/
