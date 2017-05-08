@@ -20,7 +20,7 @@ class Settings {
 
     this.modules = {
       DISPLAY: userCfg.modules.DISPLAY || 'WEB',
-      INPUT: userCfg.modules.INPUT || 'WEB',
+      INPUT: userCfg.modules.INPUT || 'GPIO',
       INFRARED: userCfg.modules.INFRARED || 'WSFAKE',
       LED: userCfg.modules.LED || 'MOCK',
       RUMBLE: userCfg.modules.RUMBLE || 'MOCK',
