@@ -23,6 +23,7 @@ class PiLazorTag extends BaseClass {
 
     this.moduleRegistry = require('./ModulesRegistry');
     this.webserver = require('../modules/web/Webserver');
+    this.websocketMsgHandler = require('./WebSocketGameMsgHandler');
     this.mainStates = require('./MainStates');
 
 
@@ -42,21 +43,6 @@ class PiLazorTag extends BaseClass {
       instance.emitCurrentState();
     });
 
-    //TODO: move this away from here for example implement a gameMsgHandler could be needed for bluetooth
-    this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
-      if(msg.type === 'start_game') {
-        instance.eventHandler.mainEvents.GAME_SETUP.emit(msg.value);
-      }
-
-      if(msg.type === 'stop_game') {
-        instance.eventHandler.mainEvents.GAME_STOP.emit();
-      }
-
-      // we become master
-      if(msg.type === 'master_mode') {
-        
-      }
-    });
 
     this.eventHandler.mainEvents.GAME_SETUP.on(function(gameSetupData){
       instance.setupGame(gameSetupData);
