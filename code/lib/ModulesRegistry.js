@@ -41,6 +41,7 @@ class ModulesRegistry extends BaseClass {
         settingsPreFix: 'INPUT',
         types: {
           WEB : new ModuleCfg('WebInputHandler',true), // handle input over a websocket
+          GPIO: new ModuleCfg('GpioInputHandler'), // handle input over gpio
           KEYBOARD : new ModuleCfg('KeyboardInputHandler') // when the input comes from the keyboard
         }
       },{

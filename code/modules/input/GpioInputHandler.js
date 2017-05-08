@@ -22,8 +22,15 @@ class GpioInputHandler extends BaseInputHandler {
     const instance = this;
     
     this.triggerBtn.watch(function(err, value) {
-      this.logger.error("VALUE IS: "+value);
-      instance.triggerShoot();
+      if(value === 0) {
+        instance.triggerShoot();
+      }
+    });
+
+    this.reloadBtn.watch(function(err,value) {
+       if(value === 0) {
+         instance.triggerReload();
+       }
     });
   }
 
