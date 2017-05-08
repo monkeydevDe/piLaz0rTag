@@ -1,8 +1,9 @@
 /**
  * The actual main class of the PiLazorTag
  */
-const {BaseClass} = require('./BaseClass');
-const {Player} = require('./game/Player');
+const { BaseClass } = require('./BaseClass');
+const { Player } = require('./game/Player');
+
 
 class PiLazorTag extends BaseClass {
 
@@ -11,6 +12,7 @@ class PiLazorTag extends BaseClass {
     super();
 
     this.log.info('PiLazorTag: Starting main game handler.');
+
     if(this.settings.DEBUG_LEVEL) {
       this.log.info('===============================================');
       //Loop over all Settings
@@ -20,13 +22,12 @@ class PiLazorTag extends BaseClass {
     }
 
     this.moduleRegistry = require('./ModulesRegistry');
-
     this.webserver = require('../modules/web/Webserver');
+    this.mainStates = require('./MainStates');
 
-    
 
     // the current status of the main game
-    this.currentState = 'SETUP';
+    this.currentState = this.mainStates.SETUP;
 
     this.gameFactory = require('./game/GameFactory');
 
@@ -50,6 +51,11 @@ class PiLazorTag extends BaseClass {
       if(msg.type === 'stop_game') {
         instance.eventHandler.mainEvents.GAME_STOP.emit();
       }
+
+      // we become master
+      if(msg.type === 'master_mode') {
+        
+      }
     });
 
     this.eventHandler.mainEvents.GAME_SETUP.on(function(gameSetupData){
@@ -62,7 +68,7 @@ class PiLazorTag extends BaseClass {
 
     this.eventHandler.mainEvents.GAME_STARTED.on(function() {
       instance.log.info('PiLaz0rTag: Game is running.');
-      instance.currentState = 'GAME_RUNNING';
+      instance.currentState = instance.mainStates.GAME_RUNNING;
       instance.emitCurrentState();
       instance.currentGame.propergateGameStatus();
     });
@@ -75,7 +81,7 @@ class PiLazorTag extends BaseClass {
     this.currentGame.cleanUpEvents();
     this.currentGame = null;
     delete this.currentGame;
-    this.currentState = 'SETUP';
+    this.currentState = this.mainStates.SETUP;
     this.emitCurrentState();
   }
 
@@ -100,7 +106,7 @@ class PiLazorTag extends BaseClass {
       gameData.player.shootDelay);
 
     this.currentGame = this.gameFactory.initGame(gameData.mode, player);
-    this.currentState = 'GAME_STARTING';
+    this.currentState = this.mainStates.GAME_STARTING;
 
     this.emitCurrentState();
 
