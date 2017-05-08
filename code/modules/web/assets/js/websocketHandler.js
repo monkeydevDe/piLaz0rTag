@@ -8,6 +8,7 @@ $(function() {
     health: ko.observable(0),
     totalHealth: ko.observable(0),
     playerId: ko.observable(0),
+    uniqueId: ko.observable(0),
     team: ko.observable(''),
     shootStrength: ko.observable(0),
     lives: ko.observable(0),
@@ -137,5 +138,6 @@ $(function() {
     PlayerViewModel.lives(data.status.lives);
     PlayerViewModel.totalLives(data.lives);
     PlayerViewModel.respawning(data.status.respawning);
+    PlayerViewModel.uniqueId(data.uniqueId);
   }
 });

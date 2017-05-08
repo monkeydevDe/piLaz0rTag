@@ -99,6 +99,11 @@ class ModulesRegistry extends BaseClass {
 
     this.log.info('ModulesRegistry: Module: ' + moduleCfg.name + ' is configured with the type: ' + configuredType);
 
+    if(configuredType === 'NONE') {
+      this.log.info('ModulesRegistry: Module: ' + moduleCfg.name + ' not loading because : ' + configuredType+' is configured');
+      return;
+    }
+
     // check if it is an autoload module
     if(moduleCfg.types[configuredType].autoLoad === true) {
       this.log.info('ModulesRegistry: Module: ' + moduleCfg.name + ' of type: '+configuredType+' is an autoload module skipping it');

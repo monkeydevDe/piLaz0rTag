@@ -5,6 +5,9 @@ class Player {
 
     this.log = require('../Logger');
 
+    const os = require('os');
+
+    this.uniqueId = os.hostname();
     this.id = id;
     this.team = team;
     this.health = health;

@@ -81,6 +81,10 @@ class Webserver extends BaseClass {
     this.log.debug('Websocket: sending type: '+type);
     this.socketIo.emit(type, data);
   }
+
+  _cleanUpInternal() {
+    this.expApp.close();
+  }
 }
 
 // run as a singleton is this the right way ?

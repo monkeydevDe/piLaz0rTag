@@ -8,8 +8,9 @@ class BaseGame extends BaseClass {
 
   constructor(player, opts) {
     super();
-    this.opts = opts;
 
+    this.opts = opts;
+    
     this.id = new Date();
     this.player = player;
     this.eventsToClean = [];
