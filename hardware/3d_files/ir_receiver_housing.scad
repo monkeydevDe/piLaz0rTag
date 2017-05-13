@@ -8,7 +8,7 @@ bottom_height = 20;
 top_height = 5;
 
 // how thick is the outer wall
-wall_thickness = 2.5;
+wall_thickness = 3;
 
 // how thick is the bottom
 bottom_thickness = 3; 
@@ -22,11 +22,17 @@ pcb_height = 1.6;
 // dome_radius
 dome_diameter = 25;
 
+// screw holes
+screw_diameter = 3;
+screw_offset = 2;
+
 // the bottom where the pcb is housing 
 module bottom() {  
   difference() {
     // main cube from 
     cube([main_width, main_width, bottom_height]);    
+    
+    screw_holes(bottom_height);
     
     // hollow the cube
     translate([wall_thickness,wall_thickness,bottom_thickness]) {
@@ -49,7 +55,7 @@ module pcb_holder() {
     pcb_holder_height = pcb_clearance + pcb_height;
     pcb_holder_width = main_width - (2*wall_thickness);    
     cube([pcb_holder_width,pcb_holder_width,pcb_holder_height]);
-  
+    
     // clearance
     center_clearance =  pcb_outline_width * 2;
     translate([center_clearance ,center_clearance ,0]) {  
@@ -66,13 +72,37 @@ module pcb_holder() {
 
 module top() {
   difference() {
+    
     cube([main_width,main_width,top_height]);
+    
     center_dome = main_width/2;
     translate([center_dome,center_dome,0]) {
       cylinder(top_height,d = dome_diameter);
     }
+    
+    screw_holes(top_height);
   }
   
+}
+
+// screw holes
+module screw_holes(hole_height) {
+  
+  translate([screw_offset,screw_offset,0]) {
+    cylinder(hole_height,d = screw_diameter);
+  }
+    
+  translate([main_width-screw_offset,screw_offset,0]) {
+    cylinder(hole_height,d = screw_diameter);
+  }
+    
+  translate([screw_offset,main_width-screw_offset,0]) {
+    cylinder(hole_height,d = screw_diameter);
+  }
+    
+  translate([main_width-screw_offset,main_width-screw_offset,0]) {
+    cylinder(hole_height,d = screw_diameter);
+  }
 }
 
 // draw the bottom
@@ -80,5 +110,5 @@ bottom();
 
 // move so the top is next to the bottom
 translate([main_width*2,0,0]) {
-  top();
+  //top();
 }
