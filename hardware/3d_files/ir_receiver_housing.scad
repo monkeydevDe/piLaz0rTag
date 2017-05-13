@@ -34,6 +34,12 @@ bottom_height = bottom_thickness + dome_bottom_height + pcb_clearance + pcb_heig
 
 $fn = 15;
 
+clamp_height = 3;
+clamp_pin_height = 2;
+clamp_pin_width = 20;
+clamp_pin_thickness = 3;
+clamp_pin_offset = 4;
+
 // the bottom where the pcb is housing 
 module bottom() {  
   difference() {
@@ -45,7 +51,6 @@ module bottom() {
     // hollow the cube
     hollow_width = main_width - (wall_thickness * 2);
     corner_width = (hollow_width - pcb_size);
-    echo(hollow_width);
     translate([wall_thickness+(corner_width/2),wall_thickness,bottom_thickness]) {
       hollow_width = main_width - (wall_thickness * 2);
       hollow_height = bottom_height - bottom_thickness;       
@@ -131,10 +136,32 @@ module screw_holes(hole_height) {
   }
 }
 
+// bottom clamp
+module bottom_clamp() {
+  difference() {
+    cube([main_width,main_width,clamp_height]);    
+    screw_holes(clamp_height);
+  }
+  pin_x_offset = (main_width - clamp_pin_width) / 2;
+  translate([pin_x_offset ,clamp_pin_offset,clamp_height]) {
+    cube([clamp_pin_width,clamp_pin_thickness,clamp_pin_height]);
+  }
+  
+  translate([pin_x_offset ,main_width-(clamp_pin_offset + clamp_pin_thickness),clamp_height]) {
+    cube([clamp_pin_width,clamp_pin_thickness,clamp_pin_height]);
+  }
+}
+
 // draw the bottom
 bottom();
 
 // move so the top is next to the bottom
-translate([main_width*2,0,0]) {
+translate([main_width+5,0,0]) {
   top();
 }
+
+// move so the bottom_clamp is next to the bottom
+translate([0,main_width+5,0]) {
+  bottom_clamp();
+}
+
