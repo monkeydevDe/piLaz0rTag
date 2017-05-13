@@ -13,6 +13,8 @@ lens_ring_height = 4;
 lens_ring_holder_width = 5;
 lens_holder_depth = ((main_dia - lens_ring_dia) / 4) + 1; 
 
+$fn=100;
+
 module lens_holder() {
   difference() {
     cylinder(main_height, d = main_dia);  
