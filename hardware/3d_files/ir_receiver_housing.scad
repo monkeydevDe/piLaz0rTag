@@ -26,6 +26,8 @@ dome_diameter = 25;
 screw_diameter = 3;
 screw_offset = 2;
 
+//$fn = 25;
+
 // the bottom where the pcb is housing 
 module bottom() {  
   difference() {
@@ -35,10 +37,19 @@ module bottom() {
     screw_holes(bottom_height);
     
     // hollow the cube
-    translate([wall_thickness,wall_thickness,bottom_thickness]) {
+    hollow_width = main_width - (wall_thickness * 2);
+    corner_width = (hollow_width - pcb_size);
+    echo(hollow_width);
+    translate([wall_thickness+(corner_width/2),wall_thickness,bottom_thickness]) {
       hollow_width = main_width - (wall_thickness * 2);
       hollow_height = bottom_height - bottom_thickness;       
-      cube([hollow_width,hollow_width,hollow_height]);
+      union() {
+        cube([hollow_width-corner_width,hollow_width,hollow_height]);
+        translate([-(corner_width/2),(corner_width/2),0]) {
+          cube([hollow_width,hollow_width-corner_width,hollow_height]);
+        }
+      }
+      
     }
   }
     
