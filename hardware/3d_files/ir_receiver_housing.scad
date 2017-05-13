@@ -1,6 +1,11 @@
-// the main width and height 
+// the main width 
 main_width = 40;
-main_height = 20;
+
+// height of the bottom module
+bottom_height = 20;
+
+// height of the top
+top_height = 5;
 
 // how thick is the outer wall
 wall_thickness = 2.5;
@@ -8,21 +13,25 @@ wall_thickness = 2.5;
 // how thick is the bottom
 bottom_thickness = 3; 
 
+// pcb sizes
 pcb_size = 30;
 pcb_outline_width = 2;
 pcb_clearance = 3;
 pcb_height = 1.6;
 
+// dome_radius
+dome_diameter = 25;
+
 // the bottom where the pcb is housing 
-module bottom_pcb() {  
+module bottom() {  
   difference() {
     // main cube from 
-    cube([main_width, main_width, main_height]);    
+    cube([main_width, main_width, bottom_height]);    
     
     // hollow the cube
     translate([wall_thickness,wall_thickness,bottom_thickness]) {
       hollow_width = main_width - (wall_thickness * 2);
-      hollow_height = main_height - bottom_thickness;       
+      hollow_height = bottom_height - bottom_thickness;       
       cube([hollow_width,hollow_width,hollow_height]);
     }
   }
@@ -55,7 +64,21 @@ module pcb_holder() {
   }
 }
 
+module top() {
+  difference() {
+    cube([main_width,main_width,top_height]);
+    center_dome = main_width/2;
+    translate([center_dome,center_dome,0]) {
+      cylinder(top_height,d = dome_diameter);
+    }
+  }
+  
+}
 
-//pcb_holder();
+// draw the bottom
+bottom();
 
-bottom_pcb();
+// move so the top is next to the bottom
+translate([main_width*2,0,0]) {
+  top();
+}
