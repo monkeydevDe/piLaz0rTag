@@ -1,8 +1,10 @@
 // the main width 
 main_width = 40;
 
-// height of the bottom module
-bottom_height = 20;
+// for the connectors
+breackout_width = 15;
+breackout_depth = 5; 
+
 
 // height of the top
 top_height = 5;
@@ -21,12 +23,16 @@ pcb_height = 1.6;
 
 // dome_radius
 dome_diameter = 25;
+dome_bottom_height = 4;
 
 // screw holes
 screw_diameter = 3;
 screw_offset = 2;
 
-//$fn = 25;
+// height of the bottom module
+bottom_height = bottom_thickness + dome_bottom_height + pcb_clearance + pcb_height;
+
+$fn = 15;
 
 // the bottom where the pcb is housing 
 module bottom() {  
@@ -91,6 +97,15 @@ module top() {
       cylinder(top_height,d = dome_diameter);
     }
     
+    center_breackout = (main_width-breackout_width) / 2;
+    translate([center_breackout,0,0]) {
+      cube([breackout_width, breackout_depth, top_height]);
+    }
+    
+    translate([center_breackout,main_width-breackout_depth,0]) {
+      cube([breackout_width, breackout_depth, top_height]);
+    }
+    
     screw_holes(top_height);
   }
   
@@ -121,5 +136,5 @@ bottom();
 
 // move so the top is next to the bottom
 translate([main_width*2,0,0]) {
-  //top();
+  top();
 }
