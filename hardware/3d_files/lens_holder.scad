@@ -1,17 +1,17 @@
-main_dia = 56;
-tube_dia = 50;
-tube_inner_dia = 48;
+main_dia = 43;
+tube_dia = 40.4;
+tube_inner_dia = 36;
 main_height = 20;
 
-lens_dia = 35;
+lens_dia = 35.5;
 lens_height = 3;
-lens_outline_dia = lens_dia - 2.5;
+lens_outline_dia = lens_dia - 3;
 lens_outline_height = 2; 
 
 
 lens_ring_dia = 40;
-lens_ring_height = 4;
-lens_ring_holder_width = 5;
+lens_ring_height = 2;
+lens_ring_holder_width = 3;
 lens_holder_depth = ((main_dia - lens_ring_dia) / 4) + 1; 
 
 ir_sender_tube_fix_length = 50;
@@ -53,7 +53,7 @@ module lens_holder() {
     }
   
     // hollow the rest
-    hollow_height = main_height - lens_outline_offset + lens_outline_height;
+    hollow_height = main_height - lens_outline_offset + lens_outline_height+5;
     cylinder(hollow_height, d = tube_dia);
   }
 }
@@ -108,10 +108,10 @@ translate([main_dia,0,0]) {
   lens_holder_ring();
 }
 
-translate([0,main_dia/2 +5,0]) {
+/*translate([0,main_dia/2 +5,0]) {
   ir_sender_tube_fix();
 }
 
 translate([0,-80,0]) {
   ir_sender_holder();
-}
+}*/
