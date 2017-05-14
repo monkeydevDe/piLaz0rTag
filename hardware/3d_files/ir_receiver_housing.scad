@@ -1,19 +1,19 @@
 // the main width 
-main_width = 40;
+main_width = 36;
 
 // for the connectors
 breackout_width = 15;
-breackout_depth = 5; 
+breackout_depth = 4; 
 
 
 // height of the top
-top_height = 5;
+top_height = 2.5;
 
 // how thick is the outer wall
 wall_thickness = 3;
 
 // how thick is the bottom
-bottom_thickness = 3; 
+bottom_thickness = 2; 
 
 // pcb sizes
 pcb_size = 30;
@@ -23,19 +23,19 @@ pcb_height = 1.6;
 
 // dome_radius
 dome_diameter = 25;
-dome_bottom_height = 4;
+dome_bottom_height = 5;
 
 // screw holes
-screw_diameter = 3;
-screw_offset = 2;
+screw_diameter = 3.2;
+screw_offset = 2.5;
 
 // height of the bottom module
 bottom_height = bottom_thickness + dome_bottom_height + pcb_clearance + pcb_height;
 
 $fn = 15;
 
-clamp_height = 3;
-clamp_pin_height = 2;
+clamp_height = 2;
+clamp_pin_height = 1;
 clamp_pin_width = 20;
 clamp_pin_thickness = 3;
 clamp_pin_offset = 4;
@@ -59,15 +59,16 @@ module bottom() {
         translate([-(corner_width/2),(corner_width/2),0]) {
           cube([hollow_width,hollow_width-corner_width,hollow_height]);
         }
-      }
-      
+      }  
     }
   }
-    
+  
   // place where to put the pcb
   translate([wall_thickness,wall_thickness,bottom_thickness]) {    
     pcb_holder();
-  }
+  }    
+    
+  
   
 };
 
@@ -75,18 +76,18 @@ module bottom() {
 module pcb_holder() {
   difference() {
     pcb_holder_height = pcb_clearance + pcb_height;
-    pcb_holder_width = main_width - (2*wall_thickness);    
-    cube([pcb_holder_width,pcb_holder_width,pcb_holder_height]);
-    
+    pcb_holder_width = main_width - (2*wall_thickness);            
+    cube([pcb_holder_width,pcb_holder_width,pcb_holder_height]);    
+
     // clearance
-    center_clearance =  pcb_outline_width * 2;
+    center_clearance =  pcb_outline_width;
     translate([center_clearance ,center_clearance ,0]) {  
       clearance_width = pcb_size - (2*pcb_outline_width);
       cube([clearance_width,clearance_width,pcb_clearance]);
     }
     
     // pcb
-    translate([pcb_outline_width ,pcb_outline_width ,pcb_clearance]) {
+    translate([0 ,0,pcb_clearance]) {
       cube([pcb_size,pcb_size,pcb_height]);
     }
   }
