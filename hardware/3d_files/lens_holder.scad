@@ -1,5 +1,6 @@
 main_dia = 56;
 tube_dia = 50;
+tube_inner_dia = 48;
 main_height = 20;
 
 lens_dia = 35;
@@ -17,6 +18,9 @@ ir_sender_tube_fix_length = 50;
 ir_sender_tube_fix_width = 8;
 ir_sender_tube_fix_height = 5; 
 ir_sender_tube_fix_slit_width  = 5;
+
+ir_sender_dia = tube_inner_dia;
+ir_sender_height = 5; 
 
 
 $fn=100;
@@ -80,12 +84,19 @@ module ir_sender_tube_fix() {
   }
 }
 
+/*module ir_sender_holder() {
+  difference() {
+    cylinder(ir_sender_height ,d=ir_sender_dia);
+  }
+}*
 
-lens_holder();
+ir_sender_holder();
+
+/*lens_holder();
 translate([main_dia,0,0]) {
   lens_holder_ring();
 }
 
 translate([0,main_dia/2 +5,0]) {
   ir_sender_tube_fix();
-}
+}*/
