@@ -20,7 +20,9 @@ ir_sender_tube_fix_height = 5;
 ir_sender_tube_fix_slit_width  = 5;
 
 ir_sender_dia = tube_inner_dia;
-ir_sender_height = 5; 
+ir_sender_height = 3; 
+ir_sender_pcb_width = 18;
+ir_sender_pcb_height = 1.6;
 
 
 $fn=100;
@@ -84,19 +86,32 @@ module ir_sender_tube_fix() {
   }
 }
 
-/*module ir_sender_holder() {
+module ir_sender_holder() {
   difference() {
-    cylinder(ir_sender_height ,d=ir_sender_dia);
+    translate([ir_sender_dia/2,ir_sender_dia/2,.0]) {
+      cylinder(ir_sender_height,d=ir_sender_dia);    
+    }
+    
+    
+    center_pcb = (ir_sender_dia - ir_sender_pcb_width) / 2;
+    translate([center_pcb,center_pcb,ir_sender_height-ir_sender_pcb_height]) {
+      cube([ir_sender_pcb_width,ir_sender_pcb_width,ir_sender_pcb_height]);
+    }
   }
-}*
+}
 
-ir_sender_holder();
 
-/*lens_holder();
+
+
+lens_holder();
 translate([main_dia,0,0]) {
   lens_holder_ring();
 }
 
 translate([0,main_dia/2 +5,0]) {
   ir_sender_tube_fix();
-}*/
+}
+
+translate([0,-80,0]) {
+  ir_sender_holder();
+}
