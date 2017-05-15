@@ -9,55 +9,9 @@ class WS2812LedHandler extends BaseLedHandler {
     super();
 
     //this._initServerProcess();
-
-    this.serverConnected = false;
-
-    this.net = require('net');
-
-    this._connectToServer();
-
-
-
+    this.webserver = require('../web/Webserver');
   }
 
-  _connectToServer() {
-    if(this.serverConnected === true) {
-      this.log.info('WS2812LED: Connected');
-      return;
-    }
-
-    this.client = new this.net.Socket();
-
-    let instance = this;
-
-    this.client.connect(this.settings.WS2812_CFG.PORT, this.settings.WS2812_CFG.HOST, function() {
-      instance.log.info('WS2812LED: Connected: ' + instance.settings.WS2812_CFG.HOST + ':' + instance.settings.WS2812_CFG.PORT);
-      instance.serverConnected = true;
-    });
-
-    this.client.on('error',function(data) {
-      instance._handleNotConnected();
-    });
-
-    this.client.on('data', function(data) {
-      instance.log.debug('WS2812LED: server answer: '+data);
-      if(data.lastIndexOf('Not OK:') === 0) {
-        instance.log.error('WS2812LED: server error: '+data);
-      }
-    });
-
-    this.client.on('close', function() {
-      instance._handleNotConnected();
-    });
-  }
-
-  _handleNotConnected() {
-    let instance = this;
-    this.serverConnected = false;
-    setTimeout(function() {
-      instance._connectToServer();
-    },1000);
-  }
   
 
   /**
@@ -94,14 +48,10 @@ class WS2812LedHandler extends BaseLedHandler {
   }
 
   _writeColordToServer(colors) {
-
-    if(this.serverConnected === false) {
-      return;
-    }
-
     let data = 'C'+colors;
     this.log.debug('WS2812LED: sending to server: '+data);
-    this.client.write(data);
+    this.webserver.sendDataOverSocket('ws2812led',data);
+
   }
 }
 

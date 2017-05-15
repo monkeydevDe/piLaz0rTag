@@ -19,7 +19,7 @@ class SSD1306Server {
     this.lastPlayerState = null;
 
 
-    let instance = this;
+    const instance = this;
     this.socketIo.on('connect', function(){
       instance.log.info('SSD1306Server: Connected to '+instance.socketHost);
     });

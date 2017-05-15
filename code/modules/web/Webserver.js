@@ -63,7 +63,6 @@ class Webserver extends BaseClass {
    * @param data the payload data
    */
   sendDisplayDataOverSocket(type,data) {
-
     let socketData = {
       'type' : type,
       'data' : data
@@ -82,9 +81,6 @@ class Webserver extends BaseClass {
     this.socketIo.emit(type, data);
   }
 
-  _cleanUpInternal() {
-    this.expApp.close();
-  }
 }
 
 // run as a singleton is this the right way ?
