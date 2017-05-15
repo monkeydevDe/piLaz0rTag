@@ -8,17 +8,17 @@ class BaseDisplay extends BaseClass {
     let instance = this;
 
     // register on the display game update event
-    this.eventHandler.gameEvents.GAME_DATA_UPDATE.on(function(game) {
-      instance.handleUpdateGameStatus(game);
+    this.eventHandler.gameEvents.GAME_DATA_UPDATE.on(function(gameStatus) {
+      instance.handleUpdateGameStatus(gameStatus);
     });
 
     this.eventHandler.mainEvents.STATE_CHANGED.on(function(state) {
        instance.handleMainStateChanged(state);
     });
 
-    /*this.eventHandler.gameEvents.GAME_OVER.on(function() {
+    this.eventHandler.gameEvents.GAME_OVER.on(function() {
       instance.handleGameOver();
-    });*/
+    });
   }
 
   /**

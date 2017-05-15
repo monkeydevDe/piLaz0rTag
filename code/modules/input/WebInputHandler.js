@@ -20,7 +20,7 @@ class WebInputHandler extends BaseInputHandler {
       }
 
       if(msg.type === 'reload') {
-        instance.triggerReload();
+        instance.triggerReload(msg.value);
       }
     });
   }
