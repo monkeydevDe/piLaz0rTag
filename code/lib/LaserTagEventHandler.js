@@ -73,6 +73,8 @@ class LaserTagEventHandler extends EventEmitter {
       IR_HIT_MESSAGE: null,
       // Is called when the data in the game has changed like health, magazine, lives etc
       GAME_DATA_UPDATE: null,
+      // The game is over
+      GAME_OVER: null
     }
     this._createEvents('GAME', this.gameEvents);
 

@@ -17,6 +17,10 @@ class WebSocketDisplay extends BaseDisplay {
     this.log.debug('Webdisplay: Main game state changed to: '+state);
     this.webserver.sendDisplayDataOverSocket('state_changed',state);
   }
+
+  handleGameOver() {
+    this.webserver.sendDisplayDataOverSocket('game_over',{});
+  }
 }
 
 module.exports = new WebSocketDisplay();

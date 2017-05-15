@@ -77,7 +77,6 @@ class Webserver extends BaseClass {
    * @param data
    */
   sendDataOverSocket(type,data) {
-    this.log.debug('Websocket: sending type: '+type);
     this.socketIo.emit(type, data);
   }
 

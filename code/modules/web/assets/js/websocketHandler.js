@@ -65,6 +65,11 @@ $(function() {
       return;
     }
 
+    if(msg.type === 'game_over') {
+      $.blockUI({message: '<h1>GAME OVER</h1>'});
+      return;
+    }
+
     if(msg.type === 'state_changed') {
 
       $('.mainDisplay').hide();

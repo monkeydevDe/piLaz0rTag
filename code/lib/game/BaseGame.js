@@ -79,11 +79,8 @@ class BaseGame extends BaseClass {
    * This is called when the player is respawend.
    */
   handleRespawnDone() {
-
     this.log.info('Game: Player respawning done.');
-
     this.eventHandler.ledEvents.STOP_BLINK.emit(this);
-    
     // reset game status
     this.player.status.health = this.player.health;
     this.player.status.roundsInMag = this.player.roundsPerMag;
@@ -137,13 +134,17 @@ class BaseGame extends BaseClass {
         this.player.status.lives--;
         this.log.info('Game: Player lives: '+this.player.status.lives);
 
+
+        if(this.player.status.lives <= 0) {
+          this.eventHandler.gameEvents.GAME_OVER.emit();
+          return;
+        }
+
         this.player.status.respawning = true;
         this.log.info('Game: Respawn player in: '+this.player.respawnTime);
-
         this.eventHandler.ledEvents.START_BLINK.emit({type: 'respawn', game: this});
         this.eventHandler.gameEvents.PLAYER_DIED.emit();
-
-        let instance = this;
+        const instance = this;
         setTimeout(function() {
           instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
         },this.player.respawnTime);
