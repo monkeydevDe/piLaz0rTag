@@ -29,10 +29,10 @@ $(function() {
   });
 
   // bind click event to buttons to emit data over the websocket
-  $('.socketMsg').on('click', function() {
-    var msgType = $(this).data('messageType');
-    var msgVal = $(this).data('messageValue');
-    socket.emit('socketMessage', {"type": msgType, "value": msgVal});
+  $('.socketMsgBtn').on('mousedown', function() {
+    sendButtonState(this,'down');
+  }).on('mouseup',function() {
+    sendButtonState(this,'up');
   });
 
 
@@ -92,6 +92,11 @@ $(function() {
 
 
   });
+
+  function sendButtonState(btnObj,status) {
+    var msgType = $(btnObj).data('messageType');
+    socket.emit('socketMessage', {"type": msgType, "value": status});
+  }
 
   function startGame(socket) {
     let gameData = {

@@ -23,7 +23,7 @@ class GpioInputHandler extends BaseInputHandler {
     
     this.triggerBtn.watch(function(err, value) {
       if(value === 0) {
-        instance.triggerShoot();
+        instance.triggerShot();
       }
     });
 

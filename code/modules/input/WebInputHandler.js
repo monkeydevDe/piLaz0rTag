@@ -16,7 +16,7 @@ class WebInputHandler extends BaseInputHandler {
     this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
 
       if(msg.type === 'shoot') {
-        instance.triggerShoot();
+        instance.triggerShot(msg.value);
       }
 
       if(msg.type === 'reload') {

@@ -47,7 +47,9 @@ class LaserTagEventHandler extends EventEmitter {
       // when the shoot button is triggered
       SHOOT_BTN: null,
       // when the reload button is triggerd
-      RELOAD_BTN: null
+      RELOAD_BTN: null,
+      // when to change the weapon mode
+      MODE_BTN: null
     }
     this._createEvents('BUTTON', this.buttonEvents);
 

@@ -18,13 +18,15 @@ class Player {
     this.reloadTime = reloadTime;
     this.shootDelay = shootDelay;
     this.respawnTime = respawnTime;
+    this.weaponMode = ['single','semi','full'];
 
-    // here all statuses are stored whgich will change current a game
+    // here all statuses are stored which will change current a game
     this.status = {
       health : this.health,
       mags : mags,
       lives : this.lives,
       roundsInMag : this.roundsPerMag,
+      weaponMode: 'single',
       reloading : false,
       shot : false,
       respawning: false,
