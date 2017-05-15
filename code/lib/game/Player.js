@@ -3,8 +3,6 @@ class Player {
 
   constructor(id,team,lives,health,respawnTime,shootStrength,mags,roundsPerMag,reloadTime,shootDelay) {
 
-    this.log = require('../Logger');
-
     const os = require('os');
 
     this.uniqueId = os.hostname();
@@ -35,36 +33,6 @@ class Player {
         on: false
       }
     }
-  }
-
-  checkPlayerStatus() {
-
-    if(this.status.lives <= 0) {
-      this.log.debug('Player: Player has no lives left no action');
-      return false;
-    }
-
-    if(this.status.health <= 0) {
-      this.log.debug('Player: Player is dead no action');
-      return false;
-    }
-
-    if(this.status.respawning == true) {
-      this.log.debug('Player: Player is respawning no action');
-      return false;
-    }
-
-    return true;
-  }
-
-  checkPlayerStatusWithReload() {
-
-    if(this.status.reloading == true) {
-      this.log.debug('Player: Player is currently reloading no action');
-      return false;
-    }
-
-    return this.checkPlayerStatus();
   }
 }
 

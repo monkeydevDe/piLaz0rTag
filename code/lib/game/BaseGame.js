@@ -113,7 +113,7 @@ class BaseGame extends BaseClass {
   onHit(strength) {
     this.log.info('Game: got hit with: '+strength);
 
-    let playerActionStatus = this.player.checkPlayerStatus();
+    let playerActionStatus = this.checkPlayerStatus();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to get a hit.');
       return;
@@ -164,7 +164,7 @@ class BaseGame extends BaseClass {
   shoot() {
     this.log.info('Game: Shoot');
 
-    let playerActionStatus = this.player.checkPlayerStatusWithReload();
+    let playerActionStatus = this.checkPlayerStatusWithReload();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to perform shooting.');
       return;
@@ -200,7 +200,7 @@ class BaseGame extends BaseClass {
   reload() {
     this.log.info('Game: Reload');
 
-    let playerActionStatus = this.player.checkPlayerStatusWithReload();
+    let playerActionStatus = this.checkPlayerStatusWithReload();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to perform reloading.');
       return;
@@ -235,6 +235,44 @@ class BaseGame extends BaseClass {
     this.player.status.roundsInMag = this.player.roundsPerMag;
     this.player.status.mags--;
     this.propergateGameStatus();
+  }
+
+  /**
+   * Check if the player is alive
+   * @returns {*}
+   */
+  checkPlayerStatus() {
+
+    if(this.player.status.lives <= 0) {
+      this.log.debug('Player: Player has no lives left no action');
+      return false;
+    }
+
+    if(this.player.status.health <= 0) {
+      this.log.debug('Player: Player is dead no action');
+      return false;
+    }
+
+    if(this.player.status.respawning == true) {
+      this.log.debug('Player: Player is respawning no action');
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if the player is alive and if so if he is reloading
+   * @returns {*}
+   */
+  checkPlayerStatusWithReload() {
+
+    if(this.player.status.reloading == true) {
+      this.log.debug('Player: Player is currently reloading no action');
+      return false;
+    }
+
+    return this.checkPlayerStatus();
   }
 
 }
