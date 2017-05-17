@@ -11,7 +11,7 @@ class Webserver extends BaseClass {
   constructor() {
     super();
     this.log.info('Starting webserver');
-    let express = require('express');
+    const express = require('express');
     this.expApp = require('express')();
     this.http = require('http').Server(this.expApp);
     this.socketIo = require('socket.io')(this.http);
@@ -20,21 +20,7 @@ class Webserver extends BaseClass {
     this.masterSocketIo = this.socketIo .of('/master');
 
 
-
-    /**
-     * We need a socket interface
-     */
-    this.expApp.get('/', function(req, res) {
-      res.sendFile(__dirname + '/html/interface_new.html');
-    });
-
-
-    this.expApp.use('/templates', express.static(__dirname+'/html/templates'));
-    this.expApp.use('/jquery', express.static('./node_modules/jquery/dist'));
-    this.expApp.use('/block-ui', express.static('./node_modules/block-ui'));
-    this.expApp.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
-    this.expApp.use('/knockout',express.static('./node_modules/knockout/build/output'));
-    this.expApp.use('/assets', express.static(__dirname + '/assets'));
+    this._declareExpressUses(express);
 
     let instance = this;
     this.socketIo.on('connection', function(socket) {
@@ -72,6 +58,23 @@ class Webserver extends BaseClass {
     this.http.listen(this.settings.WEBSERVER_PORT, function() {
       instance.log.info('Webserver listens on *:' + instance.settings.WEBSERVER_PORT);
     });
+  }
+
+  /**
+   * Some express use path setup.
+   * @private
+   */
+  _declareExpressUses(express) {
+    this.expApp.get('/', function(req, res) {
+      res.sendFile(__dirname + '/html/interface_new.html');
+    });
+
+    this.expApp.use('/templates', express.static(__dirname+'/html/templates'));
+    this.expApp.use('/jquery', express.static('./node_modules/jquery/dist'));
+    this.expApp.use('/block-ui', express.static('./node_modules/block-ui'));
+    this.expApp.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
+    this.expApp.use('/knockout',express.static('./node_modules/knockout/build/output'));
+    this.expApp.use('/assets', express.static(__dirname + '/assets'));
   }
 
   /**
