@@ -35,14 +35,12 @@ class PiLazorTag extends BaseClass {
     // when a game is running this holds the instance.
     this.currentGame = null;
 
-    let instance = this;
+    const instance = this;
 
-    this.emitCurrentState();
 
     this.eventHandler.mainEvents.GET_STATE.on(function() {
       instance.emitCurrentState();
     });
-
 
     this.eventHandler.mainEvents.GAME_SETUP.on(function(gameSetupData){
       instance.setupGame(gameSetupData);
@@ -52,12 +50,24 @@ class PiLazorTag extends BaseClass {
        instance.stopGame();
     });
 
+    this.eventHandler.mainEvents.MASTER_MODE.on(function() {
+      instance.enterMasterMode();
+    });
+
     this.eventHandler.mainEvents.GAME_STARTED.on(function() {
       instance.log.info('PiLaz0rTag: Game is running.');
       instance.currentState = instance.mainStates.GAME_RUNNING;
       instance.emitCurrentState();
       instance.currentGame.propergateGameStatus();
     });
+  }
+
+  /**
+   * Will set the current state to master mode
+   */
+  enterMasterMode() {
+    this.currentState = this.mainStates.MASTER_MODE;
+    this.emitCurrentState();
   }
 
   /**
