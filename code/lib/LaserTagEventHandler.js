@@ -33,12 +33,17 @@ class LaserTagEventHandler extends EventEmitter {
     };
     this._createEvents('MAIN', this.mainEvents);
 
+
     /**
      * Register the events for websocket stuff
      */
     this.webSocketEvents = {
       // When the websocket received a message of the type: socketMessage
-      SOCKET_MESSAGE_RECEIVED: null
+      SOCKET_MESSAGE_RECEIVED: null,
+      // when a client connected on the master namespace
+      MASTER_CLIENT_CONNECTED: null,
+      // when a client disconnected on the master namespace
+      MASTER_CLIENT_DISCONNECTED: null
     }
     this._createEvents('WS', this.webSocketEvents);
 

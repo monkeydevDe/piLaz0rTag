@@ -6,7 +6,11 @@ const { BaseClass } = require('./../BaseClass');
 class MasterMode extends BaseClass {
   constructor() {
     super();
+
+    this.log.info("Mastermode: Starting master mode.");
+
     this.clients = {};
+    this.webserver = require('../../modules/web/Webserver');
     // set the first mode
     this.currentGameMode = this.settings.GAME_MODES[0];
   }
@@ -14,6 +18,7 @@ class MasterMode extends BaseClass {
   changeGameMode(newGameMode) {
     this.log.info("MasterMode: Change gameMode from: "+this.currentGameMode+" to: "+newGameMode);
     this.currentGameMode = newGameMode;
+    this.changedGameSettings();
   }
 
   /**
@@ -41,7 +46,13 @@ class MasterMode extends BaseClass {
    * When game settings like start time scoring points etc where changed
    */
   changedGameSettings() {
-
+    const settings = {
+      avaibleGameModes:this.settings.GAME_MODES,
+      currentGameMode: this.currentGameMode
+    };
+    this.webserver.sendMasterModeData('settings',settings);
   }
 
 }
+
+exports.MasterMode = MasterMode;

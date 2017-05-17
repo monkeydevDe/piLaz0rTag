@@ -2,6 +2,11 @@
  * The actual main class of the PiLazorTag
  */
 const { BaseClass } = require('./BaseClass');
+
+// TODO Perhaps put this in a factory like for games
+const { MasterMode } = require('./modes/MasterMode');
+const { ClientMode } = require('./modes/ClientMode');
+
 const { Player } = require('./game/Player');
 
 
@@ -35,6 +40,9 @@ class PiLazorTag extends BaseClass {
     // when a game is running this holds the instance.
     this.currentGame = null;
 
+    // when a mode client/master/setup is set it is holded here
+    this.currentMode = null;
+
     const instance = this;
 
 
@@ -66,6 +74,7 @@ class PiLazorTag extends BaseClass {
    * Will set the current state to master mode
    */
   enterMasterMode() {
+    this.currentMode = new MasterMode();
     this.currentState = this.mainStates.MASTER_MODE;
     this.emitCurrentState();
   }

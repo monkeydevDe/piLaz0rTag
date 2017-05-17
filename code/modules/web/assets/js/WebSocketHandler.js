@@ -12,6 +12,8 @@ class WebSocketHandler {
     this.$ = $;
     this.socket = io();
 
+    this.masterSocket = null;
+
     this.socket.on( 'disconnect', function () {
       $.blockUI({message: '<h1><span class="glyphicon glyphicon-refresh"></span> Connection lost. Wait until reconnect</h1>'});
     });
@@ -75,5 +77,9 @@ class WebSocketHandler {
           wsHandlerInstance.$('#mainContentWrapper').html(stream);
         });
     }
+  }
+
+  connectToMasterSocket() {
+    this.masterSocket = io('/master');
   }
 }

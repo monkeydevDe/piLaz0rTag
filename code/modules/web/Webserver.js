@@ -56,6 +56,17 @@ class Webserver extends BaseClass {
       });
     });
 
+    // register handlers for the master client mode on websockets
+    this.masterSocketIo.on('connection', function(socket) {
+     instance.log.info('Websocket_Master: A user connected.');
+     instance.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.emit();
+
+      socket.on('disconnect', function() {
+        instance.log.info('Websocket_Master: A user disconnected');
+        instance.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.emit();
+      });
+    });
+
 
     // start the webserver
     this.http.listen(this.settings.WEBSERVER_PORT, function() {
