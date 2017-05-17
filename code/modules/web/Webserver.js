@@ -16,6 +16,10 @@ class Webserver extends BaseClass {
     this.http = require('http').Server(this.expApp);
     this.socketIo = require('socket.io')(this.http);
 
+    // this is for master mode all clients will connect here and only here the data for master client is send
+    this.masterSocketIo = this.socketIo .of('/master');
+
+
 
     /**
      * We need a socket interface
@@ -80,6 +84,15 @@ class Webserver extends BaseClass {
    */
   sendDataOverSocket(type,data) {
     this.socketIo.emit(type, data);
+  }
+
+  /**
+   * Sends data over the master socket.
+   * @param type the type of the message
+   * @param data the payload to send
+   */
+  sendMasterModeData(type,data) {
+    this.masterSocketIo.emit(type,data);
   }
 
 }

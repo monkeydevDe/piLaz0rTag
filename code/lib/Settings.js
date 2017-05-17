@@ -18,6 +18,13 @@ class Settings {
     this.DEBUG_LEVEL = 'debug';
     this.DEBUG_EVENTS = false;
 
+    /**
+     * The available game modes
+     * @type {[*]}
+     */
+    this.GAME_MODES = ['DeathMatch','TeamDeathMatch'];
+
+
     this.modules = {
       DISPLAY: userCfg.modules.DISPLAY || 'WEB',
       INPUT: userCfg.modules.INPUT || 'NONE',
