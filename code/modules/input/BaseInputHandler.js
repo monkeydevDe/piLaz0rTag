@@ -8,17 +8,31 @@ class BaseInputHandler extends BaseClass {
   /**
    * Is called when the input wants to trigger a shoot event.
    */
-  triggerShoot() {
-    this.eventHandler.buttonEvents.SHOOT_BTN.emit();
+  triggerShot(state) {
+    if(state === 'down') {
+      this.eventHandler.buttonEvents.SHOOT_BTN.emit();
+    }
   }
-
   
   /**
    * When to reload
    */
-  triggerReload() {
-    this.eventHandler.buttonEvents.RELOAD_BTN.emit();
+  triggerReload(state) {
+    if(state === 'down') {
+      this.eventHandler.buttonEvents.RELOAD_BTN.emit();
+    }
   }
+
+
+  /**
+   * When to change the mode of the weapon
+   */
+  triggerModeSwitch(state) {
+    if(state === 'down') {
+      this.eventHandler.buttonEvents.MODE_BTN.emit();
+    }
+  }
+
 }
 
 exports.BaseInputHandler = BaseInputHandler;

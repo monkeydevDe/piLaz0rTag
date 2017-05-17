@@ -12,7 +12,7 @@ class WebSocketGameMsgHandler extends BaseClass {
         instance.eventHandler.mainEvents.GAME_SETUP.emit(msg.value);
       }
 
-      if(msg.type === 'stop_game') {
+      if(msg.type === 'stop_game' && msg.value === 'down') {
         instance.eventHandler.mainEvents.GAME_STOP.emit();
       }
 

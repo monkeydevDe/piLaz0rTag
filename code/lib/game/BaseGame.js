@@ -79,11 +79,8 @@ class BaseGame extends BaseClass {
    * This is called when the player is respawend.
    */
   handleRespawnDone() {
-
     this.log.info('Game: Player respawning done.');
-
     this.eventHandler.ledEvents.STOP_BLINK.emit(this);
-    
     // reset game status
     this.player.status.health = this.player.health;
     this.player.status.roundsInMag = this.player.roundsPerMag;
@@ -106,7 +103,7 @@ class BaseGame extends BaseClass {
    * This will emit all events which handle the game status.
    */
   propergateGameStatus() {
-    this.eventHandler.gameEvents.GAME_DATA_UPDATE.emit(this);
+    this.eventHandler.gameEvents.GAME_DATA_UPDATE.emit(this.player);
   }
 
   /**
@@ -116,7 +113,7 @@ class BaseGame extends BaseClass {
   onHit(strength) {
     this.log.info('Game: got hit with: '+strength);
 
-    let playerActionStatus = this.player.checkPlayerStatus();
+    let playerActionStatus = this.checkPlayerStatus();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to get a hit.');
       return;
@@ -137,13 +134,17 @@ class BaseGame extends BaseClass {
         this.player.status.lives--;
         this.log.info('Game: Player lives: '+this.player.status.lives);
 
+
+        if(this.player.status.lives <= 0) {
+          this.eventHandler.gameEvents.GAME_OVER.emit();
+          return;
+        }
+
         this.player.status.respawning = true;
         this.log.info('Game: Respawn player in: '+this.player.respawnTime);
-
         this.eventHandler.ledEvents.START_BLINK.emit({type: 'respawn', game: this});
         this.eventHandler.gameEvents.PLAYER_DIED.emit();
-
-        let instance = this;
+        const instance = this;
         setTimeout(function() {
           instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
         },this.player.respawnTime);
@@ -163,7 +164,7 @@ class BaseGame extends BaseClass {
   shoot() {
     this.log.info('Game: Shoot');
 
-    let playerActionStatus = this.player.checkPlayerStatusWithReload();
+    let playerActionStatus = this.checkPlayerStatusWithReload();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to perform shooting.');
       return;
@@ -199,7 +200,7 @@ class BaseGame extends BaseClass {
   reload() {
     this.log.info('Game: Reload');
 
-    let playerActionStatus = this.player.checkPlayerStatusWithReload();
+    let playerActionStatus = this.checkPlayerStatusWithReload();
     if(playerActionStatus == false) {
       this.log.info('Game: Player is not in the status to perform reloading.');
       return;
@@ -234,6 +235,44 @@ class BaseGame extends BaseClass {
     this.player.status.roundsInMag = this.player.roundsPerMag;
     this.player.status.mags--;
     this.propergateGameStatus();
+  }
+
+  /**
+   * Check if the player is alive
+   * @returns {*}
+   */
+  checkPlayerStatus() {
+
+    if(this.player.status.lives <= 0) {
+      this.log.debug('Player: Player has no lives left no action');
+      return false;
+    }
+
+    if(this.player.status.health <= 0) {
+      this.log.debug('Player: Player is dead no action');
+      return false;
+    }
+
+    if(this.player.status.respawning == true) {
+      this.log.debug('Player: Player is respawning no action');
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if the player is alive and if so if he is reloading
+   * @returns {*}
+   */
+  checkPlayerStatusWithReload() {
+
+    if(this.player.status.reloading == true) {
+      this.log.debug('Player: Player is currently reloading no action');
+      return false;
+    }
+
+    return this.checkPlayerStatus();
   }
 
 }

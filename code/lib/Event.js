@@ -22,6 +22,7 @@ class Event {
    * @param cleanUpFunction when true this listener is added to the clean up array.
    */
   on(callback, cleanUpFunction = false) {
+
     let onCall = function(payload) {
       callback(payload);
     };

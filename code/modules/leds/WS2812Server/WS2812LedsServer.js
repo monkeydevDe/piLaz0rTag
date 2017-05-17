@@ -4,7 +4,6 @@ class WS2812LedsServer {
 
   constructor() {
     this.ws281x = require('rpi-ws281x-native');
-    this.net = require('net');
     this.log = require('../../../lib/Logger');
     this.settings = require('../../../lib/Settings');
 
@@ -16,78 +15,59 @@ class WS2812LedsServer {
 
     this.pixelData = new Uint32Array(this.numLeds);
 
-    this.pixelData[0] = 0x00FF00;
-
     this.ws281x.render(this.pixelData);
 
-    let instance = this;
+    this.socketHost = 'http://localhost:'+this.settings.WEBSERVER_PORT;
+    this.socketIo = require('socket.io-client')(this.socketHost);
+
+    const instance = this;
+
+    this.socketIo.on('connect', function(){
+      instance.log.info('WS2812LedServer: Connected to '+instance.socketHost);
+    });
+
+    this.socketIo.on('ws2812led', function(data){
+
+      const stringData = data.toString().trim();
+
+      instance.log.debug('WS2812LedServer: Data received: ' + stringData);
+
+      // split the data
+      const splitData = stringData.split(',');
+
+      // take the first element from the array which is the command
+      var command = splitData.shift();
+      instance.log.debug('WS2812LedServer: Got command: ' + command);
+
+      switch(command) {
+        case 'B':
+          instance.log.info('WS2812LedServer: Got Brightness command');
+          let msg1 = instance.setBrightness(splitData);
+          if(msg1 !== null) {
+            return;
+          }
+          break;
+        case 'C':
+          instance.log.info('WS2812LedServer: Got Color command');
+          let msg = instance.setColor(splitData);
+          if(msg !== null) {
+            return;
+          }
+          break;
+        default:
+          instance.log.error('WS2812LedServer: Got unknown command: ' + command);
+          return;
+      }
+
+    });
+
+
     process.on('SIGINT', function() {
-      instance.ws281x.reset();
+      instance.socketIo.close();
       process.nextTick(function() {
         process.exit(0);
       });
     });
-
-
-    const HOST = this.settings.WS2812_CFG.HOST;
-    const PORT = this.settings.WS2812_CFG.PORT;
-
-    this.log.info('Net: starting server on: ' + HOST + ':' + PORT);
-
-    this.net.createServer(function(sock) {
-
-      // We have a connection - a socket object is assigned to the connection automatically
-      instance.log.info('Net: Connect from: ' + sock.remoteAddress + ':' + sock.remotePort);
-
-      // Add a 'data' event handler to this instance of socket
-      sock.on('data', function(data) {
-
-        const stringData = data.toString().trim();
-
-        instance.log.debug('Net: Data from ' + sock.remoteAddress + ' received: ' + stringData);
-
-        // split the data
-        const splitData = stringData.split(',');
-
-
-        // take the first element from the array which is the command
-        var command = splitData.shift();
-        instance.log.debug('Led: Got command: ' + command);
-
-        switch(command) {
-          case 'B':
-            instance.log.info('LED: Got Brightness command');
-            let msg1 = instance.setBrightness(splitData);
-            if(msg1 !== null) {
-              sock.write('Not OK: ' + msg1);
-              return;
-            }
-            break;
-          case 'C':
-            instance.log.info('LED: Got Color command');
-            let msg = instance.setColor(splitData);
-            if(msg !== null) {
-              sock.write('Not OK: ' + msg);
-              return;
-            }
-            break;
-          default:
-            instance.log.error('LED: Got unknown command: ' + command);
-            sock.write('NOT OK: Unkown command: ' + command);
-            return;
-        }
-
-
-        // Write the data back to the socket, the client will receive it as data from the server
-        sock.write('OK');
-      });
-
-      // Add a 'close' event handler to this instance of socket
-      sock.on('close', function(data) {
-        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-      });
-
-    }).listen(PORT, HOST);
   }
 
   /**

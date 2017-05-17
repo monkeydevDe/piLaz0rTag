@@ -29,6 +29,10 @@ class BaseSoundHandler extends BaseClass {
     this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.on(function() {
       instance._playSound('mag_empty');
     });
+
+    /*this.eventHandler.gameEvents.GAME_OVER.on(function() {
+      instance._playSound('gameover');
+    });*/
   }
   
 
