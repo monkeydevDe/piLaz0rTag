@@ -1,6 +1,8 @@
 class MainStates {
 
   constructor() {
+    // select mode
+    this.SELECT_MODE = 'SELECT_MODE',
     // master_mode to open a lobby
     this.MASTER_MODE = 'MASTER_MODE',
     // setup the game

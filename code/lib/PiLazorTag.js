@@ -28,7 +28,7 @@ class PiLazorTag extends BaseClass {
 
 
     // the current status of the main game
-    this.currentState = this.mainStates.SETUP;
+    this.currentState = this.mainStates.SELECT_MODE;
 
     this.gameFactory = require('./game/GameFactory');
 
@@ -77,7 +77,7 @@ class PiLazorTag extends BaseClass {
     this.currentGame.cleanUpEvents();
     this.currentGame = null;
     delete this.currentGame;
-    this.currentState = this.mainStates.SETUP;
+    this.currentState = this.mainStates.SELECT_MODE;
     this.emitCurrentState();
   }
 

@@ -21,9 +21,11 @@ class Webserver extends BaseClass {
      * We need a socket interface
      */
     this.expApp.get('/', function(req, res) {
-      res.sendFile(__dirname + '/html/interface.html');
+      res.sendFile(__dirname + '/html/interface_new.html');
     });
 
+
+    this.expApp.use('/templates', express.static(__dirname+'/html/templates'));
     this.expApp.use('/jquery', express.static('./node_modules/jquery/dist'));
     this.expApp.use('/block-ui', express.static('./node_modules/block-ui'));
     this.expApp.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
