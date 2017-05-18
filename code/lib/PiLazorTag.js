@@ -1,13 +1,13 @@
 /**
  * The actual main class of the PiLazorTag
  */
-const { BaseClass } = require('./BaseClass');
+const {BaseClass} = require('./BaseClass');
 
 // TODO Perhaps put this in a factory like for games
-const { MasterMode } = require('./modes/MasterMode');
-const { ClientMode } = require('./modes/ClientMode');
+const {MasterMode} = require('./modes/MasterMode');
+const {ClientMode} = require('./modes/ClientMode');
 
-const { Player } = require('./game/Player');
+const {Player} = require('./game/Player');
 
 
 class PiLazorTag extends BaseClass {
@@ -18,10 +18,10 @@ class PiLazorTag extends BaseClass {
 
     this.log.info('PiLazorTag: Starting main game handler.');
 
-    if(this.settings.DEBUG_LEVEL) {
+    if (this.settings.DEBUG_LEVEL) {
       this.log.info('===============================================');
       //Loop over all Settings
-      for(let vars in this.settings.modules)
+      for (let vars in this.settings.modules)
         this.log.info(vars + ': ' + this.settings.modules[vars]);
       this.log.info('===============================================');
     }
@@ -46,23 +46,23 @@ class PiLazorTag extends BaseClass {
     const instance = this;
 
 
-    this.eventHandler.mainEvents.GET_STATE.on(function() {
+    this.eventHandler.mainEvents.GET_STATE.on(function () {
       instance.emitCurrentState();
     });
 
-    this.eventHandler.mainEvents.GAME_SETUP.on(function(gameSetupData){
+    this.eventHandler.mainEvents.GAME_SETUP.on(function (gameSetupData) {
       instance.setupGame(gameSetupData);
     });
 
-    this.eventHandler.mainEvents.GAME_STOP.on(function() {
-       instance.stopGame();
+    this.eventHandler.mainEvents.GAME_STOP.on(function () {
+      instance.stopGame();
     });
 
-    this.eventHandler.mainEvents.CHANGE_STATE.on(function(stateToSet) {
+    this.eventHandler.mainEvents.CHANGE_STATE.on(function (stateToSet) {
       instance._changeState(stateToSet);
     });
 
-    this.eventHandler.mainEvents.GAME_STARTED.on(function() {
+    this.eventHandler.mainEvents.GAME_STARTED.on(function () {
       instance.log.info('PiLaz0rTag: Game is running.');
       instance.currentState = instance.mainStates.GAME_RUNNING;
       instance.emitCurrentState();
@@ -73,29 +73,36 @@ class PiLazorTag extends BaseClass {
   /**
    * Will change the state
    */
-  _changeState(stateToSet) {
+  _changeState(stateData) {
 
-   this.currentState = null;
-   this.currentMode = null;
+    const stateToSet = stateData.state;
 
-   if(stateToSet === 'MASTER_MODE') {
-     this.currentMode = new MasterMode();
-     this.currentState = this.mainStates.MASTER_MODE;;
+    this.currentState = null;
+    this.currentMode = null;
+    delete this.currentMode;
+
+    if (stateToSet === 'MASTER_MODE') {
+      this.currentMode = new MasterMode();
+      this.currentState = this.mainStates.MASTER_MODE;
     }
 
-    if(stateToSet === 'SELECT_MODE') {
-     this.currentState = this.mainStates.SELECT_MODE;
+    if (stateToSet === 'CLIENT_MODE') {
+      this.currentMode = new ClientMode(stateData.data.host);
+      this.currentState = this.mainStates.CLIENT_MODE;
     }
 
-    if(this.currentState === null) {
-     this.log.error('PiLazorTag: No state for: '+stateToSet+' found !');
-     return;
+    if (stateToSet === 'SELECT_MODE') {
+      this.currentState = this.mainStates.SELECT_MODE;
     }
 
-    this.log.info('PiLazorTag: changed to state: '+this.currentState);
+    if (this.currentState === null) {
+      this.log.error('PiLazorTag: No state for: ' + stateToSet + ' found !');
+      return;
+    }
+
+    this.log.info('PiLazorTag: changed to state: ' + this.currentState);
     this.emitCurrentState();
   }
-
 
 
   /**
@@ -115,8 +122,8 @@ class PiLazorTag extends BaseClass {
    */
   setupGame(gameData) {
 
-    this.log.info('PiLaz0rTag: Starting new game: '+gameData);
-    
+    this.log.info('PiLaz0rTag: Starting new game: ' + gameData);
+
     const player = new Player(
       gameData.player.id,
       gameData.player.team,
@@ -134,10 +141,10 @@ class PiLazorTag extends BaseClass {
 
     this.emitCurrentState();
 
-    this.log.info('PiLaz0rTag: game is ready and will start in: '+gameData.gameStartTime);
+    this.log.info('PiLaz0rTag: game is ready and will start in: ' + gameData.gameStartTime);
 
     let instance = this;
-    setTimeout(function() {
+    setTimeout(function () {
       instance.eventHandler.mainEvents.GAME_STARTED.emit();
     }, gameData.gameStartTime);
   }

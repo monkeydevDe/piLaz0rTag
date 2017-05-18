@@ -18,7 +18,7 @@ class WebSocketGameMsgHandler extends BaseClass {
 
       // we become master
       if(msg.type === 'change_state') {
-        instance.eventHandler.mainEvents.CHANGE_STATE.emit(msg.value.state);
+        instance.eventHandler.mainEvents.CHANGE_STATE.emit(msg.value);
       }
     });
   }

@@ -2,9 +2,11 @@ class MainStates {
 
   constructor() {
     // select mode
-    this.SELECT_MODE = 'SELECT_MODE',
+    this.SELECT_MODE = 'SELECT_MODE';
     // master_mode to open a lobby
-    this.MASTER_MODE = 'MASTER_MODE',
+    this.MASTER_MODE = 'MASTER_MODE';
+    // client mode 
+    this.CLIENT_MODE = 'CLIENT_MODE';
     // setup the game
     this.SETUP = 'SETUP';
     // when the game is starting and the countdown is running

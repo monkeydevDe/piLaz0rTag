@@ -37,8 +37,12 @@ class WebSocketHandler {
    * Handles to send a new state over the socket
    * @param state
    */
-  sendNewState(state) {
-    wsHandlerInstance.sendSocketMessage('change_state',{state: state});
+  sendNewState(state,data) {
+    const dataToSend = {
+      state: state,
+      data: data
+    }
+    wsHandlerInstance.sendSocketMessage('change_state',dataToSend);
   }
 
   /**
