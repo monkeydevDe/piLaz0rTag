@@ -38,9 +38,7 @@ class WebSocketHandler {
    * @param state
    */
   sendNewState(state) {
-    if(state === 'master_mode') {
-      wsHandlerInstance.sendSocketMessage('master_mode',{});
-    }
+    wsHandlerInstance.sendSocketMessage('change_state',{state: state});
   }
 
   /**

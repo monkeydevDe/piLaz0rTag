@@ -58,8 +58,8 @@ class PiLazorTag extends BaseClass {
        instance.stopGame();
     });
 
-    this.eventHandler.mainEvents.MASTER_MODE.on(function() {
-      instance.enterMasterMode();
+    this.eventHandler.mainEvents.CHANGE_STATE.on(function(stateToSet) {
+      instance._changeState(stateToSet);
     });
 
     this.eventHandler.mainEvents.GAME_STARTED.on(function() {
@@ -71,13 +71,32 @@ class PiLazorTag extends BaseClass {
   }
 
   /**
-   * Will set the current state to master mode
+   * Will change the state
    */
-  enterMasterMode() {
-    this.currentMode = new MasterMode();
-    this.currentState = this.mainStates.MASTER_MODE;
+  _changeState(stateToSet) {
+
+   this.currentState = null;
+   this.currentMode = null;
+
+   if(stateToSet === 'MASTER_MODE') {
+     this.currentMode = new MasterMode();
+     this.currentState = this.mainStates.MASTER_MODE;;
+    }
+
+    if(stateToSet === 'SELECT_MODE') {
+     this.currentState = this.mainStates.SELECT_MODE;
+    }
+
+    if(this.currentState === null) {
+     this.log.error('PiLazorTag: No state for: '+stateToSet+' found !');
+     return;
+    }
+
+    this.log.info('PiLazorTag: changed to state: '+this.currentState);
     this.emitCurrentState();
   }
+
+
 
   /**
    * This will stop the current game and will go to SETUP

@@ -18,8 +18,8 @@ class LaserTagEventHandler extends EventEmitter {
      * Register the events which handle the main loop like DISPLAY_SETUP game mode etc
      */
     this.mainEvents = {
-      // become a game master
-      MASTER_MODE: null,
+      // changes the current state of the programm like master client game
+      CHANGE_STATE: null,
       //When the main class changes its state payload is the state of the game
       STATE_CHANGED: null,
       // When something needs the main state this event can be emitted and has to listen fo the STATE_CHANGED
