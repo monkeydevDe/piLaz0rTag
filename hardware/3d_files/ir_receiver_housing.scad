@@ -2,8 +2,9 @@
 main_width = 36;
 
 // for the connectors
-breackout_width = 15;
+breackout_width = 17;
 breackout_depth = 4; 
+breackout_height = 5;
 
 
 // height of the top
@@ -47,6 +48,15 @@ module bottom() {
     cube([main_width, main_width, bottom_height]);    
     
     screw_holes(bottom_height);
+    
+    // breakouts
+    brackout_offset = (main_width - breackout_width) / 2;
+    translate([brackout_offset,0,bottom_height-breackout_height]) {
+      cube([breackout_width,wall_thickness,breackout_height]);
+    }    
+    translate([brackout_offset,main_width-wall_thickness,bottom_height-breackout_height]) {
+      cube([breackout_width,wall_thickness,breackout_height]);
+    }
     
     // hollow the cube
     hollow_width = main_width - (wall_thickness * 2);
