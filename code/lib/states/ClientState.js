@@ -1,9 +1,9 @@
 const { BaseClass } = require('./../BaseClass');
 
 /**
- * Handles the mode when being a client.
+ * Handles the state when being a client.
  */
-class ClientMode extends BaseClass {
+class ClientState extends BaseClass {
 
   /**
    * Constructor
@@ -33,4 +33,4 @@ class ClientMode extends BaseClass {
 
 }
 
-exports.ClientMode = ClientMode;
+exports.ClientState = ClientState;

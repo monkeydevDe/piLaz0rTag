@@ -1,9 +1,9 @@
 const { BaseClass } = require('./../BaseClass');
 
 /**
- * Handles the Lobby Master Mode
+ * Handles the Lobby Master State
  */
-class MasterMode extends BaseClass {
+class MasterState extends BaseClass {
   constructor() {
     super();
 
@@ -55,4 +55,4 @@ class MasterMode extends BaseClass {
 
 }
 
-exports.MasterMode = MasterMode;
+exports.MasterState = MasterState;
