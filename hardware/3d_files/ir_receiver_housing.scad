@@ -28,7 +28,7 @@ dome_bottom_height = 5;
 
 // screw holes
 screw_diameter = 3.2;
-screw_offset = 2.5;
+screw_offset = 2.6;
 
 // height of the bottom module
 bottom_height = bottom_thickness + dome_bottom_height + pcb_clearance + pcb_height;
