@@ -11,10 +11,20 @@ class MasterState extends BaseState {
     this.log.info("MasterState: Starting master state.");
 
     this.clients = {};
+
+    if(this.settings.MASTER_MODE_ADD_LOCAL_CLIENT === true) {
+      this.log.info('MasterState: Add local client');
+      const localClient = new ClientSetupData('local');
+      localClient.uniqueId = 'local'
+      this.clients['local'] = localClient;
+    }
+
     this.webserver = require('../../modules/web/Webserver');
 
     // set the first game mode
     this.currentGameMode = this.settings.GAME_MODES[0];
+
+    this.gameStartTime = 1000;
 
     const instance = this;
 
@@ -89,6 +99,7 @@ class MasterState extends BaseState {
       avaibleShotStrength: this.settings.SHOT_STRENGTH,
       maxPlayerId: this.settings.MAX_PLAYER_ID,
       currentGameMode: this.currentGameMode,
+      gameStartTime: this.gameStartTime,
       clients: this.clients
     };
     // tell all clients that the state has ben updated

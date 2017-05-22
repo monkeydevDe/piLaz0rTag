@@ -14,9 +14,8 @@ class MasterStateGuiHandler {
    * @param data
    */
   handleStateDataUpdate(data) {
-    console.error(data);
-
     this._updateGameModeSelect(data);
+    this._updateStartTime(data);
     this._updateClients(data);
 
   }
@@ -35,6 +34,10 @@ class MasterStateGuiHandler {
     }
   }
 
+  _updateStartTime(data) {
+    $('#master_start_time').val(data.gameStartTime);
+  }
+
   /**
    * Displays the clients
    * @param data
@@ -50,9 +53,7 @@ class MasterStateGuiHandler {
     }
 
     $('#master_clients').html('');
-    //TODO: Add a template or knockout engine here ?
     $.each(data.clients, function (idx, client) {
-      console.error(client);
       $('#master_clients').append('<div class="panel panel-info">' +
         '<div class="panel-heading">' + client.uniqueId + '</div>' +
         '<div class="panel-body">' +

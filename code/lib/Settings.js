@@ -30,6 +30,8 @@ class Settings {
 
     this.MAX_PLAYER_ID = 32;
 
+    this.MASTER_MODE_ADD_LOCAL_CLIENT = true;
+
 
     this.modules = {
       DISPLAY: userCfg.modules.DISPLAY || 'WEB',
