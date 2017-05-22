@@ -103,7 +103,7 @@ class BaseGame extends BaseClass {
    * This will emit all events which handle the game status.
    */
   propergateGameStatus() {
-    this.eventHandler.mainEvents.STATE_DATA_UPDATE.emit(this.player);
+    this.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(this.player);
   }
 
   /**

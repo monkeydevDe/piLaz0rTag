@@ -22,8 +22,11 @@ class ClientState extends BaseState {
 
     this.socketIo = require('socket.io-client')(this.socketMasterHost + '/master');
 
+    this.socketId = null;
+
     const instance = this;
-    this.socketIo.on('connect', function() {
+    this.socketIo.on('connect', function(e) {
+      instance.socketId = instance.socketIo.io.engine.id;
       instance.log.info('ClientState: Connected to ' + instance.socketMasterHost);
       // send uniqueId to master
       instance.socketIo.emit('message', {type: 'setUniqueId', data: instance.uniqueId});
@@ -41,8 +44,15 @@ class ClientState extends BaseState {
      */
     this.socketIo.on('updateData', function(msg) {
       instance.log.info('ClientState: Master sends data to update.');
-      console.error(msg);
-      instance.eventHandler.mainEvents.STATE_DATA_UPDATE.emit(msg);
+      instance.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(msg);
+    });
+
+    /**
+     * When the game has to start
+     */
+    this.socketIo.on('startGame', function(msg) {
+      // get only the data for the client
+      const masterChannelClientId = '/master#'+instance.socketId;
     });
   }
 

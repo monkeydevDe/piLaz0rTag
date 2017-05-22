@@ -29,38 +29,39 @@ class MasterState extends BaseState {
     const instance = this;
 
     // when a client connected over the master data socket
-    this.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.on(function(socketId) {
+    this.addEvent(this.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.on(function(socketId) {
       instance._newClientConnected(socketId);
-    },true);
+    },true));
 
     // when a client disconnected over the master data socket
-    this.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.on(function(socketId) {
+    this.addEvent(this.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.on(function(socketId) {
       instance._clientDisconnected(socketId);
-    },true);
+    },true));
 
     // when a client send some data to the master
-    this.eventHandler.webSocketEvents.SOCKET_MASTER_MESSAGE_RECEIVED.on(function(eventMsg) {
+    this.addEvent(this.eventHandler.webSocketEvents.SOCKET_MASTER_MESSAGE_RECEIVED.on(function(eventMsg) {
       if(eventMsg.msg.type === 'setUniqueId') {
         instance._setUniqueIdOnClient(eventMsg.socketId,eventMsg.msg.data)
       }
-    },true);
+    },true));
 
-    this.eventHandler.mainEvents.UPDATE_STATE_DATA.on(function(masterData) {
-      instance._updateMasterData(masterData);
-    },true);
+    this.addEvent(this.eventHandler.mainEvents.UPDATE_STATE_DATA.on(function(masterData) {
+      if(masterData.type === 'data') {
+        instance._updateMasterData(masterData.value);
+      }
+
+      if(masterData.type === 'start_game') {
+        instance._startGame();
+      }
+    },true));
 
 
     // when a local client wants the current state
-    this.eventHandler.mainEvents.GET_STATE_DATA.on(function() {
-      instance._changedGameSettings();
-    },true);
+    this.addEvent(this.eventHandler.mainEvents.GET_STATE_DATA.on(function() {
+      instance._broadCastData();
+    },true));
   }
-
-  changeGameMode(newGameMode) {
-    this.log.info("MasterState: Change gameMode from: "+this.currentGameMode+" to: "+newGameMode);
-    this.currentGameMode = newGameMode;
-    this.changedGameSettings();
-  }
+  
 
   /**
    * When a new client connected to the master
@@ -77,7 +78,7 @@ class MasterState extends BaseState {
     this.log.info('MasterState: A client disconnected with socketId: '+socketId);
     this.clients[socketId] = null;
     delete this.clients[socketId];
-    this._changedGameSettings();
+    this._broadCastData();
   }
 
   /**
@@ -89,7 +90,7 @@ class MasterState extends BaseState {
   _setUniqueIdOnClient(socketId,uniqueId) {
     this.log.info('MasterState: Set uniqueId: '+uniqueId+' at client with socketId: '+socketId);
     this.clients[socketId].uniqueId = uniqueId;
-    this._changedGameSettings();
+    this._broadCastData();
   }
 
   /**
@@ -119,14 +120,14 @@ class MasterState extends BaseState {
        }
      }
 
-     this._changedGameSettings();
+     this._broadCastData();
   }
 
 
   /**
    * When game settings like start time scoring points etc where changed
    */
-  _changedGameSettings() {
+  _broadCastData() {
     const settings = {
       avaibleGameModes: this.settings.GAME_MODES,
       avaibleTeams: this.settings.TEAMS,
@@ -140,7 +141,16 @@ class MasterState extends BaseState {
     this.webserver.sendMasterModeData('updateData',settings);
 
     // tell the local program that the state has changed
-    this.eventHandler.mainEvents.STATE_DATA_UPDATE.emit(settings);
+    this.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(settings);
+  }
+
+  /**
+   * Tells all the clients that a game is starting
+   * @private
+   */
+  _startGame() {
+    this.log.info('MasterState: Tell all clients to start a new game.');
+
   }
 }
 

@@ -6,6 +6,7 @@ const {BaseClass} = require('./BaseClass');
 // TODO Perhaps put this in a factory like for games
 const {MasterState} = require('./states/MasterState');
 const {ClientMode} = require('./states/ClientState');
+const {StartGameState} = require('./states/StartGameState');
 
 const {Player} = require('./game/Player');
 
@@ -41,7 +42,7 @@ class PiLazorTag extends BaseClass {
     this.currentGame = null;
 
     // when a mode client/master/setup is set it is holded here
-    this.currentMode = null;
+    this.currentStateInstance = null;
 
     const instance = this;
 
@@ -58,8 +59,8 @@ class PiLazorTag extends BaseClass {
       instance.stopGame();
     });
 
-    this.eventHandler.mainEvents.CHANGE_STATE.on(function (stateToSet) {
-      instance._changeState(stateToSet);
+    this.eventHandler.mainEvents.CHANGE_STATE.on(function(stateData) {
+      instance._changeState(stateData);
     });
 
     this.eventHandler.mainEvents.GAME_STARTED.on(function () {
@@ -78,20 +79,28 @@ class PiLazorTag extends BaseClass {
     const stateToSet = stateData.state;
 
     this.currentState = null;
-    this.currentMode = null;
-    delete this.currentMode;
+    if(this.currentStateInstance !== undefined && this.currentStateInstance !== null) {
+      this.currentStateInstance.cleanUpEvents();
+    }
+    this.currentStateInstance = null;
+    delete this.currentStateInstance;
 
-    if (stateToSet === 'MASTER_MODE') {
-      this.currentMode = new MasterState();
+    if (stateToSet === this.mainStates.MASTER_MODE) {
+      this.currentStateInstance = new MasterState();
       this.currentState = this.mainStates.MASTER_MODE;
     }
 
-    if (stateToSet === 'CLIENT_MODE') {
-      this.currentMode = new ClientMode(stateData.data.host);
+    if (stateToSet === this.mainStates.CLIENT_MODE) {
+      this.currentStateInstance = new ClientMode(stateData.data.host);
       this.currentState = this.mainStates.CLIENT_MODE;
     }
 
-    if (stateToSet === 'SELECT_MODE') {
+    if(stateToSet === this.mainStates.GAME_STARTING) {
+      this.currentStateInstance = new StartGameState(stateData.data);
+      this.currentState = this.mainStates.GAME_STARTING;
+    }
+
+    if (stateToSet === this.mainStates.SELECT_MODE) {
       this.currentState = this.mainStates.SELECT_MODE;
     }
 

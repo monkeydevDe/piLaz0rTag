@@ -30,7 +30,11 @@ class MasterStateGuiHandler {
          }
       });
 
-      wsHandlerInstance.sendSocketMessage('update_current_state_data',masterData);
+      wsHandlerInstance.sendSocketMessage('update_current_state_data',{type : 'data', value: masterData});
+    });
+
+    $(document.body).on('click','#master_start_game_btn',function() {
+      wsHandlerInstance.sendSocketMessage('update_current_state_data',{type : 'start_game'});
     });
 
   }
@@ -254,4 +258,4 @@ class MasterStateGuiHandler {
 
     return htmlContent;
   }
-}
+};

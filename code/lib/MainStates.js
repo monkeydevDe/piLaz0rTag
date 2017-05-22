@@ -7,8 +7,6 @@ class MainStates {
     this.MASTER_MODE = 'MASTER_MODE';
     // client mode 
     this.CLIENT_MODE = 'CLIENT_MODE';
-    // setup the game
-    this.SETUP = 'SETUP';
     // when the game is starting and the countdown is running
     this.GAME_STARTING = 'GAME_STARTING';
     // when the countdown stoped and the game is running
