@@ -24,6 +24,12 @@ class Settings {
      */
     this.GAME_MODES = ['DeathMatch','TeamDeathMatch'];
 
+    this.TEAMS = ['green','red','blue','yellow'];
+
+    this.SHOT_STRENGTH = [25,50,75,100];
+
+    this.MAX_PLAYER_ID = 32;
+
 
     this.modules = {
       DISPLAY: userCfg.modules.DISPLAY || 'WEB',
@@ -69,6 +75,7 @@ class Settings {
       FUNC1_GPIO: 19,
       FUNC2_GPIO: 26
     }
+
   }
 }
 

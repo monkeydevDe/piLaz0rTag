@@ -82,7 +82,7 @@ class WebSocketHandler {
 
     if(state === 'MASTER_MODE') {
       templateName = 'Master';
-      wsHandlerInstance.currentStateHandler = new MasterStateGuiHandler(wsHandlerInstance.$);
+      wsHandlerInstance.currentStateHandler = new MasterStateGuiHandler();
     }
 
     // when a template was loaded display it

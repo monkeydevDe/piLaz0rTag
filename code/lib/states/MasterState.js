@@ -84,7 +84,10 @@ class MasterState extends BaseState {
    */
   _changedGameSettings() {
     const settings = {
-      avaibleGameModes:this.settings.GAME_MODES,
+      avaibleGameModes: this.settings.GAME_MODES,
+      avaibleTeams: this.settings.TEAMS,
+      avaibleShotStrength: this.settings.SHOT_STRENGTH,
+      maxPlayerId: this.settings.MAX_PLAYER_ID,
       currentGameMode: this.currentGameMode,
       clients: this.clients
     };

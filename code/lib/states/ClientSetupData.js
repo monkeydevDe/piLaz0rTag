@@ -7,7 +7,7 @@ class ClientSetupData {
     this.socketId = socketId;
 
     this.uniqueId = '';
-    this.id = 1;
+    this.playerId = 1;
     this.team = '';
     this.health = 100;
     this.mags = 3;
