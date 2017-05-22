@@ -26,5 +26,12 @@ class BaseState extends BaseClass {
       this.eventsToClean[idx].removeCleanupListeners();
     }
   }
+
+  /**
+   * Can be called when there is an internal clean up
+   */
+  internalCleanup() {
+
+  }
 }
 exports.BaseState = BaseState;

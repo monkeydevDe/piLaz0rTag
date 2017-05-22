@@ -13,7 +13,7 @@ class StartGameState extends BaseState {
     const instance = this;
 
     setTimeout(function () {
-      instance.log.error('StartGameState: STAAART');
+      instance.eventHandler.mainEvents.CHANGE_STATE.emit({state: 'GAME_RUNNING', data: gameData});;
     }, gameData.gameStartTime);
   }
 

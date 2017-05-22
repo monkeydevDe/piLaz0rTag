@@ -31,10 +31,7 @@ class BaseGame extends BaseClass {
     this.addEventToGame(this.eventHandler.gameEvents.RELOAD_FINISHED.on(function() {
        instance.reloadDone();
     },true));
-
-    this.addEventToGame(this.eventHandler.gameEvents.GET_STATUS.on(function() {
-       instance.propergateGameStatus();
-    },true));
+    
 
     this.addEventToGame(this.eventHandler.gameEvents.IR_HIT_MESSAGE.on(function(hitData) {
        instance.handlePlayerHit(hitData);

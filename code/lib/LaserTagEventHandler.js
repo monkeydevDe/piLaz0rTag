@@ -29,13 +29,7 @@ class LaserTagEventHandler extends EventEmitter {
       // When something wants the current state data
       GET_STATE_DATA: null,
       // is called when something wants to update the state data
-      UPDATE_STATE_DATA: null,
-      // when to setup a game
-      GAME_SETUP: null,
-      // when the game starts
-      GAME_STARTED: null,
-      // stops the current game
-      GAME_STOP: null
+      UPDATE_STATE_DATA: null
     };
     this._createEvents('MAIN', this.mainEvents);
 
@@ -70,10 +64,6 @@ class LaserTagEventHandler extends EventEmitter {
 
 
     this.gameEvents = {
-      // when somebody wants to know the current status of the game
-      GET_STATUS: null,
-      // when the game starts
-      STARTED: null,
       // when to actual shoot we have to send an ir signal etc.
       SHOOT: null,
       // when reloading is done

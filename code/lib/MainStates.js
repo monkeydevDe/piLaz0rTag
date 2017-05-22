@@ -9,7 +9,7 @@ class MainStates {
     this.CLIENT_MODE = 'CLIENT_MODE';
     // when the game is starting and the countdown is running
     this.GAME_STARTING = 'GAME_STARTING';
-    // when the countdown stoped and the game is running
+    // when the countdown stopped and the game is running
     this.GAME_RUNNING = 'GAME_RUNNING';
   }
 }

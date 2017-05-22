@@ -7,8 +7,8 @@ const {BaseClass} = require('./BaseClass');
 const {MasterState} = require('./states/MasterState');
 const {ClientMode} = require('./states/ClientState');
 const {StartGameState} = require('./states/StartGameState');
+const {GameRunningState} = require('./states/GameRunningState');
 
-const {Player} = require('./game/Player');
 
 
 class PiLazorTag extends BaseClass {
@@ -36,12 +36,7 @@ class PiLazorTag extends BaseClass {
     // the current status of the main game
     this.currentState = this.mainStates.SELECT_MODE;
 
-    this.gameFactory = require('./game/GameFactory');
-
-    // when a game is running this holds the instance.
-    this.currentGame = null;
-
-    // when a mode client/master/setup is set it is holded here
+    // when a state client/master/setup is set it is holded here
     this.currentStateInstance = null;
 
     const instance = this;
@@ -51,24 +46,11 @@ class PiLazorTag extends BaseClass {
       instance.emitCurrentState();
     });
 
-    this.eventHandler.mainEvents.GAME_SETUP.on(function (gameSetupData) {
-      instance.setupGame(gameSetupData);
-    });
 
-    this.eventHandler.mainEvents.GAME_STOP.on(function () {
-      instance.stopGame();
-    });
-
-    this.eventHandler.mainEvents.CHANGE_STATE.on(function(stateData) {
+    this.eventHandler.mainEvents.CHANGE_STATE.on(function (stateData) {
       instance._changeState(stateData);
     });
 
-    this.eventHandler.mainEvents.GAME_STARTED.on(function () {
-      instance.log.info('PiLaz0rTag: Game is running.');
-      instance.currentState = instance.mainStates.GAME_RUNNING;
-      instance.emitCurrentState();
-      instance.currentGame.propergateGameStatus();
-    });
   }
 
   /**
@@ -81,6 +63,7 @@ class PiLazorTag extends BaseClass {
     this.currentState = null;
     if(this.currentStateInstance !== undefined && this.currentStateInstance !== null) {
       this.currentStateInstance.cleanUpEvents();
+      this.currentStateInstance.internalCleanup();
     }
     this.currentStateInstance = null;
     delete this.currentStateInstance;
@@ -100,6 +83,11 @@ class PiLazorTag extends BaseClass {
       this.currentState = this.mainStates.GAME_STARTING;
     }
 
+    if(stateToSet === this.mainStates.GAME_RUNNING) {
+      this.currentStateInstance = new GameRunningState(stateData.data);
+      this.currentState = this.mainStates.GAME_RUNNING;
+    }
+
     if (stateToSet === this.mainStates.SELECT_MODE) {
       this.currentState = this.mainStates.SELECT_MODE;
     }
@@ -114,49 +102,6 @@ class PiLazorTag extends BaseClass {
   }
 
 
-  /**
-   * This will stop the current game and will go to SETUP
-   */
-  stopGame() {
-    this.currentGame.cleanUpEvents();
-    this.currentGame = null;
-    delete this.currentGame;
-    this.currentState = this.mainStates.SELECT_MODE;
-    this.emitCurrentState();
-  }
-
-  /**
-   * Setups the current game
-   * @param gameData
-   */
-  setupGame(gameData) {
-
-    this.log.info('PiLaz0rTag: Starting new game: ' + gameData);
-
-    const player = new Player(
-      gameData.player.id,
-      gameData.player.team,
-      gameData.player.lives,
-      gameData.player.health,
-      gameData.player.respawnTime,
-      gameData.player.shootStrength,
-      gameData.player.mags,
-      gameData.player.roundsPerMag,
-      gameData.player.reloadTime,
-      gameData.player.shootDelay);
-
-    this.currentGame = this.gameFactory.initGame(gameData.mode, player);
-    this.currentState = this.mainStates.GAME_STARTING;
-
-    this.emitCurrentState();
-
-    this.log.info('PiLaz0rTag: game is ready and will start in: ' + gameData.gameStartTime);
-
-    let instance = this;
-    setTimeout(function () {
-      instance.eventHandler.mainEvents.GAME_STARTED.emit();
-    }, gameData.gameStartTime);
-  }
 
   /**
    * Emits the event with the current state
