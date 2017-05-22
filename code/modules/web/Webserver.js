@@ -75,7 +75,7 @@ class Webserver extends BaseClass {
         instance.log.debug('Websocket_Master msg: ' + msg.type);
         // emit the message over the application so the listeners can handle this
         const eventMsg = {socketId : socket.id, msg: msg};
-        instance.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.emit(eventMsg);
+        instance.eventHandler.webSocketEvents.SOCKET_MASTER_MESSAGE_RECEIVED.emit(eventMsg);
       });
     });
   }

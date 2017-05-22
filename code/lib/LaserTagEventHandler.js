@@ -26,6 +26,8 @@ class LaserTagEventHandler extends EventEmitter {
       STATE_DATA_UPDATE: null,
       // When something needs the main state this event can be emitted and has to listen fo the STATE_CHANGED
       GET_STATE: null,
+      // When something wants the current state data
+      GET_STATE_DATA: null,
       // when to setup a game
       GAME_SETUP: null,
       // when the game starts
@@ -84,8 +86,6 @@ class LaserTagEventHandler extends EventEmitter {
       PLAYER_HIT: null,
       // Is called when the player received a ir hit message payload: {'id': playerId, 'team': playerTeam, 'strength': strength}
       IR_HIT_MESSAGE: null,
-      // Is called when the data in the game has changed like health, magazine, lives etc
-      GAME_DATA_UPDATE: null,
       // The game is over
       GAME_OVER: null
     }

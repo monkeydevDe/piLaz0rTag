@@ -18,18 +18,27 @@ class MasterState extends BaseState {
 
     const instance = this;
 
+    // when a client connected over the master data socket
     this.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.on(function(socketId) {
       instance._newClientConnected(socketId);
     },true);
 
+    // when a client disconnected over the master data socket
     this.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.on(function(socketId) {
       instance._clientDisconnected(socketId);
     },true);
 
-    this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(eventMsg) {
+    // when a client send some data to the master
+    this.eventHandler.webSocketEvents.SOCKET_MASTER_MESSAGE_RECEIVED.on(function(eventMsg) {
       if(eventMsg.msg.type === 'setUniqueId') {
         instance._setUniqueIdOnClient(eventMsg.socketId,eventMsg.msg.data)
       }
+    },true);
+
+
+    // when a local client wants the current state
+    this.eventHandler.mainEvents.GET_STATE_DATA.on(function() {
+      instance._changedGameSettings();
     },true);
   }
 
@@ -79,7 +88,11 @@ class MasterState extends BaseState {
       currentGameMode: this.currentGameMode,
       clients: this.clients
     };
+    // tell all clients that the state has ben updated
     this.webserver.sendMasterModeData('updateData',settings);
+
+    // tell the local program that the state has changed
+    this.eventHandler.mainEvents.STATE_DATA_UPDATE.emit(settings);
   }
 }
 

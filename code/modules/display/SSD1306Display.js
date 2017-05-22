@@ -22,8 +22,8 @@ class SSD1306Display extends BaseDisplay {
     this._sendDataOverWebsocket('mainstate',state);
   }
 
-  handleUpdateGameStatus(gameStatus) {
-    this._sendDataOverWebsocket('gamestatus',gameStatus);
+  handleUpdateStateData(stateStatus) {
+    this._sendDataOverWebsocket('gamestatus',stateStatus);
   }
 
   _sendDataOverWebsocket(type,data) {
