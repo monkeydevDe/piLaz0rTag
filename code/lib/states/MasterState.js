@@ -1,22 +1,34 @@
-const { BaseClass } = require('./../BaseClass');
+const { BaseState } = require('./BaseState');
+const { ClientSetupData } = require('./ClientSetupData');
 
 /**
  * Handles the Lobby Master State
  */
-class MasterState extends BaseClass {
+class MasterState extends BaseState {
   constructor() {
     super();
 
-    this.log.info("Mastermode: Starting master mode.");
+    this.log.info("MasterState: Starting master state.");
 
     this.clients = {};
     this.webserver = require('../../modules/web/Webserver');
-    // set the first mode
+
+    // set the first game mode
     this.currentGameMode = this.settings.GAME_MODES[0];
+
+    const instance = this;
+
+    this.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.on(function(socketId) {
+      instance._newClientConnected(socketId);
+    },true);
+
+    this.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.on(function(socketId) {
+      instance._clientDisconnected(socketId);
+    },true);
   }
 
   changeGameMode(newGameMode) {
-    this.log.info("MasterMode: Change gameMode from: "+this.currentGameMode+" to: "+newGameMode);
+    this.log.info("MasterState: Change gameMode from: "+this.currentGameMode+" to: "+newGameMode);
     this.currentGameMode = newGameMode;
     this.changedGameSettings();
   }
@@ -24,15 +36,18 @@ class MasterState extends BaseClass {
   /**
    * When a new client connected to the master
    */
-  newClientConnected() {
-
+  _newClientConnected(socketId) {
+    this.log.info('MasterState: A new client connected with sockeId: '+socketId);
+    this.clients[socketId] = new ClientSetupData(socketId);
   }
 
   /**
   * when a client disconnected
   */
-  clientDisconnected() {
-
+  _clientDisconnected(socketId) {
+    this.log.info('MasterState: A client disconnected with sockeId: '+socketId);
+    this.clients[socketId] = null;
+    delete this.clients[socketId];
   }
 
   /**

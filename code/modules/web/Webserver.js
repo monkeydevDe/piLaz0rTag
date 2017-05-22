@@ -22,7 +22,7 @@ class Webserver extends BaseClass {
 
     this._declareExpressUses(express);
 
-    let instance = this;
+    const instance = this;
     this.socketIo.on('connection', function(socket) {
       instance.log.info('Websocket: A user connected');
 
@@ -42,21 +42,40 @@ class Webserver extends BaseClass {
       });
     });
 
-    // register handlers for the master client mode on websockets
-    this.masterSocketIo.on('connection', function(socket) {
-     instance.log.info('Websocket_Master: A user connected.');
-     instance.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.emit();
-
-      socket.on('disconnect', function() {
-        instance.log.info('Websocket_Master: A user disconnected');
-        instance.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.emit();
-      });
-    });
+    this._masterSocketSetup();
 
 
     // start the webserver
     this.http.listen(this.settings.WEBSERVER_PORT, function() {
       instance.log.info('Webserver listens on *:' + instance.settings.WEBSERVER_PORT);
+    });
+  }
+
+  /**
+   * Setups the master websocket which handles the main lobby mode of the game
+   * @private
+   */
+  _masterSocketSetup() {
+    const instance = this;
+
+    // register handlers for the master client mode on websockets
+    this.masterSocketIo.on('connection', function(socket) {
+      instance.log.info('Websocket_Master: A user connected.');
+
+      instance.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.emit(socket.id);
+
+      // handle client diconnecting
+      socket.on('disconnect', function() {
+        instance.log.info('Websocket_Master: A user disconnected');
+        instance.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.emit(socket.id);
+      });
+
+      socket.on('message', function(msg) {
+        instance.log.debug('Websocket_Master msg: ' + msg.type);
+
+        // emit the message over the application so the listeners can handle this
+        instance.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.emit(msg);
+      });
     });
   }
 

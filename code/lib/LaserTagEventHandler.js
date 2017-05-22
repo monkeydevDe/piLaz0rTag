@@ -40,6 +40,8 @@ class LaserTagEventHandler extends EventEmitter {
     this.webSocketEvents = {
       // When the websocket received a message of the type: socketMessage
       SOCKET_MESSAGE_RECEIVED: null,
+      // When a master message is send
+      SOCKET_MASTER_MESSAGE_RECEIVED: null,
       // when a client connected on the master namespace
       MASTER_CLIENT_CONNECTED: null,
       // when a client disconnected on the master namespace
