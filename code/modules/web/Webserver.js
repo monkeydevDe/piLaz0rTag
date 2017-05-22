@@ -64,17 +64,18 @@ class Webserver extends BaseClass {
 
       instance.eventHandler.webSocketEvents.MASTER_CLIENT_CONNECTED.emit(socket.id);
 
-      // handle client diconnecting
+      // handle client disconnecting
       socket.on('disconnect', function() {
         instance.log.info('Websocket_Master: A user disconnected');
         instance.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.emit(socket.id);
       });
 
+      // when a message was received
       socket.on('message', function(msg) {
         instance.log.debug('Websocket_Master msg: ' + msg.type);
-
         // emit the message over the application so the listeners can handle this
-        instance.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.emit(msg);
+        const eventMsg = {socketId : socket.id, msg: msg};
+        instance.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.emit(eventMsg);
       });
     });
   }

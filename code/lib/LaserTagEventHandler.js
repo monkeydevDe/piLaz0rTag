@@ -22,6 +22,8 @@ class LaserTagEventHandler extends EventEmitter {
       CHANGE_STATE: null,
       //When the main class changes its state payload is the state of the game
       STATE_CHANGED: null,
+      // is fired when the state data is updated
+      STATE_DATA_UPDATE: null,
       // When something needs the main state this event can be emitted and has to listen fo the STATE_CHANGED
       GET_STATE: null,
       // when to setup a game

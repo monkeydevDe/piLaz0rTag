@@ -25,6 +25,12 @@ class MasterState extends BaseState {
     this.eventHandler.webSocketEvents.MASTER_CLIENT_DISCONNECTED.on(function(socketId) {
       instance._clientDisconnected(socketId);
     },true);
+
+    this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(eventMsg) {
+      if(eventMsg.msg.type === 'setUniqueId') {
+        instance._setUniqueIdOnClient(eventMsg.socketId,eventMsg.msg.data)
+      }
+    },true);
   }
 
   changeGameMode(newGameMode) {
@@ -37,7 +43,7 @@ class MasterState extends BaseState {
    * When a new client connected to the master
    */
   _newClientConnected(socketId) {
-    this.log.info('MasterState: A new client connected with sockeId: '+socketId);
+    this.log.info('MasterState: A new client connected with socketId: '+socketId);
     this.clients[socketId] = new ClientSetupData(socketId);
   }
 
@@ -45,29 +51,36 @@ class MasterState extends BaseState {
   * when a client disconnected
   */
   _clientDisconnected(socketId) {
-    this.log.info('MasterState: A client disconnected with sockeId: '+socketId);
+    this.log.info('MasterState: A client disconnected with socketId: '+socketId);
     this.clients[socketId] = null;
     delete this.clients[socketId];
+    this._changedGameSettings();
   }
 
   /**
-   * When settings of a client where changed like team strength etc
+   * Sets the uniqueId at the client
+   * @param socketId
+   * @param uniqueId
+   * @private
    */
-  changedClientSettings() {
-
+  _setUniqueIdOnClient(socketId,uniqueId) {
+    this.log.info('MasterState: Set uniqueId: '+uniqueId+' at client with socketId: '+socketId);
+    this.clients[socketId].uniqueId = uniqueId;
+    this._changedGameSettings();
   }
+
 
   /**
    * When game settings like start time scoring points etc where changed
    */
-  changedGameSettings() {
+  _changedGameSettings() {
     const settings = {
       avaibleGameModes:this.settings.GAME_MODES,
-      currentGameMode: this.currentGameMode
+      currentGameMode: this.currentGameMode,
+      clients: this.clients
     };
-    this.webserver.sendMasterModeData('settings',settings);
+    this.webserver.sendMasterModeData('updateData',settings);
   }
-
 }
 
 exports.MasterState = MasterState;
