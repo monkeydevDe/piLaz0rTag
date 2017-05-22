@@ -51,8 +51,16 @@ class ClientState extends BaseState {
      * When the game has to start
      */
     this.socketIo.on('startGame', function(msg) {
+      instance.log.info('ClientState: Master sends start game command.');
       // get only the data for the client
       const masterChannelClientId = '/master#'+instance.socketId;
+      const localSettings = {
+        currentGameMode: msg.currentGameMode,
+        gameStartTime: msg.gameStartTime,
+        client: msg.clients[masterChannelClientId]
+      };
+
+      instance.eventHandler.mainEvents.CHANGE_STATE.emit({state: 'GAME_STARTING', data: localSettings});
     });
   }
 

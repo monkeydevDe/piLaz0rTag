@@ -151,6 +151,24 @@ class MasterState extends BaseState {
   _startGame() {
     this.log.info('MasterState: Tell all clients to start a new game.');
 
+    const settings = {
+      currentGameMode: this.currentGameMode,
+      gameStartTime: this.gameStartTime,
+      clients: this.clients
+    };
+
+    // tell all clients to start
+    this.webserver.sendMasterModeData('startGame',settings);
+
+    // tell local client to start
+    if(this.settings.MASTER_MODE_ADD_LOCAL_CLIENT === true) {
+      const localSettings = {
+        currentGameMode: this.currentGameMode,
+        gameStartTime: this.gameStartTime,
+        client: this.clients['local']
+      };
+      this.eventHandler.mainEvents.CHANGE_STATE.emit({state: 'GAME_STARTING', data: localSettings});
+    }
   }
 }
 

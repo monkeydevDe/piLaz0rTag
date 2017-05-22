@@ -8,12 +8,12 @@ class StartGameState extends BaseState {
   constructor(gameData) {
     super();
 
-    this.log.info('StartGameState: Starting new game: ' + gameData);
-
     this.log.info('StartGameState: game is ready and will start in: ' + gameData.gameStartTime);
 
+    const instance = this;
+
     setTimeout(function () {
-      instance.eventHandler.mainEvents.GAME_STARTED.emit();
+      instance.log.error('StartGameState: STAAART');
     }, gameData.gameStartTime);
   }
 

@@ -85,6 +85,10 @@ class WebSocketHandler {
       wsHandlerInstance.currentStateHandler = new MasterStateGuiHandler();
     }
 
+    if(state === 'GAME_STARTING') {
+      templateName = 'GameStarting';
+    }
+
     // when a template was loaded display it
     if(templateName !== '') {
       wsHandlerInstance.$.ajax('templates/'+templateName+'.html', { async: false })
