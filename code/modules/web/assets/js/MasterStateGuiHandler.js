@@ -3,8 +3,34 @@
  */
 class MasterStateGuiHandler {
   constructor() {
-    $(document.body).on('change', '#master_gameMode', function () {
-      alert($(this).val());
+    $(document.body).on('change', '[data-master-field]', function () {
+
+      let masterData = {
+        clients: {}
+      };
+
+      $('[data-master-field]').each(function(idx,input) {
+         const val = $(input).val();
+         const field = $(input).data('masterField');
+
+         // it is a client field
+         if(field.startsWith('client|') === true) {
+           const clientSplit = field.split('|');
+           const clientName = clientSplit[1];
+           const clientField = clientSplit[2];
+
+           if(masterData.clients[clientName] === undefined) {
+             masterData.clients[clientName] = {};
+           }
+
+           masterData.clients[clientName][clientField] = val;
+
+         } else {
+           masterData[field] = val;
+         }
+      });
+
+      console.error(masterData);
     });
 
   }
@@ -79,8 +105,7 @@ class MasterStateGuiHandler {
    */
   _generateRow(colOne, colTwo, colThree) {
 
-    const mdClass = (colThree === undefined) ? 'col-md-6' : 'col-md-4';
-
+    const mdClass = (colThree === undefined) ? 'col-xs-6' : 'col-xs-4';
 
     let htmlContent = '<div class="row">' +
       '<div class="' + mdClass + '">' + colOne + '</div>' +
@@ -105,7 +130,7 @@ class MasterStateGuiHandler {
   _generateShotStrength(client, data) {
     let htmlContent = '<div class="form-group">' +
       '<label>Shot Strength:</label>' +
-      '<select class="form-control">';
+      '<select class="form-control" data-master-field="client|'+client.uniqueId+'|shotStrength">';
     $.each(data.avaibleShotStrength, function (idx, shotStrength) {
       const selected = (shotStrength === client.shotStrength) ? 'selected' : '';
       htmlContent += '<option ' + selected + ' value="' + shotStrength + '">' + shotStrength + '</option>';
@@ -125,7 +150,7 @@ class MasterStateGuiHandler {
   _generatePlayerId(client, data) {
     let htmlContent = '<div class="form-group">' +
       '<label>Player Id:</label>' +
-      '<select class="form-control">';
+      '<select class="form-control"  data-master-field="client|'+client.uniqueId+'|playerId">';
     for (let playerId = 0; playerId < data.maxPlayerId; playerId++) {
       const selected = (playerId === client.playerId) ? 'selected' : '';
       htmlContent += '<option ' + selected + ' value="' + playerId + '">' + playerId + '</option>';
@@ -147,7 +172,7 @@ class MasterStateGuiHandler {
 
     let htmlContent = '<div class="form-group">' +
       '<label>Team</label>' +
-      '<select class="form-control">';
+      '<select class="form-control"  data-master-field="client|'+client.uniqueId+'|team">';
 
     $.each(data.avaibleTeams, function (idx, team) {
       const selected = (team === client.team) ? 'selected' : '';
@@ -167,7 +192,7 @@ class MasterStateGuiHandler {
    * @private
    */
   _generateHealth(client) {
-    return this._generateNumberInput(client.health, 'Health:', 25, 500);
+    return this._generateNumberInput(client,'health', 'Health:', 25, 500);
   }
 
   /**
@@ -176,7 +201,7 @@ class MasterStateGuiHandler {
    * @private
    */
   _generateLives(client) {
-    return this._generateNumberInput(client.lives, 'Lives:', 1, 25);
+    return this._generateNumberInput(client,'lives', 'Lives:', 1, 25);
   }
 
   /**
@@ -186,7 +211,7 @@ class MasterStateGuiHandler {
    * @private
    */
   _generateMags(client) {
-    return this._generateNumberInput(client.mags, 'Mags:', 1, 25);
+    return this._generateNumberInput(client,'mags', 'Mags:', 1, 25);
   }
 
   /**
@@ -196,35 +221,35 @@ class MasterStateGuiHandler {
    * @private
    */
   _generateRoundsPerMag(client) {
-    return this._generateNumberInput(client.roundsPerMag, 'Rounds per Mag:', 1, 150);
+    return this._generateNumberInput(client,'roundsPerMag', 'Rounds per Mag:', 1, 150);
   }
 
   _generateReloadTime(client) {
-    return this._generateNumberInput(client.reloadTime, 'Reload Time:', 1000, 10000);
+    return this._generateNumberInput(client,'reloadTime', 'Reload Time:', 1000, 10000);
   }
 
   _generateRespawnTime(client) {
-    return this._generateNumberInput(client.respawnTime, 'Respwan Time:', 1000, 100000);
+    return this._generateNumberInput(client,'respawnTime', 'Respwan Time:', 1000, 100000);
   }
 
   _generateShootDelay(client) {
-    return this._generateNumberInput(client.respawnTime, 'Shoot Delay:', 50, 100000);
+    return this._generateNumberInput(client,'respawnTime', 'Shoot Delay:', 50, 100000);
   }
 
 
   /**
    * Generates a number input
-   * @param currVal
+   * @param field
    * @param label
    * @param min
    * @param max
    * @returns {string}
    * @private
    */
-  _generateNumberInput(currVal, label, min, max) {
+  _generateNumberInput(client,field, label, min, max) {
     let htmlContent = '<div class="form-group">' +
       '<label>' + label + '</label>' +
-      '<input class="form-control" type="number" value="' + currVal + '" min="' + min + '" max="' + max + '" />' +
+      '<input class="form-control" data-master-field="client|'+client.uniqueId+'|'+field+'" type="number" value="' + client[field] + '" min="' + min + '" max="' + max + '" />' +
       '</div>';
 
     return htmlContent;
