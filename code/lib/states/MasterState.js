@@ -45,6 +45,10 @@ class MasterState extends BaseState {
       }
     },true);
 
+    this.eventHandler.mainEvents.UPDATE_STATE_DATA.on(function(masterData) {
+      instance._updateMasterData(masterData);
+    },true);
+
 
     // when a local client wants the current state
     this.eventHandler.mainEvents.GET_STATE_DATA.on(function() {
@@ -86,6 +90,36 @@ class MasterState extends BaseState {
     this.log.info('MasterState: Set uniqueId: '+uniqueId+' at client with socketId: '+socketId);
     this.clients[socketId].uniqueId = uniqueId;
     this._changedGameSettings();
+  }
+
+  /**
+   * Updates the state data on master
+   * @param masterData
+   * @private
+   */
+  _updateMasterData(masterData) {
+     this.log.info('MasterState: update data.');
+     this.currentGameMode = masterData.currentGameMode;
+     this.gameStartTime = masterData.gameStartTime;
+
+     for(let clientIdx in masterData.clients) {
+       const newClientState = masterData.clients[clientIdx];
+       if(this.clients[clientIdx] !== undefined) {
+         let client = this.clients[clientIdx];
+         client.team = newClientState.team;
+         client.playerId = Number(newClientState.playerId);
+         client.health = newClientState.health;
+         client.lives = newClientState.lives;
+         client.shotStrength = Number(newClientState.shotStrength);
+         client.mags = newClientState.mags;
+         client.roundsPerMag = newClientState.roundsPerMag;
+         client.shootDelay = newClientState.shootDelay;
+         client.respawnTime = newClientState.respawnTime;
+         client.reloadTime = newClientState.reloadTime;
+       }
+     }
+
+     this._changedGameSettings();
   }
 
 

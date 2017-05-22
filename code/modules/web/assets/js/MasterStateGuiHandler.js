@@ -30,7 +30,7 @@ class MasterStateGuiHandler {
          }
       });
 
-      console.error(masterData);
+      wsHandlerInstance.sendSocketMessage('update_current_state_data',masterData);
     });
 
   }
@@ -130,7 +130,7 @@ class MasterStateGuiHandler {
   _generateShotStrength(client, data) {
     let htmlContent = '<div class="form-group">' +
       '<label>Shot Strength:</label>' +
-      '<select class="form-control" data-master-field="client|'+client.uniqueId+'|shotStrength">';
+      '<select class="form-control" data-master-field="client|'+client.socketId+'|shotStrength">';
     $.each(data.avaibleShotStrength, function (idx, shotStrength) {
       const selected = (shotStrength === client.shotStrength) ? 'selected' : '';
       htmlContent += '<option ' + selected + ' value="' + shotStrength + '">' + shotStrength + '</option>';
@@ -150,7 +150,7 @@ class MasterStateGuiHandler {
   _generatePlayerId(client, data) {
     let htmlContent = '<div class="form-group">' +
       '<label>Player Id:</label>' +
-      '<select class="form-control"  data-master-field="client|'+client.uniqueId+'|playerId">';
+      '<select class="form-control"  data-master-field="client|'+client.socketId+'|playerId">';
     for (let playerId = 0; playerId < data.maxPlayerId; playerId++) {
       const selected = (playerId === client.playerId) ? 'selected' : '';
       htmlContent += '<option ' + selected + ' value="' + playerId + '">' + playerId + '</option>';
@@ -172,7 +172,7 @@ class MasterStateGuiHandler {
 
     let htmlContent = '<div class="form-group">' +
       '<label>Team</label>' +
-      '<select class="form-control"  data-master-field="client|'+client.uniqueId+'|team">';
+      '<select class="form-control"  data-master-field="client|'+client.socketId+'|team">';
 
     $.each(data.avaibleTeams, function (idx, team) {
       const selected = (team === client.team) ? 'selected' : '';
@@ -233,7 +233,7 @@ class MasterStateGuiHandler {
   }
 
   _generateShootDelay(client) {
-    return this._generateNumberInput(client,'respawnTime', 'Shoot Delay:', 50, 100000);
+    return this._generateNumberInput(client,'shootDelay', 'Shoot Delay:', 50, 100000);
   }
 
 
@@ -249,7 +249,7 @@ class MasterStateGuiHandler {
   _generateNumberInput(client,field, label, min, max) {
     let htmlContent = '<div class="form-group">' +
       '<label>' + label + '</label>' +
-      '<input class="form-control" data-master-field="client|'+client.uniqueId+'|'+field+'" type="number" value="' + client[field] + '" min="' + min + '" max="' + max + '" />' +
+      '<input class="form-control" data-master-field="client|'+client.socketId+'|'+field+'" type="number" value="' + client[field] + '" min="' + min + '" max="' + max + '" />' +
       '</div>';
 
     return htmlContent;

@@ -25,6 +25,10 @@ class WebSocketGameMsgHandler extends BaseClass {
       if(msg.type === 'get_current_state_data') {
         instance.eventHandler.mainEvents.GET_STATE_DATA.emit();
       }
+
+      if(msg.type === 'update_current_state_data') {
+        instance.eventHandler.mainEvents.UPDATE_STATE_DATA.emit(msg.value);
+      }
     });
   }
 }

@@ -28,6 +28,8 @@ class LaserTagEventHandler extends EventEmitter {
       GET_STATE: null,
       // When something wants the current state data
       GET_STATE_DATA: null,
+      // is called when something wants to update the state data
+      UPDATE_STATE_DATA: null,
       // when to setup a game
       GAME_SETUP: null,
       // when the game starts
