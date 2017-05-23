@@ -29,7 +29,7 @@ class GameRunningGuiHandler {
    */
   sendButtonState(btnObj, status) {
     let msgType = $(btnObj).data('messageType');
-    wsHandlerInstance.sendSocketMessage({type : msgType, value: status});
+    wsHandlerInstance.sendSocketMessage(msgType, status);
   }
 
   /**
