@@ -1,0 +1,28 @@
+<button class="btn state-btn" data-state="SELECT_MODE">Back</button>
+<button id="master_start_game_btn" class="btn btn-danger">Start</button>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="master_gameMode">Game Mode:</label>
+      <select class="form-control" data-master-field="currentGameMode" id="master_gameMode">
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="master_start_time">Starttime:</label>
+      <input type="number" class="form-control" data-master-field="gameStartTime" id="master_start_time" min="100"/>
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Clients</h3>
+  </div>
+  <div class="panel-body" id="master_clients">
+
+  </div>
+</div>

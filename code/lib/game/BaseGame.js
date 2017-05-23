@@ -6,13 +6,13 @@ const { BaseClass } = require('../BaseClass');
 
 class BaseGame extends BaseClass {
 
-  constructor(player, opts) {
+  constructor(gameState, opts) {
     super();
 
     this.opts = opts;
     
     this.id = new Date();
-    this.player = player;
+    this.gameState = gameState;
     this.eventsToClean = [];
 
     this.eventHandler.ledEvents.SET.emit(this);
@@ -31,10 +31,7 @@ class BaseGame extends BaseClass {
     this.addEventToGame(this.eventHandler.gameEvents.RELOAD_FINISHED.on(function() {
        instance.reloadDone();
     },true));
-
-    this.addEventToGame(this.eventHandler.gameEvents.GET_STATUS.on(function() {
-       instance.propergateGameStatus();
-    },true));
+    
 
     this.addEventToGame(this.eventHandler.gameEvents.IR_HIT_MESSAGE.on(function(hitData) {
        instance.handlePlayerHit(hitData);
@@ -67,7 +64,7 @@ class BaseGame extends BaseClass {
    * @param hitData
    */
   handlePlayerHit(hitData) {
-    if(this.player.team == hitData.team && this.player.id == hitData.id) {
+    if(this.gameState.team == hitData.team && this.gameState.id == hitData.id) {
       this.log.info('Game: You hit your self. Do nothing :)');
       return;
     }
@@ -82,10 +79,10 @@ class BaseGame extends BaseClass {
     this.log.info('Game: Player respawning done.');
     this.eventHandler.ledEvents.STOP_BLINK.emit(this);
     // reset game status
-    this.player.status.health = this.player.health;
-    this.player.status.roundsInMag = this.player.roundsPerMag;
-    this.player.status.mags = this.player.mags;
-    this.player.status.respawning = false;
+    this.gameState.status.health = this.gameState.health;
+    this.gameState.status.roundsInMag = this.gameState.roundsPerMag;
+    this.gameState.status.mags = this.gameState.mags;
+    this.gameState.status.respawning = false;
 
     this.propergateGameStatus();
   }
@@ -103,7 +100,7 @@ class BaseGame extends BaseClass {
    * This will emit all events which handle the game status.
    */
   propergateGameStatus() {
-    this.eventHandler.gameEvents.GAME_DATA_UPDATE.emit(this.player);
+    this.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(this.gameState);
   }
 
   /**
@@ -119,35 +116,35 @@ class BaseGame extends BaseClass {
       return;
     }
 
-    this.player.status.health-=strength;
-    if(this.player.status.health < 0) {
-      this.player.status.health = 0;
+    this.gameState.status.health-=strength;
+    if(this.gameState.status.health < 0) {
+      this.gameState.status.health = 0;
     }
 
-    this.log.info('Game: Player health is: '+this.player.status.health);
+    this.log.info('Game: Player health is: '+this.gameState.status.health);
 
-    if(this.player.status.health <= 0) {
+    if(this.gameState.status.health <= 0) {
       // player has still some lives left let him respawn
-      if(this.player.status.lives > 0) {
+      if(this.gameState.status.lives > 0) {
 
         // remove a live from the player
-        this.player.status.lives--;
-        this.log.info('Game: Player lives: '+this.player.status.lives);
+        this.gameState.status.lives--;
+        this.log.info('Game: Player lives: '+this.gameState.status.lives);
 
 
-        if(this.player.status.lives <= 0) {
+        if(this.gameState.status.lives <= 0) {
           this.eventHandler.gameEvents.GAME_OVER.emit();
           return;
         }
 
-        this.player.status.respawning = true;
-        this.log.info('Game: Respawn player in: '+this.player.respawnTime);
+        this.gameState.status.respawning = true;
+        this.log.info('Game: Respawn player in: '+this.gameState.respawnTime);
         this.eventHandler.ledEvents.START_BLINK.emit({type: 'respawn', game: this});
         this.eventHandler.gameEvents.PLAYER_DIED.emit();
         const instance = this;
         setTimeout(function() {
           instance.eventHandler.gameEvents.PLAYER_RESPAWNED.emit();
-        },this.player.respawnTime);
+        },this.gameState.respawnTime);
       }
     } else {
       this.eventHandler.ledEvents.START_BLINK.emit({type: 'hit', game: this});
@@ -170,27 +167,27 @@ class BaseGame extends BaseClass {
       return;
     }
 
-    if(this.player.status.shot == true) {
+    if(this.gameState.status.shot == true) {
       this.log.debug('Game: Player is shooting no shooting possible');
       return;
     }
 
-    if(this.player.status.mags === 0 && this.player.status.roundsInMag === 0) {
+    if(this.gameState.status.mags === 0 && this.gameState.status.roundsInMag === 0) {
       this.log.debug('Game: no bullets and mags left');
       this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.emit();
       return;
     }
 
-    if(this.player.status.roundsInMag === 0) {
+    if(this.gameState.status.roundsInMag === 0) {
       this.log.debug('Game: no bullets left in current mag');
       this.eventHandler.gameEvents.PLAYER_EMPTY_MAG.emit();
       return;
     }
 
-    this.player.status.roundsInMag--;
+    this.gameState.status.roundsInMag--;
 
 
-    this.eventHandler.gameEvents.SHOOT.emit(this.player);
+    this.eventHandler.gameEvents.SHOOT.emit(this.gameState);
     this.propergateGameStatus();
   }
 
@@ -206,22 +203,22 @@ class BaseGame extends BaseClass {
       return;
     }
 
-    if(this.player.status.mags === 0) {
+    if(this.gameState.status.mags === 0) {
       this.log.debug('Game: No Mags left');
       return;
     }
 
     // mark the player reloading
-    this.player.status.reloading = true;
+    this.gameState.status.reloading = true;
 
-    this.log.debug('Game: starting reloading for: '+this.player.reloadTime);
+    this.log.debug('Game: starting reloading for: '+this.gameState.reloadTime);
 
     this.propergateGameStatus();
 
     let instance = this;
     setTimeout(function() {
       instance.eventHandler.gameEvents.RELOAD_FINISHED.emit();
-    },this.player.reloadTime);
+    },this.gameState.reloadTime);
     
   }
 
@@ -231,9 +228,9 @@ class BaseGame extends BaseClass {
    */
   reloadDone() {
     this.log.info('Game: Reload done');
-    this.player.status.reloading = false;
-    this.player.status.roundsInMag = this.player.roundsPerMag;
-    this.player.status.mags--;
+    this.gameState.status.reloading = false;
+    this.gameState.status.roundsInMag = this.gameState.roundsPerMag;
+    this.gameState.status.mags--;
     this.propergateGameStatus();
   }
 
@@ -243,17 +240,17 @@ class BaseGame extends BaseClass {
    */
   checkPlayerStatus() {
 
-    if(this.player.status.lives <= 0) {
+    if(this.gameState.status.lives <= 0) {
       this.log.debug('Player: Player has no lives left no action');
       return false;
     }
 
-    if(this.player.status.health <= 0) {
+    if(this.gameState.status.health <= 0) {
       this.log.debug('Player: Player is dead no action');
       return false;
     }
 
-    if(this.player.status.respawning == true) {
+    if(this.gameState.status.respawning == true) {
       this.log.debug('Player: Player is respawning no action');
       return false;
     }
@@ -267,7 +264,7 @@ class BaseGame extends BaseClass {
    */
   checkPlayerStatusWithReload() {
 
-    if(this.player.status.reloading == true) {
+    if(this.gameState.status.reloading == true) {
       this.log.debug('Player: Player is currently reloading no action');
       return false;
     }

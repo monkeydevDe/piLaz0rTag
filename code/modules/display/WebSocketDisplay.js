@@ -8,9 +8,9 @@ class WebSocketDisplay extends BaseDisplay {
     this.webserver = require('../web/Webserver');
   }
 
-  handleUpdateGameStatus(gameStatus) {
-    this.log.debug('Webdisplay: Updating game status display.');
-    this.webserver.sendDisplayDataOverSocket('game_status',gameStatus);
+  handleUpdateStateData(stateStatus) {
+    this.log.debug('Webdisplay: Updating state status display.');
+    this.webserver.sendDisplayDataOverSocket('state_status',stateStatus);
   }
 
   handleMainStateChanged(state) {

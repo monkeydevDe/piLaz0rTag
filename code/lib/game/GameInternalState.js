@@ -1,4 +1,4 @@
-class Player {
+class GameInternalState {
 
 
   constructor(id,team,lives,health,respawnTime,shootStrength,mags,roundsPerMag,reloadTime,shootDelay) {
@@ -36,4 +36,4 @@ class Player {
   }
 }
 
-exports.Player = Player;
+exports.GameInternalState = GameInternalState;

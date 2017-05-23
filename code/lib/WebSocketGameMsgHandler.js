@@ -8,17 +8,18 @@ class WebSocketGameMsgHandler extends BaseClass {
 
     // when something comes over the websocket decide if to handle it :)
     this.eventHandler.webSocketEvents.SOCKET_MESSAGE_RECEIVED.on(function(msg) {
-      if(msg.type === 'start_game') {
-        instance.eventHandler.mainEvents.GAME_SETUP.emit(msg.value);
+      // the state of the application has to change
+      if(msg.type === 'change_state') {
+        instance.eventHandler.mainEvents.CHANGE_STATE.emit(msg.value);
       }
 
-      if(msg.type === 'stop_game' && msg.value === 'down') {
-        instance.eventHandler.mainEvents.GAME_STOP.emit();
+      // the frontend wants the current state
+      if(msg.type === 'get_current_state_data') {
+        instance.eventHandler.mainEvents.GET_STATE_DATA.emit();
       }
 
-      // we become master
-      if(msg.type === 'master_mode') {
-        instance.eventHandler.mainEvents.MASTER_MODE.emit();
+      if(msg.type === 'update_current_state_data') {
+        instance.eventHandler.mainEvents.UPDATE_STATE_DATA.emit(msg.value);
       }
     });
   }
