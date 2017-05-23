@@ -1,10 +1,10 @@
-main_dia = 43;
-tube_dia = 40.4;
+main_dia = 44;
+tube_dia = 42.4;
 tube_inner_dia = 36;
 main_height = 20;
 
-lens_dia = 35.5;
-lens_height = 3;
+lens_dia = 36.5;
+lens_height = 3.5;
 lens_outline_dia = lens_dia - 3;
 lens_outline_height = 2; 
 
