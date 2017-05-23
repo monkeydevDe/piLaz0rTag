@@ -1,0 +1,50 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Status:</h3>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-xs-6">
+        <dl class="dl-horizontal">
+          <dt>Rounds:</dt>
+          <dd><span id="gamerun_status_roundsInMag"></span> / <span id="gamerun_roundsPerMag"></span></dd>
+          <dt>Mags:</dt>
+          <dd><span id="gamerun_status_mags"></span> / <span id="gamerun_mags"></span></dd>
+          <dt>Health:</dt>
+          <dd><span id="gamerun_status_health"></span> / <span id="gamerun_health"></span></dd>
+          <dt>Lives:</dt>
+          <dd><span id="gamerun_status_lives"></span> / <span id="gamerun_lives"></span></dd>
+        </dl>
+      </div>
+
+      <div class="col-xs-6">
+        <dl class="dl-horizontal">
+
+          <dt>Unique ID:</dt>
+          <dd><span id="gamerun_uniqueId"></span></dd>
+
+          <dt>Player ID:</dt>
+          <dd><span id="gamerun_id"></span></dd>
+
+          <dt>Team:</dt>
+          <dd><span id="gamerun_team"></span></dd>
+
+          <dt>Shoot Strength:</dt>
+          <dd><span id="gamerun_shootStrength"></span></dd>
+
+          <dt>Respawning:</dt>
+          <dd><span id="gamerun_status_respawning"></span></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="well">
+  <button id="gamerun_shootBtn" class="gameRunSocketMsgBtn btn btn-danger" data-message-type="shoot" type="button">Shoot</button>
+  <button id="gamerun_reloadBtn" class="gameRunSocketMsgBtn btn btn-info" data-message-type="reload" type="button">Reload</button>
+
+  <button id="gamerun_stopGameBtn" class="socketMsgBtn btn btn-info" data-message-type="stop_game" type="button">Stop Current Game</button>
+</div>

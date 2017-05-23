@@ -9,6 +9,8 @@ class GameRunningState extends BaseState {
   constructor(gameData) {
     super();
 
+    this.log.info('GameRunningState: game is running: '+gameData.currentGameMode);
+
     this.gameFactory = require('../game/GameFactory');
 
 
@@ -18,7 +20,7 @@ class GameRunningState extends BaseState {
       gameData.client.lives,
       gameData.client.health,
       gameData.client.respawnTime,
-      gameData.client.shootStrength,
+      gameData.client.shotStrength,
       gameData.client.mags,
       gameData.client.roundsPerMag,
       gameData.client.reloadTime,
@@ -26,7 +28,11 @@ class GameRunningState extends BaseState {
 
     this.currentGame = this.gameFactory.initGame(gameData.currentGameMode, gameState);
 
-    this.log.info('GameRunningState: game is running: '+gameData.currentGameMode);
+    const instance = this;
+    // when a local client wants the current state
+    this.addEvent(this.eventHandler.mainEvents.GET_STATE_DATA.on(function() {
+      instance.currentGame.propergateGameStatus();
+    },true));
 
   }
 

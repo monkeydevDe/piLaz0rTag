@@ -1,6 +1,6 @@
 $(function() {
 
-  new WebSocketHandler($);
+  new WebSocketGuiHandler($);
 
   $(document.body).on( "click", "button.state-btn", function() {
     const newState =  $(this).data('state');

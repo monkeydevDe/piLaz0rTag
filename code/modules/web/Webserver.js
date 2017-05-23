@@ -93,7 +93,6 @@ class Webserver extends BaseClass {
     this.expApp.use('/jquery', express.static('./node_modules/jquery/dist'));
     this.expApp.use('/block-ui', express.static('./node_modules/block-ui'));
     this.expApp.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
-    this.expApp.use('/knockout',express.static('./node_modules/knockout/build/output'));
     this.expApp.use('/assets', express.static(__dirname + '/assets'));
   }
 

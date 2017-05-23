@@ -1,7 +1,7 @@
 let wsHandlerInstance = null;
 
 
-class WebSocketHandler {
+class WebSocketGuiHandler {
 
   constructor($) {
 
@@ -87,6 +87,11 @@ class WebSocketHandler {
 
     if(state === 'GAME_STARTING') {
       templateName = 'GameStarting';
+    }
+
+    if(state === 'GAME_RUNNING') {
+      templateName = 'GameRunning';
+      wsHandlerInstance.currentStateHandler = new GameRunningGuiHandler();
     }
 
     // when a template was loaded display it

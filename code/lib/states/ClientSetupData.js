@@ -8,7 +8,7 @@ class ClientSetupData {
 
     this.uniqueId = '';
     this.playerId = 1;
-    this.team = '';
+    this.team = 'green';
     this.health = 100;
     this.mags = 3;
     this.lives = 3;
