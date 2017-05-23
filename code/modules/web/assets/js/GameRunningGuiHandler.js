@@ -20,6 +20,17 @@ class GameRunningGuiHandler {
       instance.sendButtonState(this, 'up');
     });
 
+    /**
+     * Creates and sends a fake_ir_receive message to the webserver
+     */
+    $(document.body).on('click','#dev_fake_ir_btn', function() {
+      let playerId = $('#dev_fake_ir_player').val();
+      let teamId = $('#dev_fake_ir_team').val();
+      let strength = $('#dev_fake_ir_strength').val();
+      let msg = 'shoot_' + playerId + '_' + teamId + '_' + strength;
+      wsHandlerInstance.sendSocketMessage('fake_ir_receive', msg);
+    });
+
   }
 
   /**

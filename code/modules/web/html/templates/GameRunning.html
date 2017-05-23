@@ -48,3 +48,53 @@
 
   <button class="btn state-btn" data-state="SELECT_MODE">End Game</button>
 </div>
+
+
+<div class="panel panel-danger" id="dev_panel">
+  <div class="panel-heading">
+    <h3 class="panel-title">DEV Stuff:</h3>
+  </div>
+  <div class="panel-body">
+
+    <h3>Fake ir received signal.</h3>
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <!-- FAKE IR Player-->
+        <div class="form-group">
+          <label for="dev_fake_ir_player">Fake IR Player: </label>
+          <input id="dev_fake_ir_player" class="form-control" type="number" value="1" min="1" max="31"/>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <!-- FAKE IR TEAM -->
+        <div class="form-group">
+          <label for="dev_fake_ir_team">Fake IR Player: </label>
+          <select id="dev_fake_ir_team" class="form-control">
+            <option value="red">red</option>
+            <option value="green">green</option>
+            <option value="yellow">yellow</option>
+            <option value="blue">blue</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <!-- FAKE IR STRENGTH -->
+        <div class="form-group">
+          <label for="dev_fake_ir_strength">Shoot Strength: </label>
+          <select id="dev_fake_ir_strength" class="form-control">
+            <option value="100">100</option>
+            <option value="75">75</option>
+            <option value="50">50</option>
+            <option value="25">25</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-warning" id="dev_fake_ir_btn">Fake Ir receive</button>
+
+  </div>
+</div>
