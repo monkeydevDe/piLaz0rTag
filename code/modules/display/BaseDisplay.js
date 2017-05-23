@@ -8,8 +8,8 @@ class BaseDisplay extends BaseClass {
     let instance = this;
 
     // register on the display game update event
-    this.eventHandler.gameEvents.GAME_DATA_UPDATE.on(function(gameStatus) {
-      instance.handleUpdateGameStatus(gameStatus);
+    this.eventHandler.mainEvents.STATE_DATA_UPDATED.on(function(gameStatus) {
+      instance.handleUpdateStateData(gameStatus);
     });
 
     this.eventHandler.mainEvents.STATE_CHANGED.on(function(state) {
@@ -23,10 +23,10 @@ class BaseDisplay extends BaseClass {
 
   /**
    * When in a game this is called when some data like from the player changed.
-   * @param game the current game running
+   * @param stateStatus the stateStatus
    */
-  handleUpdateGameStatus(game) {
-    this.log.error('Display: Implement me: '+this.handleUpdateGameStatus.name);
+  handleUpdateStateData(stateStatus) {
+    this.log.error('Display: Implement me: '+this.handleUpdateStateData.name);
   }
 
   /**

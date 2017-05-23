@@ -18,6 +18,21 @@ class Settings {
     this.DEBUG_LEVEL = 'debug';
     this.DEBUG_EVENTS = false;
 
+    /**
+     * The available game modes
+     * @type {[*]}
+     */
+    this.GAME_MODES = ['DeathMatch','TeamDeathMatch'];
+
+    this.TEAMS = ['green','red','blue','yellow'];
+
+    this.SHOT_STRENGTH = [25,50,75,100];
+
+    this.MAX_PLAYER_ID = 32;
+
+    this.MASTER_MODE_ADD_LOCAL_CLIENT = true;
+
+
     this.modules = {
       DISPLAY: userCfg.modules.DISPLAY || 'WEB',
       INPUT: userCfg.modules.INPUT || 'NONE',
@@ -62,6 +77,7 @@ class Settings {
       FUNC1_GPIO: 19,
       FUNC2_GPIO: 26
     }
+
   }
 }
 

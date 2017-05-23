@@ -3,14 +3,14 @@ const { DeathMatchGame } = require('./DeathMatchGame');
 
 class GameFactory {
 
-  initGame(type,player) {
+  initGame(type,gameState) {
 
     if(type === 'DeathMatch') {
-      return new DeathMatchGame(player);
+      return new DeathMatchGame(gameState);
     }
 
     if(type === 'TeamDeathMatch') {
-      return new TeamDeathMatchGame(player);
+      return new TeamDeathMatchGame(gameState);
     }
 
     throw new Error('No Game type found for: '+type);
