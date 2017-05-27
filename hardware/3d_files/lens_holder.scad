@@ -1,12 +1,12 @@
 main_dia = 44;
-tube_dia = 42.4;
+tube_dia = 42;
 tube_inner_dia = 36;
-main_height = 20;
+main_height = 15;
 
 lens_dia = 36.5;
 lens_height = 3.5;
 lens_outline_dia = lens_dia - 3;
-lens_outline_height = 2; 
+lens_outline_height = 3; 
 
 
 lens_ring_dia = 40;
@@ -40,6 +40,7 @@ module lens_holder() {
       cylinder(lens_ring_height,d=lens_ring_dia);
     }
   
+    
     // place for the lens
     lens_offset = lens_ring_offset - lens_height;
     translate([0,0,lens_offset]) {
@@ -53,8 +54,9 @@ module lens_holder() {
     }
   
     // hollow the rest
-    hollow_height = main_height - lens_outline_offset + lens_outline_height+5;
+    hollow_height = main_height - lens_ring_height - lens_height - lens_outline_height;
     cylinder(hollow_height, d = tube_dia);
+    
   }
 }
 
