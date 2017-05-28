@@ -3,7 +3,15 @@
  */
 class MasterStateGuiHandler {
   constructor() {
+
+    // handles the last active field detection
+    this.lastActivField = null;
+
+    const instance = this;
+
     $(document.body).on('change', '[data-master-field]', function () {
+
+      instance.lastActivField = $(this).attr('data-master-field');
 
       let masterData = {
         clients: {}
@@ -47,6 +55,10 @@ class MasterStateGuiHandler {
     this._updateGameModeSelect(data);
     this._updateStartTime(data);
     this._updateClients(data);
+
+    if(this.lastActivField !== null) {
+      $('[data-master-field="'+this.lastActivField+'"]').focus();
+    }
 
   }
 
