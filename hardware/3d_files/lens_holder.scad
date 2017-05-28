@@ -4,7 +4,7 @@ tube_inner_dia = 36;
 main_height = 15;
 
 lens_dia = 36.5;
-lens_height = 3.5;
+lens_height = 1.5;
 lens_outline_dia = lens_dia - 3;
 lens_outline_height = 3; 
 
@@ -13,6 +13,9 @@ lens_ring_dia = 40;
 lens_ring_height = 2;
 lens_ring_holder_width = 3;
 lens_holder_depth = ((main_dia - lens_ring_dia) / 4) + 1; 
+
+main_top_height =  lens_ring_height + lens_height + lens_outline_height;
+main_bottom_height = main_height - main_top_height;
 
 ir_sender_tube_fix_length = 50;
 ir_sender_tube_fix_width = 8;
@@ -32,8 +35,9 @@ $fn=100;
 */
 module lens_holder() {
   difference() {
-    cylinder(main_height, d = main_dia);  
-    lens_ring_offset = main_height-lens_ring_height;
+    
+    cylinder(main_top_height, d = main_dia);  
+    lens_ring_offset = main_top_height-lens_ring_height;
     
     // lens holder ring
     translate([0,0,lens_ring_offset]) {
@@ -52,12 +56,16 @@ module lens_holder() {
     translate([0,0,lens_outline_offset]) {
       cylinder(lens_outline_height,d=lens_outline_dia);
     }
-  
-    // hollow the rest
-    hollow_height = main_height - lens_ring_height - lens_height - lens_outline_height;
-    cylinder(hollow_height, d = tube_dia);
-    
   }
+  
+  translate([main_dia+1,main_dia+1,0]) {  
+    difference() {
+      cylinder(main_bottom_height,d=main_dia);
+      cylinder(main_bottom_height,d=tube_dia);
+    }
+  }
+  
+  
 }
 
 /*
@@ -65,7 +73,7 @@ module lens_holder() {
 */
 module lens_holder_ring() {
   difference() {
-    cylinder(lens_ring_height,d=lens_ring_dia);
+    cylinder(lens_ring_height,d=lens_ring_dia-0.5);
     cylinder(lens_ring_height,d=lens_outline_dia);
   }
 }
