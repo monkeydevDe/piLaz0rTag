@@ -5,7 +5,7 @@ const {BaseClass} = require('./BaseClass');
 
 // TODO Perhaps put this in a factory like for games
 const {MasterState} = require('./states/MasterState');
-const {ClientMode} = require('./states/ClientState');
+const {ClientState} = require('./states/ClientState');
 const {StartGameState} = require('./states/StartGameState');
 const {GameRunningState} = require('./states/GameRunningState');
 
@@ -74,7 +74,7 @@ class PiLazorTag extends BaseClass {
     }
 
     if (stateToSet === this.mainStates.CLIENT_MODE) {
-      this.currentStateInstance = new ClientMode(stateData.data.host);
+      this.currentStateInstance = new ClientState(stateData.data.host);
       this.currentState = this.mainStates.CLIENT_MODE;
     }
 
