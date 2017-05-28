@@ -87,7 +87,7 @@ class GameRunningGuiHandler {
 
   _updateData(fieldName, data, prefix) {
     let htmlId = (prefix == undefined) ? fieldName : prefix + '_' + fieldName;
-    $('#gamerun_' + htmlId).html(data[fieldName]);
+    $('#gamerun_' + htmlId).text(data[fieldName]);
   }
 }
 

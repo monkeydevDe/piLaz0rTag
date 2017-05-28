@@ -78,7 +78,7 @@ class MasterStateGuiHandler {
     const instance = this;
 
     if ($.isEmptyObject(data.clients) === true) {
-      $('#master_clients').html('No clients connected.');
+      $('#master_clients').text('No clients connected.');
       return;
     }
 

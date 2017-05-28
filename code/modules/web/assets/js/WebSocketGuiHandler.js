@@ -94,6 +94,11 @@ class WebSocketGuiHandler {
       wsHandlerInstance.currentStateHandler = new GameRunningGuiHandler();
     }
 
+    if(state === 'CLIENT_MODE') {
+      templateName = 'Client';
+      wsHandlerInstance.currentStateHandler = new ClientStateGuiHandler();
+    }
+
     // when a template was loaded display it
     if(templateName !== '') {
       wsHandlerInstance.$.ajax('templates/'+templateName+'.html', { async: false })
