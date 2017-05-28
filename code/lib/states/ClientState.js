@@ -64,6 +64,10 @@ class ClientState extends BaseState {
     });
   }
 
+  internalCleanup() {
+    this.socketId.disconnect();
+  }
+
 }
 
 exports.ClientState = ClientState;
