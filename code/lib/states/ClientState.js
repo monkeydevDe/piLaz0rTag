@@ -73,7 +73,7 @@ class ClientState extends BaseState {
   }
 
   _broadCastData() {
-    instance.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(this.masterStateData);
+    this.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(this.masterStateData);
   }
 
   internalCleanup() {
