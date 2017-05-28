@@ -10,7 +10,7 @@ class ClientStateGuiHandler {
   handleStateDataUpdate(data) {
 
     $('#client_gameMode').text(data.currentGameMode);
-    $('client_start_time').text(data.gameStartTime);
+    $('#client_start_time').text(data.gameStartTime);
     this._updateClients(data);
   }
 
