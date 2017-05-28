@@ -24,6 +24,8 @@ class ClientState extends BaseState {
 
     this.socketId = null;
 
+    this.masterStateData = null;
+
     const instance = this;
     this.socketIo.on('connect', function(e) {
       instance.socketId = instance.socketIo.io.engine.id;
@@ -44,8 +46,14 @@ class ClientState extends BaseState {
      */
     this.socketIo.on('updateData', function(msg) {
       instance.log.info('ClientState: Master sends data to update.');
-      instance.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(msg);
+      instance.masterStateData = msg;
+      instance._broadCastData();
     });
+
+    // when a local client wants the current state
+    this.addEvent(this.eventHandler.mainEvents.GET_STATE_DATA.on(function() {
+      instance._broadCastData();
+    },true));
 
     /**
      * When the game has to start
@@ -62,6 +70,10 @@ class ClientState extends BaseState {
 
       instance.eventHandler.mainEvents.CHANGE_STATE.emit({state: 'GAME_STARTING', data: localSettings});
     });
+  }
+
+  _broadCastData() {
+    instance.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(this.masterStateData);
   }
 
   internalCleanup() {
