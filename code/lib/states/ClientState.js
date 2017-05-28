@@ -65,7 +65,7 @@ class ClientState extends BaseState {
   }
 
   internalCleanup() {
-    this.socketId.disconnect();
+    this.socketIo.close();
   }
 
 }
