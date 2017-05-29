@@ -130,5 +130,4 @@ class Webserver extends BaseClass {
 
 }
 
-// run as a singleton is this the right way ?
 module.exports = new Webserver();

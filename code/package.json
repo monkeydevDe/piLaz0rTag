@@ -23,6 +23,7 @@
   "dependencies": {
     "aplay": "^1.1.0",
     "block-ui": "^2.70.1",
+    "bonjour": "^3.5.0",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
     "jquery": "^3.2.1",

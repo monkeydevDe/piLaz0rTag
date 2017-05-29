@@ -21,6 +21,9 @@ class MasterState extends BaseState {
 
     this.webserver = require('../../modules/web/Webserver');
 
+    this.bonjour = require('../../modules/bonjour/BonjourHandler');
+    this.bonjour.publishMasterHost();
+
     // set the first game mode
     this.currentGameMode = this.settings.GAME_MODES[0];
 
@@ -61,7 +64,10 @@ class MasterState extends BaseState {
       instance._broadCastData();
     },true));
   }
-  
+
+  internalCleanup() {
+    this.bonjour.unpublishAll();
+  }
 
   /**
    * When a new client connected to the master
