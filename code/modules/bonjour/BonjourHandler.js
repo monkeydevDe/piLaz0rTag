@@ -12,8 +12,7 @@ class BonjourHandler extends BaseClass {
     this.browser = this.bonjour.find({type: 'piLaz0rTag'},function(service) {
       const value = service.addresses[0];
       instance.log.info('Bonjour: Got service for master: '+value);
-      this.eventHandler.mainEvents.UPDATE_STATE_DATA.emit({type: 'bonjour',value: value});
-
+      instance.eventHandler.mainEvents.UPDATE_STATE_DATA.emit({type: 'bonjour',value: value});
     });
 
 
