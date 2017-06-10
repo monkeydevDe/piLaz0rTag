@@ -9,6 +9,6 @@ class WelcomeStateGuiHandler {
    * @param data
    */
   handleStateDataUpdate(data) {
-    $('#client_master_host').text(data);
+    $('#client_master_host').val(data);
   }
 }
