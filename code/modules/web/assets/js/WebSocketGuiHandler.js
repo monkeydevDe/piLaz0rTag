@@ -78,6 +78,7 @@ class WebSocketGuiHandler {
 
     if(state === 'SELECT_MODE') {
       templateName = 'Welcome';
+      wsHandlerInstance.currentStateHandler = new WelcomeStateGuiHandler();
     }
 
     if(state === 'MASTER_MODE') {
