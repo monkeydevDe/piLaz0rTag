@@ -26,7 +26,7 @@ class BonjourHandler extends BaseClass {
    */
   publishMasterHost() {
     this.log.info('Bonjour: Casting Master mode server on port: '+this.settings.WEBSERVER_PORT);
-    this.mastetService  = this.bonjour.publish({ name: 'pilazorTag Master - '+this.uniqueId, type: 'piLaz0rTag', port: this.settings.WEBSERVER_PORT })
+    this.mastetService  = this.bonjour.publish({ name: 'pilazorTag_master_'+this.uniqueId, type: 'piLaz0rTag', port: this.settings.WEBSERVER_PORT })
   }
 
 
