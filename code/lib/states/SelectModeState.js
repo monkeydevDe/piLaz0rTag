@@ -22,6 +22,7 @@ class SelectModeState extends BaseState {
     },true));
 
     this.addEvent(this.eventHandler.mainEvents.UPDATE_STATE_DATA.on(function(data) {
+      console.error(data);
       if(data.type === 'bonjour') {
         instance.masterHost = data.value;
         instance._broadCastData();
@@ -31,6 +32,7 @@ class SelectModeState extends BaseState {
   }
 
   _broadCastData() {
+    console.error('WTF?: '+this.masterHost);
     this.eventHandler.mainEvents.STATE_DATA_UPDATED.emit(this.masterHost);
   }
 }

@@ -5,6 +5,9 @@ class BonjourHandler extends BaseClass {
     super();
     this.bonjour = require('bonjour')();
 
+    const os = require('os');
+    this.masterServiceName = 'pilazorTag_master_'+os.hostname();
+
     this.mastetService = null;
 
     const instance = this;
@@ -22,8 +25,8 @@ class BonjourHandler extends BaseClass {
    * Cast the master Host when in master mode
    */
   publishMasterHost() {
-    this.log.info('Bonjour: Casting Master mode server on port: '+this.settings.WEBSERVER_PORT);
-    this.mastetService  = this.bonjour.publish({ name: 'pilazorTag Master', type: 'piLaz0rTag', port: this.settings.WEBSERVER_PORT })
+    this.log.info('Bonjour: Casting Master mode server on port: '+this.settings.WEBSERVER_PORT+' name: '+this.masterServiceName);
+    this.mastetService  = this.bonjour.publish({ name: this.masterServiceName, type: 'piLaz0rTag', port: this.settings.WEBSERVER_PORT })
   }
 
 

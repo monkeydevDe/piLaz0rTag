@@ -64,7 +64,7 @@
     (aux_axis_origin 92 114)
     (visible_elements FFFFFF7F)
     (pcbplotparams
-      (layerselection 0x00000_00000001)
+      (layerselection 0x01000_00000000)
       (usegerberextensions false)
       (excludeedgelayer true)
       (linewidth 0.100000)
@@ -768,7 +768,7 @@
   (gr_line (start 92 114) (end 131 114) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 92 112) (end 92 114) (angle 90) (layer Edge.Cuts) (width 0.15))
 
-  (segment (start 127.61 101.93) (end 127.61 97.5) (width 1) (layer F.Cu) (net 1) (status 400000))
+  (segment (start 127.61 101.93) (end 127.61 97.5) (width 1) (layer F.Cu) (net 1))
   (segment (start 127.61 97.5) (end 127.5 97.5) (width 1) (layer F.Cu) (net 1) (tstamp 592019BB))
   (segment (start 126 97.5) (end 127.5 97.5) (width 1) (layer F.Cu) (net 1))
   (segment (start 127.5 97.5) (end 136 97.5) (width 1) (layer F.Cu) (net 1) (tstamp 592019C1))
