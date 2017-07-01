@@ -3,7 +3,7 @@ tube_dia = 42;
 tube_inner_dia = 36;
 main_height = 15;
 
-lens_dia = 36.5;
+lens_dia = 36;
 lens_height = 1.5;
 lens_outline_dia = lens_dia - 3;
 lens_outline_height = 3; 
