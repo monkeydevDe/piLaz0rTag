@@ -22,9 +22,9 @@ ir_sender_tube_fix_width = 8;
 ir_sender_tube_fix_height = 5; 
 ir_sender_tube_fix_slit_width  = 5;
 
-ir_sender_dia = tube_inner_dia;
+ir_sender_dia = tube_inner_dia-1;
 ir_sender_height = 3; 
-ir_sender_pcb_width = 18;
+ir_sender_pcb_width = 21;
 ir_sender_pcb_height = 1.6;
 
 
@@ -113,15 +113,15 @@ module ir_sender_holder() {
 
 
 
-lens_holder();
+/*lens_holder();
 translate([main_dia,0,0]) {
   lens_holder_ring();
-}
+}*/
 
 /*translate([0,main_dia/2 +5,0]) {
   ir_sender_tube_fix();
-}
+}*/
 
 translate([0,-80,0]) {
   ir_sender_holder();
-}*/
+}
