@@ -13,7 +13,6 @@ class BonjourHandler extends BaseClass {
     const instance = this;
 
     this.browser = this.bonjour.find({type: 'piLaz0rTag'},function(service) {
-      console.error(service);
       const value = service.addresses[0];
       instance.log.info('Bonjour: Got service for master: '+value);
       instance.eventHandler.mainEvents.UPDATE_STATE_DATA.emit({type: 'bonjour',value: value});
