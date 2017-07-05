@@ -12,25 +12,27 @@ class SSD1306Server {
 
     this.font = require('oled-font-5x7');
 
-    this.socketHost = 'http://localhost:'+this.settings.WEBSERVER_PORT;
+    this.socketHost = 'http://localhost:' + this.settings.WEBSERVER_PORT;
 
     this.socketIo = require('socket.io-client')(this.socketHost);
-    
-    this.lastPlayerState = null;
+
+    this.stateData = null;
+
+    this.currentState = null;
 
 
     const instance = this;
-    this.socketIo.on('connect', function(){
-      instance.log.info('SSD1306Server: Connected to '+instance.socketHost);
+    this.socketIo.on('connect', function() {
+      instance.log.info('SSD1306Server: Connected to ' + instance.socketHost);
     });
 
-    this.socketIo.on('ssd1306display', function(data){
-      if(data.type === 'mainstate') {
+    this.socketIo.on('display', function(data) {
+      if(data.type === 'state_changed') {
         instance._handleMainStateChanged(data.data);
       }
 
-      if(data.type === 'gamestatus') {
-        instance._handleUpdateGameStatus(data.data);
+      if(data.type === 'state_status') {
+        instance._handleUpdateStateData(data.data);
       }
 
     });
@@ -40,33 +42,35 @@ class SSD1306Server {
     //this.oledDisplay.dimDisplay(true);
   }
 
-  _handleMainStateChanged(state) {
-    this.oledDisplay.clearDisplay();
-    this.oledDisplay.setCursor(0, 0);
-    this.oledDisplay.writeString(this.font, 1, state, 1, true);
+  _handleMainStateChanged(state) {   
+    this.currentState = state;
   }
 
-  _handleUpdateGameStatus(player) {
-                                
-    if(this.lastPlayerState === null) {
+  _handleUpdateStateData(stateData) {
+    if(this.stateData === null) {
       let instance = this;
       setTimeout(function() {
         instance.oledDisplay.clearDisplay();
-        instance.oledDisplay.setCursor(0, 0);
-        instance.oledDisplay.writeString(instance.font, 1, 'Mags: '+instance.lastPlayerState.status.mags + '/'+instance.lastPlayerState.mags, 1, false);
-        instance.oledDisplay.setCursor(0, 15);
-        instance.oledDisplay.writeString(instance.font, 1, 'Rounds: '+instance.lastPlayerState.status.roundsInMag+ '/'+instance.lastPlayerState.roundsPerMag, 1, false);
-        instance.lastPlayerState = null;    
-      },300);
+        if(instance.currentState === 'GAME_RUNNING') {
+          instance.oledDisplay.setCursor(0, 0);
+          instance.oledDisplay.writeString(instance.font, 1, 'Mags: ' + instance.stateData.status.mags + '/' + instance.stateData.mags, 1, false);
+          instance.oledDisplay.setCursor(0, 15);
+          instance.oledDisplay.writeString(instance.font, 1, 'Rounds: ' + instance.stateData.status.roundsInMag + '/' + instance.stateData.roundsPerMag, 1, false);
+        } else {
+          instance.oledDisplay.setCursor(0, 0);
+          instance.oledDisplay.writeString(instance.font, 1, instance.currentState, 1, true);
+        }
+
+        instance.stateData = null;
+      }, 150);
     }
 
-    this.lastPlayerState = player;
-    
-    
-    
+    this.stateData = stateData;
+
+
   }
 
-  
+
 }
 
 new SSD1306Server();
