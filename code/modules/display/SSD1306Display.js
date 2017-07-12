@@ -19,15 +19,11 @@ class SSD1306Display extends BaseDisplay {
   }
 
   handleMainStateChanged(state) {
-    this._sendDataOverWebsocket('mainstate',state);
+   // noop web display takes care of this and is already running
   }
 
   handleUpdateStateData(stateStatus) {
-    this._sendDataOverWebsocket('gamestatus',stateStatus);
-  }
-
-  _sendDataOverWebsocket(type,data) {
-    this.webserver.sendDataOverSocket('ssd1306display',{type: type, data: data});
+    // noop web display takes care of this and is already running
   }
 }
 

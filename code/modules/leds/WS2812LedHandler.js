@@ -38,8 +38,8 @@ class WS2812LedHandler extends BaseLedHandler {
   }
 
   setStatusOnReceiverLeds(game,on) {
-    let setOn = (on !== undefined) ? on : game.player.status.led.on;
-    let colorToSet = (setOn === true) ? this.settings.WS2812_CFG.TEAM_COLORS[game.player.status.led.color] : '0x000000';
+    let setOn = (on !== undefined) ? on : game.gameState.status.led.on;
+    let colorToSet = (setOn === true) ? this.settings.WS2812_CFG.TEAM_COLORS[game.gameState.status.led.color] : '0x000000';
     let data = '';
     for(let idx in this.settings.WS2812_CFG.HIT_LEDS) {
       data+=','+this.settings.WS2812_CFG.HIT_LEDS[idx]+','+colorToSet;
