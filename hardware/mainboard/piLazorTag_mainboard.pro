@@ -1,4 +1,4 @@
-update=Sa 06 Mai 2017 13:22:08 CEST
+update=Mi 12 Jul 2017 19:28:17 CEST
 version=1
 last_client=kicad
 [general]
@@ -62,3 +62,13 @@ LibName28=contrib
 LibName29=valves
 LibName30=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/L293D
 LibName31=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/SparkFun-Kicad-Libraries/SparkFun-Boards
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
