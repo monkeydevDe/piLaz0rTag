@@ -1,4 +1,4 @@
-update=Mi 12 Jul 2017 19:04:25 CEST
+update=Sa 15 Jul 2017 15:35:51 CEST
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,8 +23,6 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [eeschema]
 version=1
 LibDir=
@@ -61,3 +59,5 @@ LibName29=contrib
 LibName30=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/L293D
 LibName31=valves
 LibName32=/home/tuxburner/workspace/piLaz0rTag/hardware/kicad/SparkFun-Kicad-Libraries/SparkFun-Boards
+[general]
+version=1
