@@ -13,7 +13,7 @@ lensRingHeight = 2;
 lensRingDia=40;
 
 lensHolderOuterHeight= lensHeight +  lensOutlineHeight + lensRingHeight;
-lensHolderInnerHeight=3;
+lensHolderInnerHeight=5;
 lensHolderInnerWallWidth=1;
 
 ledHolderThickness=3;
