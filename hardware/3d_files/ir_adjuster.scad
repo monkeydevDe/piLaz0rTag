@@ -1,7 +1,20 @@
-$fn=100;
+$fn=200;
 
 tubeInnerDia=36;
 tubeOuterDia=40;
+
+lensHolderOuterDia = tubeOuterDia + 4;
+lensDia = 36;
+lensHeight = 1.5;
+lensOutlineDia = lensDia - 3;
+lensOutlineHeight = 2; 
+
+lensRingHeight = 2;
+lensRingDia=40;
+
+lensHolderOuterHeight= lensHeight +  lensOutlineHeight + lensRingHeight;
+lensHolderInnerHeight=3;
+lensHolderInnerWallWidth=1;
 
 ledHolderThickness=3;
 ledHolderThinner=1;
@@ -37,8 +50,14 @@ module drawBack()  {
       cylinder(h=backInnerThickness, d=tubeInnerDia);
     }
   
-    // draw hole for cables
+    // draw hole for led cables
     cylinder(h=backThickness, d=cableHoleDia);
+    
+    // draw hole for flash led
+    flashXOffset=  ((ledHolderDia / 2) - flashLedOffset) * -1;
+    translate([flashXOffset, 0, 0]) {
+        cylinder(h=backThickness, d=cableHoleDia);  
+    }
   
     // draw hole for screw
     screwHoleXOffset= (tubeOuterDia / 2) - (tubeOuterDia - tubeInnerDia) - screwOffset;
@@ -102,8 +121,63 @@ module drawNutPocket() {
   }
 }
 
-//drawNutPocket();
+// draw the lens holder
+module drawLensHolder() {
+  totalLensHolderHeight = lensHolderOuterHeight + lensHolderInnerHeight;
+  difference() {
+    
+    // the lens holder body
+    cylinder(d=lensHolderOuterDia, h=totalLensHolderHeight);
+    
+    // cut to fit the inner ring
+    difference() {
+      cylinder(d=lensHolderOuterDia, h=lensHolderInnerHeight);
+      cylinder(d=tubeInnerDia, h=lensHolderInnerHeight);
+    }
+    
+    // hollow the bottom
+    cylinder(d=tubeInnerDia - (2 * lensHolderInnerWallWidth),h=lensHolderInnerHeight);
+        
+    translate([0, 0, lensHolderInnerHeight]) {
+      // add lens outline
+      cylinder(d=lensOutlineDia, h=lensOutlineHeight);
+      
+      translate([0, 0, lensOutlineHeight]) {
+        // add lens compartment
+        cylinder(d=lensDia, h=lensHeight);  
+        
+        // add lens ring holder
+        translate([0, 0, lensHeight]) {
+          // add lens compartment
+          cylinder(d=lensRingDia, h=lensRingHeight);  
+        }
+      }
+      
+    }
+  }
+}
 
-//drawBack();
+// draws the ring holding the lens
+module drawLensRing() {
+  difference() {
+    cylinder(d=lensRingDia, h=lensRingHeight);
+    cylinder(d=lensOutlineDia, h=lensRingHeight);
+  }
+}
 
-drawLedHolder();
+
+
+
+drawLensHolder();
+translate([lensHolderOuterDia+5,0,0]) {
+  drawLensRing();
+}
+
+
+translate([0,lensHolderOuterDia+5,0]) {
+  drawBack();
+
+  translate([tubeOuterDia+5,0,0]) {
+    drawLedHolder();
+  }
+}
