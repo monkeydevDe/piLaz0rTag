@@ -1,29 +1,29 @@
-$fn=25;
+$fn=100;
 
-tubeInnerDia=40;
-tubeOuterDia=43;
+tubeInnerDia=36;
+tubeOuterDia=40;
 
 ledHolderThickness=3;
-ledHolderThinner=1;
+ledHolderThinner=2;
 ledHolderDia=tubeInnerDia - ledHolderThinner;
 
 backThickness=10;
 backInnerThickness=5;
 
-cableHoleDia=3;
+cableHoleDia=5;
 
-screwDia=3;
-screwOffset=4;
+screwDia=4.4;
+screwOffset=6;
 
-irLedDia=3;
-flashLedDia=3;
+irLedDia=5.2;
+flashLedDia=5.2;
 flashLedOffset=5;
 
 
-nutOuterSize=6;
-nutHeight=3;
+nutOuterSize=8.1;
+nutHeight=3.3;
 nutPocketWidth=nutOuterSize + 2;
-nutPocketHeight=nutHeight +3;
+nutPocketHeight=nutHeight + 1.5;
 
 // draw the back holder
 module drawBack()  {
@@ -93,7 +93,7 @@ module drawNutPocket() {
     
     // hollow so we cann insert the nut
     translate([nutPocketWidth / 3, 0, nutHeight / 2]) {
-      cube([nutPocketWidth / 2, screwDia * 2, nutHeight], center=true);
+      cube([nutPocketWidth / 2, nutOuterSize-1.1, nutHeight], center=true);
     } 
         
     // screw hole
@@ -104,6 +104,6 @@ module drawNutPocket() {
 
 //drawNutPocket();
 
-drawLedHolder();
+//drawLedHolder();
 
-//drawBack();
+drawBack();
