@@ -7,8 +7,8 @@ ledHolderThickness=3;
 ledHolderThinner=2;
 ledHolderDia=tubeInnerDia - ledHolderThinner;
 
-backThickness=10;
-backInnerThickness=5;
+backThickness=5;
+backInnerThickness=3;
 
 cableHoleDia=5;
 
@@ -21,7 +21,7 @@ flashLedOffset=5;
 
 
 nutOuterSize=8.1;
-nutHeight=3.3;
+nutHeight=4;
 nutPocketWidth=nutOuterSize + 2;
 nutPocketHeight=nutHeight + 1.5;
 
@@ -104,6 +104,6 @@ module drawNutPocket() {
 
 //drawNutPocket();
 
-//drawLedHolder();
-
 drawBack();
+
+//drawLedHolder();
