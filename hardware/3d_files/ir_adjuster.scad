@@ -4,7 +4,7 @@ tubeInnerDia=36;
 tubeOuterDia=40;
 
 ledHolderThickness=3;
-ledHolderThinner=2;
+ledHolderThinner=1;
 ledHolderDia=tubeInnerDia - ledHolderThinner;
 
 backThickness=5;
@@ -104,6 +104,6 @@ module drawNutPocket() {
 
 //drawNutPocket();
 
-drawBack();
+//drawBack();
 
-//drawLedHolder();
+drawLedHolder();
