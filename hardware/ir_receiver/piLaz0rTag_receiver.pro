@@ -1,4 +1,4 @@
-update=Di 18 Apr 2017 19:20:51 CEST
+update=So 13 Mai 2018 13:58:29 CEST
 version=1
 last_client=kicad
 [pcbnew]
@@ -27,7 +27,7 @@ NetIExt=net
 version=1
 [eeschema]
 version=1
-LibDir=
+LibDir=../kicad
 [eeschema/libraries]
 LibName1=piLaz0rTag_receiver-rescue
 LibName2=power
