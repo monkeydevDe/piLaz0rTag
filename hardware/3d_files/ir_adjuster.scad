@@ -11,25 +11,28 @@ lensOutlineHeight = 2;
 
 lensRingHeight = 2;
 lensRingDia=40;
+lensRingDiaThinner=0.2;
 
 lensHolderOuterHeight= lensHeight +  lensOutlineHeight + lensRingHeight;
 lensHolderInnerHeight=5;
 lensHolderInnerWallWidth=1;
 
-ledHolderThickness=3;
+ledHolderHeight=3;
 ledHolderThinner=1;
 ledHolderDia=tubeInnerDia - ledHolderThinner;
+ledPlateHeight=1.5;
 
-backThickness=5;
-backInnerThickness=3;
+backHeight=5;
+backInnerHeight=3;
 
 cableHoleDia=5;
 
 screwDia=4.4;
 screwOffset=6;
 
-irLedDia=5.2;
-flashLedDia=5.2;
+ledDia=5.2;
+ledRingHeight=1.2;
+ledRingDia=6.2;
 flashLedOffset=5;
 
 
@@ -38,64 +41,88 @@ nutHeight=4;
 nutPocketWidth=nutOuterSize + 2;
 nutPocketHeight=nutHeight + 1.5;
 
+screwHoleXOffset= (tubeOuterDia / 2) - (tubeOuterDia - tubeInnerDia) - screwOffset;
+flashXOffset=  ((ledHolderDia / 2) - flashLedOffset) * -1;
+
 // draw the back holder
 module drawBack()  {
   difference() {
     // draw the main cylinder     
-    cylinder(h=backThickness, d=tubeOuterDia);
+    cylinder(h=backHeight, d=tubeOuterDia);
    
     // create ring for cutout
     difference() {
-      cylinder(h=backInnerThickness, d=tubeOuterDia);
-      cylinder(h=backInnerThickness, d=tubeInnerDia);
+      cylinder(h=backInnerHeight, d=tubeOuterDia);
+      cylinder(h=backInnerHeight, d=tubeInnerDia);
     }
   
     // draw hole for led cables
-    cylinder(h=backThickness, d=cableHoleDia);
+    cylinder(h=backHeight, d=cableHoleDia);
     
-    // draw hole for flash led
-    flashXOffset=  ((ledHolderDia / 2) - flashLedOffset) * -1;
+    // draw hole for flash led    
     translate([flashXOffset, 0, 0]) {
-        cylinder(h=backThickness, d=cableHoleDia);  
+        cylinder(h=backHeight, d=cableHoleDia);  
     }
   
-    // draw hole for screw
-    screwHoleXOffset= (tubeOuterDia / 2) - (tubeOuterDia - tubeInnerDia) - screwOffset;
-    translate([screwHoleXOffset, 0, 0]) {
-      cylinder(h=backThickness, d=screwDia);
-    }
+    // screw hole
+    drawScrewHole(backHeight);    
   }
 }
 
-// craet the led holder
+// draw the led holder
 module drawLedHolder() {
-
- screwHoleXOffset= (tubeOuterDia / 2) - (tubeOuterDia - tubeInnerDia) - screwOffset;
 
   difference() {
       
     // the plate of the led holder
-    cylinder(h=ledHolderThickness, d=ledHolderDia);  
+    cylinder(h=ledHolderHeight, d=ledHolderDia);  
     
     // led hole
-    cylinder(h=ledHolderThickness, d=irLedDia);  
+    cylinder(h=ledHolderHeight, d=ledDia);  
+    cylinder(h=ledRingHeight, d=ledRingDia);
     
-    // flash led hole
-    flashXOffset=  ((ledHolderDia / 2) - flashLedOffset) * -1;
+    // flash led hole    
     translate([flashXOffset, 0, 0]) {
-        cylinder(h=ledHolderThickness, d=flashLedDia);  
+        cylinder(h=ledHolderHeight, d=ledDia);  
+        cylinder(h=ledRingHeight, d=ledRingDia);
     }
     
     // screw hole
-    translate([screwHoleXOffset, 0, 0]) {
-      cylinder(h=backThickness, d=screwDia);
-    }
+    drawScrewHole(ledHolderHeight);
   }
   
   // nut pocket
   translate([screwHoleXOffset, 0, nutPocketHeight / 2]) {
     drawNutPocket();
   }
+}
+
+// draw the led fixation plate
+module drawLedFixationPlate() {
+  
+  difference() {
+    // the main plate for the fixation  
+    cylinder(d=ledHolderDia, h=ledPlateHeight);
+    
+    // led hole
+    cylinder(h=ledHolderDia, d=ledDia);  
+    
+    // draw hole for flash led    
+    translate([flashXOffset, 0, 0]) {
+        cylinder(h=ledHolderDia, d=ledDia);  
+    }
+    
+    // screw hole
+    drawScrewHole(ledPlateHeight);
+  }
+  
+}
+
+module drawScrewHole(holeHeight) {
+  // screw hole
+    translate([screwHoleXOffset, 0, 0]) {
+      cylinder(h=holeHeight, d=screwDia);
+    }
 }
 
 
@@ -160,7 +187,7 @@ module drawLensHolder() {
 // draws the ring holding the lens
 module drawLensRing() {
   difference() {
-    cylinder(d=lensRingDia, h=lensRingHeight);
+    cylinder(d=lensRingDia-lensRingDiaThinner, h=lensRingHeight);
     cylinder(d=lensOutlineDia, h=lensRingHeight);
   }
 }
@@ -179,5 +206,9 @@ translate([0,lensHolderOuterDia+5,0]) {
 
   translate([tubeOuterDia+5,0,0]) {
     drawLedHolder();
+    
+    translate([tubeOuterDia+5,0,0]) {
+      drawLedFixationPlate();
+    }
   }
 }
