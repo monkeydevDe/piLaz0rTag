@@ -20,7 +20,9 @@ lensHolderInnerWallWidth=1;
 ledHolderHeight=3;
 ledHolderThinner=1;
 ledHolderDia=tubeInnerDia - ledHolderThinner;
-ledPlateHeight=1.5;
+ledFixPlateHeight=1;
+ledFixScrewDia=3.3;
+ledFixScrewOffset=3;
 
 backHeight=5;
 backInnerHeight=3;
@@ -89,6 +91,9 @@ module drawLedHolder() {
     
     // screw hole
     drawScrewHole(ledHolderHeight);
+    
+    // fix holes
+    drawFixScrewHoles(ledHolderHeight);
   }
   
   // nut pocket
@@ -102,27 +107,45 @@ module drawLedFixationPlate() {
   
   difference() {
     // the main plate for the fixation  
-    cylinder(d=ledHolderDia, h=ledPlateHeight);
+    cylinder(d=ledHolderDia, h=ledFixPlateHeight);
     
     // led hole
-    cylinder(h=ledHolderDia, d=ledDia);  
+    cylinder(d=ledDia, h=ledFixPlateHeight);  
     
     // draw hole for flash led    
     translate([flashXOffset, 0, 0]) {
-        cylinder(h=ledHolderDia, d=ledDia);  
+        cylinder(d=ledDia, h=ledFixPlateHeight);  
     }
     
     // screw hole
-    drawScrewHole(ledPlateHeight);
+    drawScrewHole(ledFixPlateHeight);
+    
+    // fix holes
+    drawFixScrewHoles(ledFixPlateHeight);
   }
   
 }
 
 module drawScrewHole(holeHeight) {
   // screw hole
-    translate([screwHoleXOffset, 0, 0]) {
-      cylinder(h=holeHeight, d=screwDia);
-    }
+  translate([screwHoleXOffset, 0, 0]) {
+    cylinder(h=holeHeight, d=screwDia);
+  }
+}
+
+// draws the holes for the screws fixaiting the led plate
+module drawFixScrewHoles(holeHeight) {
+  screwYOffset = (ledHolderDia / 2) - (ledFixScrewDia / 2) - ledFixScrewOffset ;
+  
+  // right hole  
+  translate([0,screwYOffset,0]) {
+    cylinder(d=ledFixScrewDia, h=holeHeight);
+  }
+  
+  // left hole
+  translate([0,screwYOffset * -1,0]) {
+    cylinder(d=ledFixScrewDia, h=holeHeight);
+  }
 }
 
 
