@@ -33,14 +33,14 @@ screwDia=4.4;
 screwOffset=6;
 
 ledDia=5.2;
-ledRingHeight=1.2;
-ledRingDia=6.2;
+ledRingHeight=1.3;
+ledRingDia=6.4;
 flashLedOffset=5;
 
 
-nutOuterSize=8.1;
+nutOuterSize=9.1;
 nutHeight=4;
-nutPocketWidth=nutOuterSize + 2;
+nutPocketWidth=nutOuterSize + 1.9;
 nutPocketHeight=nutHeight + 1.5;
 
 screwHoleXOffset= (tubeOuterDia / 2) - (tubeOuterDia - tubeInnerDia) - screwOffset;
@@ -79,14 +79,20 @@ module drawLedHolder() {
     // the plate of the led holder
     cylinder(h=ledHolderHeight, d=ledHolderDia);  
     
+    ledRingZOffset = ledHolderHeight - ledRingHeight;
+    
     // led hole
     cylinder(h=ledHolderHeight, d=ledDia);  
-    cylinder(h=ledRingHeight, d=ledRingDia);
+    translate([0,0,ledRingZOffset]) {
+      cylinder(h=ledRingHeight, d=ledRingDia);
+    }
     
     // flash led hole    
     translate([flashXOffset, 0, 0]) {
-        cylinder(h=ledHolderHeight, d=ledDia);  
+      cylinder(h=ledHolderHeight, d=ledDia);  
+      translate([0,0,ledRingZOffset]) {
         cylinder(h=ledRingHeight, d=ledRingDia);
+      }
     }
     
     // screw hole
