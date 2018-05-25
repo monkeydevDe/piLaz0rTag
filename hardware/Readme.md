@@ -24,6 +24,7 @@ The schematics are done with the awesome Tool: http://fritzing.org for the proto
 
 #### KiCad
 
+* Take a look here: https://kicad.github.io/ !!!!
 * As a base for the PL9823 LEDs: https://github.com/madworm/WS2812B.pretty.git
 * For the some parts https://github.com/RoboUlbricht/kicad.lib.git
 * PiZero hat: https://github.com/help-14/PiZeroHat
