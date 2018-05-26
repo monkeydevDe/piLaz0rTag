@@ -20,7 +20,7 @@ lensHolderInnerWallWidth=1;
 ledHolderHeight=3;
 ledHolderThinner=1;
 ledHolderDia=tubeInnerDia - ledHolderThinner;
-ledFixPlateHeight=1;
+ledFixPlateHeight=2;
 ledFixScrewDia=3.3;
 ledFixScrewOffset=3;
 
@@ -45,6 +45,12 @@ nutPocketHeight=nutHeight + 1.5;
 
 screwHoleXOffset= (tubeOuterDia / 2) - (tubeOuterDia - tubeInnerDia) - screwOffset;
 flashXOffset=  ((ledHolderDia / 2) - flashLedOffset) * -1;
+
+pcbWidthY=17;
+pcbWidthX=15;
+pcbHeight=1.5;
+pcbBrim=1;
+pcbOffset=-6;
 
 // draw the back holder
 module drawBack()  {
@@ -101,65 +107,7 @@ module drawLedHolder() {
     // fix holes
     drawFixScrewHoles(ledHolderHeight);
   }
-  
-  // nut pocket
-  translate([screwHoleXOffset, 0, nutPocketHeight / 2]) {
-    drawNutPocket();
-  }
 }
-
-
-// draw the led holder
-module drawLedPcbHolder() {
-
-
-
-  difference() {
-      
-    // the plate of the led holder
-    cylinder(h=ledHolderHeight, d=ledHolderDia);  
-    
-    
-    pcbWidthY=17;
-    pcbWidthX=15;
-    pcbHeight=1.5;
-    pcbBrim=1;
-    pcbBrimHeight = ledHolderHeight-pcbHeight;
-    pcbBrimZOffset = (pcbBrimHeight / 2);
-    pcbZOffset = (pcbHeight / 2) + (pcbBrimHeight);
-  
-    // draw the brim
-    translate([-6, 0, pcbBrimZOffset ]) {
-      cube([pcbWidthX-pcbBrim,pcbWidthY-pcbBrim,pcbBrimHeight],center=true);
-    }
-    
-    // draw the pcb
-    translate([-6, 0, pcbZOffset]) {
-      cube([pcbWidthX,pcbWidthY,pcbHeight],center=true);
-    }
-    
-    // draw cable hole
-    translate([-(ledHolderDia/2), 0, 0]) {
-      cylinder(h=ledHolderHeight, d=ledFixScrewDia);
-    }
-    
-    
-    
-    
-    
-    // screw hole
-    drawScrewHole(ledHolderHeight);
-    
-    // fix holes
-    drawFixScrewHoles(ledHolderHeight);
-  }
-  
-  // nut pocket
-  translate([screwHoleXOffset, 0, nutPocketHeight / 2]) {
-    drawNutPocket();
-  }
-}
-
 
 // draw the led fixation plate
 module drawLedFixationPlate() {
@@ -183,7 +131,106 @@ module drawLedFixationPlate() {
     drawFixScrewHoles(ledFixPlateHeight);
   }
   
+  // nut pocket
+  translate([screwHoleXOffset, 0, ledFixPlateHeight]) {
+    drawNutPocket();
+  }
+  
 }
+
+
+// draw the led holder
+module drawLedPcbHolder() {
+
+  difference() {
+      
+    // the plate of the led holder
+    cylinder(h=ledHolderHeight, d=ledHolderDia);  
+    
+    pcbBrimHeight = ledHolderHeight-pcbHeight;
+    pcbBrimZOffset = (pcbBrimHeight / 2);
+    pcbZOffset = (pcbHeight / 2) + (pcbBrimHeight);
+  
+    // draw the brim
+    translate([pcbOffset, 0, pcbBrimZOffset ]) {
+      cube([pcbWidthX-pcbBrim,pcbWidthY-pcbBrim,pcbBrimHeight],center=true);
+    }
+    
+    // draw the pcb
+    translate([pcbOffset, 0, pcbZOffset]) {
+      cube([pcbWidthX,pcbWidthY,pcbHeight],center=true);
+    }
+    
+    // draw cable hole
+    translate([-(ledHolderDia/2), 0, 0]) {
+      cylinder(h=ledHolderHeight, d=ledFixScrewDia);
+    }
+    
+    
+    // screw hole
+    drawScrewHole(ledHolderHeight);
+    
+    // fix holes
+    drawFixScrewHoles(ledHolderHeight);
+  }  
+}
+
+// draw the led fixation plate
+module drawLedPcbFixationPlate() {  
+  pcbWidthYBrim=17-2;
+  
+  difference() {
+    // the main plate for the fixation  
+    cylinder(d=ledHolderDia, h=ledFixPlateHeight);
+    
+     // draw the pcb
+    translate([pcbOffset, 0, ledFixPlateHeight/2]) {
+      cube([pcbWidthX,pcbWidthYBrim,ledFixPlateHeight],center=true);
+    }
+    
+    // draw cable hole
+    translate([-(ledHolderDia/2), 0, 0]) {
+      cylinder(h=ledFixPlateHeight, d=ledFixScrewDia);
+    }
+    
+    // screw hole
+    drawScrewHole(ledFixPlateHeight);
+    
+    // fix holes
+    drawFixScrewHoles(ledFixPlateHeight);
+  }
+  
+  // nut pocket
+  translate([screwHoleXOffset, 0, ledFixPlateHeight]) {
+    drawNutPocket();
+  }
+  
+}
+
+// draw the back holder
+module drawBackPcb()  {
+  difference() {
+    // draw the main cylinder     
+    cylinder(h=backHeight, d=tubeOuterDia);
+   
+    // create ring for cutout
+    difference() {
+      cylinder(h=backInnerHeight, d=tubeOuterDia);
+      cylinder(h=backInnerHeight, d=tubeInnerDia);
+    }
+  
+    // draw hole for cables
+    translate([pcbOffset,0,(backHeight/2)]) {
+      cube([pcbWidthX,pcbWidthY,backHeight],center=true);
+    }
+    
+  
+    // screw hole
+    drawScrewHole(backHeight);    
+  }
+}
+
+
 
 module drawScrewHole(holeHeight) {
   // screw hole
@@ -221,7 +268,7 @@ module drawNutPocket() {
     
     // hollow so we cann insert the nut
     translate([nutPocketWidth / 3, 0, nutHeight / 2]) {
-      cube([nutPocketWidth / 2, nutOuterSize-1.1, nutHeight], center=true);
+      cube([nutPocketWidth / 2, nutOuterSize-1.2, nutHeight], center=true);
     } 
         
     // screw hole
@@ -275,23 +322,44 @@ module drawLensRing() {
 }
 
 
+/**
+* Draw the led holder with holes for the led
+*/
+module drawLedHolderModule() {
+  drawLedHolder();
+    translate([tubeOuterDia+5,0,0]) {
+      drawLedFixationPlate();
+    }
+}
+
+/**
+* Draw the led holder for the irs sender pcb
+*/
+module drawLedPcbHolderModule() {
+  drawLedPcbHolder();
+    translate([tubeOuterDia+5,0,0]) {
+      drawLedPcbFixationPlate();
+    }
+}
 
 
-/*drawLensHolder();
+drawLensHolder();
 translate([lensHolderOuterDia+5,0,0]) {
   drawLensRing();
-}*/
+}
+
 
 
 translate([0,lensHolderOuterDia+5,0]) {
-  //drawBack();
+  drawBack();
+  translate([lensHolderOuterDia+5,0,0]) {
+    drawLedHolderModule();
+  }
+}
 
-  translate([tubeOuterDia+5,0,0]) {
-    //drawLedHolder();
-    drawLedPcbHolder();
-    
-    translate([tubeOuterDia+5,0,0]) {
-    //  drawLedFixationPlate();
-    }
+translate([0,(lensHolderOuterDia+5) * 2,0]) {
+  drawBackPcb();
+  translate([lensHolderOuterDia+5,0,0]) {
+    drawLedPcbHolderModule();
   }
 }
