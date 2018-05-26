@@ -121,19 +121,26 @@ module drawLedPcbHolder() {
     
     
     pcbWidthY=17;
-    pcbWidthX=14;
+    pcbWidthX=15;
     pcbHeight=1.5;
     pcbBrim=1;
     pcbBrimHeight = ledHolderHeight-pcbHeight;
     pcbBrimZOffset = (pcbBrimHeight / 2);
     pcbZOffset = (pcbHeight / 2) + (pcbBrimHeight);
   
-    translate([-5, 0, pcbBrimZOffset ]) {
+    // draw the brim
+    translate([-6, 0, pcbBrimZOffset ]) {
       cube([pcbWidthX-pcbBrim,pcbWidthY-pcbBrim,pcbBrimHeight],center=true);
     }
     
-    translate([-5, 0, pcbZOffset]) {
+    // draw the pcb
+    translate([-6, 0, pcbZOffset]) {
       cube([pcbWidthX,pcbWidthY,pcbHeight],center=true);
+    }
+    
+    // draw cable hole
+    translate([-(ledHolderDia/2), 0, 0]) {
+      cylinder(h=ledHolderHeight, d=ledFixScrewDia);
     }
     
     
