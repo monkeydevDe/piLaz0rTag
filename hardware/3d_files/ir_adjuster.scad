@@ -108,6 +108,52 @@ module drawLedHolder() {
   }
 }
 
+
+// draw the led holder
+module drawLedPcbHolder() {
+
+
+
+  difference() {
+      
+    // the plate of the led holder
+    cylinder(h=ledHolderHeight, d=ledHolderDia);  
+    
+    
+    pcbWidthY=17;
+    pcbWidthX=14;
+    pcbHeight=1.5;
+    pcbBrim=1;
+    pcbBrimHeight = ledHolderHeight-pcbHeight;
+    pcbBrimZOffset = (pcbBrimHeight / 2);
+    pcbZOffset = (pcbHeight / 2) + (pcbBrimHeight);
+  
+    translate([-5, 0, pcbBrimZOffset ]) {
+      cube([pcbWidthX-pcbBrim,pcbWidthY-pcbBrim,pcbBrimHeight],center=true);
+    }
+    
+    translate([-5, 0, pcbZOffset]) {
+      cube([pcbWidthX,pcbWidthY,pcbHeight],center=true);
+    }
+    
+    
+    
+    
+    
+    // screw hole
+    drawScrewHole(ledHolderHeight);
+    
+    // fix holes
+    drawFixScrewHoles(ledHolderHeight);
+  }
+  
+  // nut pocket
+  translate([screwHoleXOffset, 0, nutPocketHeight / 2]) {
+    drawNutPocket();
+  }
+}
+
+
 // draw the led fixation plate
 module drawLedFixationPlate() {
   
@@ -224,20 +270,21 @@ module drawLensRing() {
 
 
 
-drawLensHolder();
+/*drawLensHolder();
 translate([lensHolderOuterDia+5,0,0]) {
   drawLensRing();
-}
+}*/
 
 
 translate([0,lensHolderOuterDia+5,0]) {
-  drawBack();
+  //drawBack();
 
   translate([tubeOuterDia+5,0,0]) {
-    drawLedHolder();
+    //drawLedHolder();
+    drawLedPcbHolder();
     
     translate([tubeOuterDia+5,0,0]) {
-      drawLedFixationPlate();
+    //  drawLedFixationPlate();
     }
   }
 }
