@@ -50,7 +50,7 @@ pcbWidthY=17;
 pcbWidthX=15;
 pcbHeight=2;
 pcbBrim=1;
-pcbOffset=-6;
+pcbOffset=-5;
 
 // draw the back holder
 module drawBack()  {
