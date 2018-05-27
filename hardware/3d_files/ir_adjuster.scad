@@ -48,7 +48,7 @@ flashXOffset=  ((ledHolderDia / 2) - flashLedOffset) * -1;
 
 pcbWidthY=17;
 pcbWidthX=15;
-pcbHeight=1.5;
+pcbHeight=2;
 pcbBrim=1;
 pcbOffset=-6;
 
