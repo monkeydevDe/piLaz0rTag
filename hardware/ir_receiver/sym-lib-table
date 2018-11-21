@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name piLaz0rTag_receiver-rescue)(type Legacy)(uri ${KIPRJMOD}/piLaz0rTag_receiver-rescue.lib)(options "")(descr ""))
+  (lib (name pl8923)(type Legacy)(uri /_data/_workspaces/piLaz0rTag/hardware/kicad/pl8923.lib)(options "")(descr ""))
+)

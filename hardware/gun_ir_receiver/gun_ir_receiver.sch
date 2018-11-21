@@ -1,0 +1,152 @@
+EESchema Schematic File Version 4
+LIBS:gun_ir_receiver-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Interface_Optical:TSOP583xx IrReceiver1
+U 1 1 5BF5B915
+P 4800 1700
+F 0 "IrReceiver1" V 4741 1988 50  0000 L CNN
+F 1 "TSOP583xx" V 4832 1988 50  0000 L CNN
+F 2 "OptoDevice:Vishay_MINICAST-3Pin" H 4750 1325 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/82462/tsop581.pdf" H 5450 2000 50  0001 C CNN
+	1    4800 1700
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 5BF5B9E2
+P 4600 2100
+F 0 "#PWR0101" H 4600 1850 50  0001 C CNN
+F 1 "GND" H 4605 1927 50  0000 C CNN
+F 2 "" H 4600 2100 50  0001 C CNN
+F 3 "" H 4600 2100 50  0001 C CNN
+	1    4600 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0102
+U 1 1 5BF5BA4C
+P 5000 2100
+F 0 "#PWR0102" H 5000 1950 50  0001 C CNN
+F 1 "+5V" H 5015 2273 50  0000 C CNN
+F 2 "" H 5000 2100 50  0001 C CNN
+F 3 "" H 5000 2100 50  0001 C CNN
+	1    5000 2100
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 5BF5BA84
+P 3100 1300
+F 0 "#PWR0103" H 3100 1050 50  0001 C CNN
+F 1 "GND" H 3105 1127 50  0000 C CNN
+F 2 "" H 3100 1300 50  0001 C CNN
+F 3 "" H 3100 1300 50  0001 C CNN
+	1    3100 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0104
+U 1 1 5BF5BAB6
+P 3000 1300
+F 0 "#PWR0104" H 3000 1150 50  0001 C CNN
+F 1 "+5V" H 3015 1473 50  0000 C CNN
+F 2 "" H 3000 1300 50  0001 C CNN
+F 3 "" H 3000 1300 50  0001 C CNN
+	1    3000 1300
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Conn_01x05_Female Connector1
+U 1 1 5BF5BBC9
+P 3550 3000
+F 0 "Connector1" V 3397 3248 50  0000 L CNN
+F 1 "Conn_01x05_Female" V 3488 3248 50  0000 L CNN
+F 2 "Connector_JST:JST_EH_B05B-EH-A_1x05_P2.50mm_Vertical" H 3550 3000 50  0001 C CNN
+F 3 "~" H 3550 3000 50  0001 C CNN
+	1    3550 3000
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR0106
+U 1 1 5BF5BE27
+P 3650 2800
+F 0 "#PWR0106" H 3650 2650 50  0001 C CNN
+F 1 "+5V" H 3665 2973 50  0000 C CNN
+F 2 "" H 3650 2800 50  0001 C CNN
+F 3 "" H 3650 2800 50  0001 C CNN
+	1    3650 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4800 2100 4800 2650
+Text Label 4800 2450 0    50   ~ 0
+IrData
+Text Label 3550 2050 0    50   ~ 0
+LedOut
+Text Label 2400 2300 0    50   ~ 0
+LedIn
+$Comp
+L Connector:Conn_01x04_Female LEDPL9823
+U 1 1 5BF5D19E
+P 3000 1100
+F 0 "LEDPL9823" V 2940 812 50  0000 R CNN
+F 1 "Conn_01x04_Female" V 2849 812 50  0000 R CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical" H 3000 1100 50  0001 C CNN
+F 3 "~" H 3000 1100 50  0001 C CNN
+	1    3000 1100
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2400 1300 2900 1300
+Wire Wire Line
+	2400 1300 2400 2600
+Wire Wire Line
+	3200 1300 3550 1300
+Wire Wire Line
+	4800 2650 4050 2650
+Wire Wire Line
+	4050 2650 4050 2500
+Wire Wire Line
+	2400 2600 2750 2600
+Wire Wire Line
+	2750 2600 2750 2300
+Wire Wire Line
+	2750 2300 3750 2300
+Wire Wire Line
+	3750 2300 3750 2800
+$Comp
+L power:GND #PWR?
+U 1 1 5BF5D905
+P 3550 2800
+F 0 "#PWR?" H 3550 2550 50  0001 C CNN
+F 1 "GND" H 3555 2627 50  0000 C CNN
+F 2 "" H 3550 2800 50  0001 C CNN
+F 3 "" H 3550 2800 50  0001 C CNN
+	1    3550 2800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3550 1300 3550 2200
+Wire Wire Line
+	3550 2200 3350 2200
+Wire Wire Line
+	3350 2200 3350 2800
+Wire Wire Line
+	3450 2800 3450 2500
+Wire Wire Line
+	3450 2500 4050 2500
+$EndSCHEMATC

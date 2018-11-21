@@ -1,0 +1,185 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L RJ45 J2
+U 1 1 5AFFDE4C
+P 3500 2800
+F 0 "J2" H 3700 3300 50  0000 C CNN
+F 1 "RJ45" H 3350 3300 50  0000 C CNN
+F 2 "kicad:rj45-seppel-small" H 3500 2800 50  0001 C CNN
+F 3 "" H 3500 2800 50  0001 C CNN
+	1    3500 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_01x04 J1
+U 1 1 5AFFDEAD
+P 3450 4200
+F 0 "J1" H 3450 4400 50  0000 C CNN
+F 1 "Conn_01x04" H 3450 3900 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 3450 4200 50  0001 C CNN
+F 3 "" H 3450 4200 50  0001 C CNN
+	1    3450 4200
+	0    1    1    0   
+$EndComp
+$Comp
+L +5V #PWR01
+U 1 1 5AFFDF0E
+P 3150 3250
+F 0 "#PWR01" H 3150 3100 50  0001 C CNN
+F 1 "+5V" H 3150 3390 50  0000 C CNN
+F 2 "" H 3150 3250 50  0001 C CNN
+F 3 "" H 3150 3250 50  0001 C CNN
+	1    3150 3250
+	-1   0    0    1   
+$EndComp
+$Comp
+L +5V #PWR02
+U 1 1 5AFFDF26
+P 3550 4000
+F 0 "#PWR02" H 3550 3850 50  0001 C CNN
+F 1 "+5V" H 3550 4140 50  0000 C CNN
+F 2 "" H 3550 4000 50  0001 C CNN
+F 3 "" H 3550 4000 50  0001 C CNN
+	1    3550 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 5AFFDF3E
+P 3450 4000
+F 0 "#PWR03" H 3450 3750 50  0001 C CNN
+F 1 "GND" H 3450 3850 50  0000 C CNN
+F 2 "" H 3450 4000 50  0001 C CNN
+F 3 "" H 3450 4000 50  0001 C CNN
+	1    3450 4000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3350 4000 3350 3500
+Wire Wire Line
+	3350 3500 3650 3500
+Wire Wire Line
+	3650 3500 3650 3250
+Wire Wire Line
+	3250 4000 3250 3650
+Wire Wire Line
+	3250 3650 3850 3650
+Wire Wire Line
+	3850 3650 3850 3250
+$Comp
+L GND #PWR04
+U 1 1 5AFFDF64
+P 3250 3250
+F 0 "#PWR04" H 3250 3000 50  0001 C CNN
+F 1 "GND" H 3250 3100 50  0000 C CNN
+F 2 "" H 3250 3250 50  0001 C CNN
+F 3 "" H 3250 3250 50  0001 C CNN
+	1    3250 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR05
+U 1 1 5AFFDF7C
+P 3350 3250
+F 0 "#PWR05" H 3350 3000 50  0001 C CNN
+F 1 "GND" H 3350 3100 50  0000 C CNN
+F 2 "" H 3350 3250 50  0001 C CNN
+F 3 "" H 3350 3250 50  0001 C CNN
+	1    3350 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR06
+U 1 1 5AFFDF94
+P 3450 3250
+F 0 "#PWR06" H 3450 3000 50  0001 C CNN
+F 1 "GND" H 3450 3100 50  0000 C CNN
+F 2 "" H 3450 3250 50  0001 C CNN
+F 3 "" H 3450 3250 50  0001 C CNN
+	1    3450 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR07
+U 1 1 5AFFDFAC
+P 3550 3250
+F 0 "#PWR07" H 3550 3000 50  0001 C CNN
+F 1 "GND" H 3550 3100 50  0000 C CNN
+F 2 "" H 3550 3250 50  0001 C CNN
+F 3 "" H 3550 3250 50  0001 C CNN
+	1    3550 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR08
+U 1 1 5AFFDFC4
+P 3750 3250
+F 0 "#PWR08" H 3750 3000 50  0001 C CNN
+F 1 "GND" H 3750 3100 50  0000 C CNN
+F 2 "" H 3750 3250 50  0001 C CNN
+F 3 "" H 3750 3250 50  0001 C CNN
+	1    3750 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR09
+U 1 1 5AFFDFDC
+P 4050 2450
+F 0 "#PWR09" H 4050 2200 50  0001 C CNN
+F 1 "GND" H 4050 2300 50  0000 C CNN
+F 2 "" H 4050 2450 50  0001 C CNN
+F 3 "" H 4050 2450 50  0001 C CNN
+	1    4050 2450
+	1    0    0    -1  
+$EndComp
+Text Label 3750 3650 0    60   ~ 0
+led
+Text Label 3400 3500 0    60   ~ 0
+irdata
+$EndSCHEMATC
