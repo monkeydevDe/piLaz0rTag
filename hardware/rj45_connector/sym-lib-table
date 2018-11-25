@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name rj45_connector-rescue)(type Legacy)(uri ${KIPRJMOD}/rj45_connector-rescue.lib)(options "")(descr ""))
+)
