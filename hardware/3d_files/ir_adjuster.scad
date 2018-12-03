@@ -177,7 +177,7 @@ module drawLedPcbHolder() {
 
 // draw the led fixation plate
 module drawLedPcbFixationPlate() {  
-  pcbWidthYBrim=17-2;
+  pcbWidthXBrim=pcbWidthX-2;
   
   difference() {
     // the main plate for the fixation  
@@ -185,7 +185,7 @@ module drawLedPcbFixationPlate() {
     
      // draw the pcb
     translate([pcbOffset, 0, ledFixPlateHeight/2]) {
-      cube([pcbWidthX,pcbWidthYBrim,ledFixPlateHeight],center=true);
+      cube([pcbWidthXBrim,pcbWidthY,ledFixPlateHeight],center=true);
     }
     
     // draw cable hole
