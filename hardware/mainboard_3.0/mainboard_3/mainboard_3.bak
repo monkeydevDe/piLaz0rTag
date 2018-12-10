@@ -15,10 +15,10 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L SparkFun-Boards:SPARKFUN_LOGIC_LEVEL_CONVERTER B?
+L SparkFun-Boards:SPARKFUN_LOGIC_LEVEL_CONVERTER LVL_Shifter
 U 1 1 5C050D11
 P 5100 3800
-F 0 "B?" H 5100 4460 45  0000 C CNN
+F 0 "LVL_Shifter" H 5100 4460 45  0000 C CNN
 F 1 "SPARKFUN_LOGIC_LEVEL_CONVERTER" H 5100 4376 45  0000 C CNN
 F 2 "SPARKFUN_LOGIC_LEVEL_CONVERTER" H 5100 4250 20  0001 C CNN
 F 3 "" H 5100 3800 50  0001 C CNN
@@ -146,10 +146,10 @@ F 3 "" H 6350 2900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x05 J?
+L Connector_Generic:Conn_01x05 IRSenderConnector
 U 1 1 5C053701
 P 7300 2900
-F 0 "J?" H 7380 2942 50  0000 L CNN
+F 0 "IRSenderConnector" H 7380 2942 50  0000 L CNN
 F 1 "Conn_01x05" H 7380 2851 50  0000 L CNN
 F 2 "" H 7300 2900 50  0001 C CNN
 F 3 "~" H 7300 2900 50  0001 C CNN
@@ -157,10 +157,10 @@ F 3 "~" H 7300 2900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x02 J?
+L Connector_Generic:Conn_01x02 PowerConnector
 U 1 1 5C053854
 P 3950 2400
-F 0 "J?" H 4030 2392 50  0000 L CNN
+F 0 "PowerConnector" H 4030 2392 50  0000 L CNN
 F 1 "Conn_01x02" H 4030 2301 50  0000 L CNN
 F 2 "" H 3950 2400 50  0001 C CNN
 F 3 "~" H 3950 2400 50  0001 C CNN
@@ -210,10 +210,10 @@ IR_ON
 Text Label 6850 2500 0    50   ~ 0
 IR_GND
 $Comp
-L Connector_Generic:Conn_01x04 J?
+L Connector_Generic:Conn_01x04 IRReceiverConnector
 U 1 1 5C053B4C
 P 7500 3650
-F 0 "J?" H 7580 3642 50  0000 L CNN
+F 0 "IRReceiverConnector" H 7580 3642 50  0000 L CNN
 F 1 "Conn_01x04" H 7580 3551 50  0000 L CNN
 F 2 "" H 7500 3650 50  0001 C CNN
 F 3 "~" H 7500 3650 50  0001 C CNN
@@ -246,20 +246,140 @@ Wire Wire Line
 	7100 2700 7100 2350
 Wire Wire Line
 	7100 2350 7750 2350
-Wire Wire Line
-	7750 2350 7750 3350
-Wire Wire Line
-	7750 3350 7300 3350
-Wire Wire Line
-	7300 3350 7300 3550
 Text Label 7750 3100 0    50   ~ 0
 LED_OUT
 Wire Wire Line
-	5750 3600 7250 3600
+	5750 3600 6950 3600
 Wire Wire Line
 	7250 3600 7250 3650
 Wire Wire Line
 	7250 3650 7300 3650
 Text Label 6200 3600 0    50   ~ 0
 IR_REC
+$Comp
+L Connector_Generic:Conn_01x03 MotorConnector
+U 1 1 5C0E9ADF
+P 6400 5250
+F 0 "MotorConnector" H 6480 5292 50  0000 L CNN
+F 1 "Conn_01x03" H 6480 5201 50  0000 L CNN
+F 2 "" H 6400 5250 50  0001 C CNN
+F 3 "~" H 6400 5250 50  0001 C CNN
+	1    6400 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5C0E9F73
+P 7400 4600
+F 0 "#PWR?" H 7400 4350 50  0001 C CNN
+F 1 "GND" V 7405 4472 50  0000 R CNN
+F 2 "" H 7400 4600 50  0001 C CNN
+F 3 "" H 7400 4600 50  0001 C CNN
+	1    7400 4600
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5C0E9FF8
+P 7400 4500
+F 0 "#PWR?" H 7400 4350 50  0001 C CNN
+F 1 "+5V" V 7415 4628 50  0000 L CNN
+F 2 "" H 7400 4500 50  0001 C CNN
+F 3 "" H 7400 4500 50  0001 C CNN
+	1    7400 4500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5C0EA54F
+P 6200 5350
+F 0 "#PWR?" H 6200 5200 50  0001 C CNN
+F 1 "+5V" V 6215 5478 50  0000 L CNN
+F 2 "" H 6200 5350 50  0001 C CNN
+F 3 "" H 6200 5350 50  0001 C CNN
+	1    6200 5350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5C0EA5B7
+P 6200 5250
+F 0 "#PWR?" H 6200 5000 50  0001 C CNN
+F 1 "GND" V 6205 5122 50  0000 R CNN
+F 2 "" H 6200 5250 50  0001 C CNN
+F 3 "" H 6200 5250 50  0001 C CNN
+	1    6200 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x05 IRGunReceiverConnector
+U 1 1 5C0EA895
+P 7600 4400
+F 0 "IRGunReceiverConnector" H 7680 4442 50  0000 L CNN
+F 1 "Conn_01x05" H 7680 4351 50  0000 L CNN
+F 2 "" H 7600 4400 50  0001 C CNN
+F 3 "~" H 7600 4400 50  0001 C CNN
+	1    7600 4400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7400 4400 6950 4400
+Wire Wire Line
+	6950 4400 6950 3600
+Connection ~ 6950 3600
+Wire Wire Line
+	6950 3600 7250 3600
+Wire Wire Line
+	7750 4100 7250 4100
+Wire Wire Line
+	7250 4100 7250 4300
+Wire Wire Line
+	7250 4300 7400 4300
+Wire Wire Line
+	7750 2350 7750 4100
+Wire Wire Line
+	7400 4200 7400 4000
+Wire Wire Line
+	7400 4000 8100 4000
+Wire Wire Line
+	8100 4000 8100 3300
+Wire Wire Line
+	8100 3300 7300 3300
+Wire Wire Line
+	7300 3300 7300 3550
+Text Label 8100 3500 0    50   ~ 0
+LED_IN
+$Comp
+L Connector_Generic:Conn_01x04 DisplayConnector
+U 1 1 5C0EB37F
+P 5350 1300
+F 0 "DisplayConnector" H 5430 1292 50  0000 L CNN
+F 1 "Conn_01x04" H 5430 1201 50  0000 L CNN
+F 2 "" H 5350 1300 50  0001 C CNN
+F 3 "~" H 5350 1300 50  0001 C CNN
+	1    5350 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5C0EB403
+P 5150 1500
+F 0 "#PWR?" H 5150 1250 50  0001 C CNN
+F 1 "GND" V 5155 1372 50  0000 R CNN
+F 2 "" H 5150 1500 50  0001 C CNN
+F 3 "" H 5150 1500 50  0001 C CNN
+	1    5150 1500
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5C0EB47A
+P 5150 1200
+F 0 "#PWR?" H 5150 1050 50  0001 C CNN
+F 1 "+3.3V" V 5165 1328 50  0000 L CNN
+F 2 "" H 5150 1200 50  0001 C CNN
+F 3 "" H 5150 1200 50  0001 C CNN
+	1    5150 1200
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC
