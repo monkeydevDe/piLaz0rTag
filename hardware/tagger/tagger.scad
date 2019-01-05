@@ -12,7 +12,9 @@ lensTubeLength=200;
 
 // lens tube fixiations dims 
 lensTubeFixWidth=10;
-lensTubeFixHeight=lensTubeDiameter + 2 * 5;
+lensTubeFixFlesh=10;
+lensTubeFixHeight=lensTubeDiameter + 2 * lensTubeFixFlesh;
+lensTubeGap=1.5;
 
 // pcb parameters
 esp32Height=30;
@@ -32,9 +34,10 @@ gunThickness = lensTubeDiameter + 30;
 gunHalfThickness = gunThickness / 2;
 
 // grip parameters
-gripWidth=80;
+gripWidth=70;
 gripHeight=100;
 gripFrontOffset=200;
+gripCornerRadius=5;
 
 
 /**
@@ -42,12 +45,18 @@ gripFrontOffset=200;
 */
 module lensTubeFixiation() {
   difference() {
-    cube(size=[lensTubeFixWidth, lensTubeFixHeight, lensTubeFixHeight], center=true);     
-    rotate([0, 90, 0]) {
-      cylinder(d=lensTubeDiameter, h=10, center=true);    
+    cube(size=[lensTubeFixWidth, lensTubeFixHeight, lensTubeFixHeight], center=false);     
+    translate([0, lensTubeFixHeight / 2, lensTubeFixHeight / 2]) {
+      rotate([0, 90, 0]) {
+        cylinder(d=lensTubeDiameter, h=lensTubeFixWidth, center=false);    
+      }  
     }
-    
-    
+
+    // cut of the top
+    offset = lensTubeFixHeight / 2 - lensTubeGap / 2;
+    translate([0, 0, offset]) {
+      cube(size=[lensTubeFixWidth, lensTubeFixHeight, lensTubeFixHeight / 2 + lensTubeGap / 2], center=false);
+    }
   }
 }
 
@@ -80,16 +89,56 @@ module gunBodyBack() {
 }
 
 module gripBody() {
-  minkowski() {
-    cube(size=[gripWidth, gripHeight, gunHalfThickness], center=false);
-    cylinder(r=20, h=gunHalfThickness, center=false);  
+  translate([gripCornerRadius, gripCornerRadius, gripCornerRadius]) {  
+    difference() {
+      minkowski() {
+        cube(size=[gripWidth - 2 * gripCornerRadius , gripHeight - gripCornerRadius, gunHalfThickness -  gripCornerRadius], center=false);
+        sphere(r=gripCornerRadius);
+      }
+
+      translate([gunWallThickness, gunWallThickness, gunWallThickness]) {
+        minkowski() {
+          cube(size=[gripWidth - 2 * gripCornerRadius - 2 * gunWallThickness , gripHeight - gripCornerRadius - 2 * gunWallThickness , gunHalfThickness -  gripCornerRadius], center=false);
+          sphere(r=gripCornerRadius);
+        }
+      }
+
+
+      // cut off the top
+      translate([-gripCornerRadius, - gripCornerRadius, gunHalfThickness - gripCornerRadius]) {
+        cube(size=[gripWidth, gripHeight + gripCornerRadius, gripCornerRadius], center=false);
+      }
+
+      // cut of the cap
+      translate([-gripCornerRadius, gripHeight - gripCornerRadius, -gripCornerRadius]) {
+        cube(size=[gripWidth,  gripCornerRadius, gunHalfThickness], center=false);
+      }     
+    }
   }
-  
 }
 
 module gunBody() {
   union() {
-    gunBodyFront();
+    difference() {
+      gunBodyFront();
+      tubeHoleOffset = gunHeight - lensTubeDiameter / 2 - lensTubeFixFlesh -gunWallThickness;
+      //echo(str("Variable = ", gunHeight - lensTubeDiameter / 2 - lensTubeFixFlesh -gunWallThickness));
+      translate([0,tubeHoleOffset, lensTubeDiameter / 2 + lensTubeFixFlesh + gunWallThickness]) {
+        rotate([0, 90, 0]) {
+          #cylinder(d=lensTubeDiameter, h=gunWallThickness, center=false);
+        }  
+      }
+      
+    }
+
+    translate([gunWallThickness, gunHeight - lensTubeFixHeight - gunWallThickness, gunWallThickness ]) {
+      lensTubeFixiation();  
+      translate([lensTubeLength - 2 * lensTubeFixWidth, 0, 0]) {
+        lensTubeFixiation();   
+      }
+    }
+
+    
 
     translate([gunFrontLength, 0, 0]) {
       gunBodyBack();   
@@ -97,9 +146,14 @@ module gunBody() {
   }
 }
 
+
 gunBody();
 
-gripBody();
+translate([gripFrontOffset, -gripHeight , 0]) {
+  gripBody();  
+}
+
+
 
 
 
