@@ -147,10 +147,15 @@ module gunBody() {
 }
 
 
-gunBody();
+difference() {
+  gunBody();
+  translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
+    #cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness, gunHalfThickness - gunWallThickness], center=false);
+  }
+}
 
 translate([gripFrontOffset, -gripHeight + gripCornerRadius, 0]) {
-  gripBody();  
+  gripBody();    
 }
 
 
