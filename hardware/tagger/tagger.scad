@@ -110,8 +110,8 @@ module gripBody() {
       }
 
       // cut of the cap
-      translate([-gripCornerRadius, gripHeight - gripCornerRadius, -gripCornerRadius]) {
-        cube(size=[gripWidth,  gripCornerRadius, gunHalfThickness], center=false);
+      translate([-gripCornerRadius, gripHeight - gripCornerRadius * 2, -gripCornerRadius]) {
+        cube(size=[gripWidth,  gripCornerRadius * 2, gunHalfThickness], center=false);
       }     
     }
   }
@@ -149,7 +149,7 @@ module gunBody() {
 
 gunBody();
 
-translate([gripFrontOffset, -gripHeight , 0]) {
+translate([gripFrontOffset, -gripHeight + gripCornerRadius, 0]) {
   gripBody();  
 }
 
