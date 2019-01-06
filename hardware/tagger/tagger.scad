@@ -17,27 +17,40 @@ lensTubeFixHeight=lensTubeDiameter + 2 * lensTubeFixFlesh;
 lensTubeGap=1.5;
 
 // pcb parameters
-esp32Height=30;
+esp32Height=25;
+esp32Length=57;
 displayWidth=10;
 displayHeight=30;
 displayThickness=10;
 
 
+// gun wall thickness
+gunWallThickness=3;
+
+// esp32 standoff
+esp32StandoffBaseHeight = gunWallThickness;
+esp32StandoffScrewHoleDia=2;
+esp32StandoffScrewHolderDia = esp32StandoffScrewHoleDia * 2;
+esp32StandoffLength = esp32Length ;
+esp32StandoffHeight = esp32Height;
+esp32StandoffBaseSpace=3;
+esp32StandoffHoles = [[55,2], [55,23]];
+esp32StandoffPoles = [[2,2], [2,23]];
 
 
 // gun parameters
-gunWallThickness=3;
-gunHeight=lensTubeFixHeight + esp32Height;
+gunHeight=lensTubeFixHeight + esp32StandoffHeight;
 gunFrontLength = lensTubeLength + 10;
 gunBackLength = 150 + displayThickness;
 gunThickness = lensTubeDiameter + 30;
 gunHalfThickness = gunThickness / 2;
 
 // grip parameters
-gripWidth=70;
+gripWidth=50;
 gripHeight=100;
 gripFrontOffset=200;
 gripCornerRadius=5;
+
 
 
 /**
@@ -146,8 +159,40 @@ module gunBody() {
   }
 }
 
+module esp32Standoff() {
+  color([255/255, 0, 0]) {
+    union() {
+      cube(size=[esp32StandoffLength, esp32StandoffHeight, esp32StandoffBaseHeight], center=false);  
+      
+      
+      // create hole spacers
+      for (i=esp32StandoffHoles) {
+        translate([i[0],i[1], esp32StandoffBaseHeight]) {
+          difference() {
+            cylinder(d=esp32StandoffScrewHolderDia, h=esp32StandoffBaseSpace, center=false, $fn = 100);  
+            cylinder(d=esp32StandoffScrewHoleDia, h=esp32StandoffBaseSpace, center=false, $fn = 100);  
+          }
+        }        
+      }
 
-difference() {
+      // create pole spacers
+      // create hole spacers
+      for (i=esp32StandoffPoles) {
+        translate([i[0],i[1], esp32StandoffBaseHeight]) {
+          difference() {
+            cylinder(d=esp32StandoffScrewHolderDia, h=esp32StandoffBaseSpace, center=false, $fn = 100);              
+          }
+        }        
+      }
+      
+    }
+
+  }
+  
+}
+
+
+/*difference() {
   gunBody();
   translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
     #cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness, gunHalfThickness - gunWallThickness], center=false);
@@ -155,15 +200,11 @@ difference() {
 }
 
 translate([gripFrontOffset, -gripHeight + gripCornerRadius, 0]) {
-  gripBody();    
-}
+  rotate([0, 0, 0]) {
+    gripBody();      
+  }
+}*/
+
+esp32Standoff();
 
 
-
-
-
-
-
-
-
-//lensTubeFixiation();
