@@ -4,6 +4,9 @@
 */
 
 
+// detail of round surfaces
+$fn=100;
+
 // lens tube dims
 lensTubeDiameter=45;
 lensTubeLength=200;
@@ -16,18 +19,17 @@ lensTubeFixHeightFlesh=1;
 lensTubeFixHeight=lensTubeDiameter + 2 * lensTubeFixHeightFlesh;
 lensTubeGap=1.5;
 
-// pcb parameters
+// esp32 pcb parameters
 esp32Height=25;
 esp32Length=57;
 
-
+// display parameters
 displayCutOutWidth=26;
 displayCutOutHeight=20;
 displayCutOutThickness=3;
 displayPcbWidth=26;
 displayPcbHeight=26;
 displayThickness=10;
-
 
 // gun wall thickness
 gunWallThickness=3;
@@ -82,7 +84,6 @@ gripWidth=50;
 gripHeight=100;
 gripFrontOffset=200;
 gripCornerRadius=5;
-
 
 
 /**
@@ -271,8 +272,47 @@ module gunBodyConPole() {
 }
 
 
+// speaker parameters
+speakerDiameter=25;
+speakerHeight=15;
+speakerHolderWallThickness=2;
+speakerHolderHeight=speakerHeight;
+speakerHolderDia=speakerDiameter + 2 * speakerHolderWallThickness;
+speakerHolderScrewDia=1.5;
+speakerHolderScrewHeight=speakerHolderHeight / 2;
+speakerHolderScrewPoleDia=2*speakerHolderScrewDia;
 
 
+
+module speakerHolder() {  
+  color("OrangeRed") {
+    difference() {
+      cylinder(d=speakerHolderDia, h=speakerHolderHeight, center=false);
+      cylinder(d=speakerDiameter, h=speakerHolderHeight,center=false);
+    }
+
+    translate([- speakerHolderDia / 2 - speakerHolderScrewDia / 2, 0, 0]) {
+      difference() {
+        cylinder(d=speakerHolderScrewPoleDia, h=speakerHolderHeight, center=false);  
+        translate([0,0,speakerHolderHeight - speakerHolderScrewHeight]) {
+          cylinder(d=speakerHolderScrewDia, h=speakerHolderScrewHeight, center=false);  
+        }
+      }
+    }
+
+    translate([+ speakerHolderDia / 2 + speakerHolderScrewDia / 2, 0, 0]) {
+      difference() {
+        cylinder(d=speakerHolderScrewPoleDia, h=speakerHolderHeight, center=false);  
+        translate([0,0,speakerHolderHeight - speakerHolderScrewHeight]) {
+          cylinder(d=speakerHolderScrewDia, h=speakerHolderScrewHeight, center=false);  
+        }
+      }
+    }
+  }
+}
+
+
+//speakerHolder();
 
 difference() {
   gunBody();
@@ -287,7 +327,7 @@ translate([gunFrontLength - gunWallThickness - esp32StandoffLength,gunWallThickn
 }
 
 translate([gripFrontOffset, -gripHeight + gripCornerRadius, 0]) {
-  rotate([0, 0, 0]) {
+  rotate([0, 0, 15]) {
     gripBody();      
   }
 }
