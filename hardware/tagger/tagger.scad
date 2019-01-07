@@ -60,6 +60,23 @@ gunThickness = lensTubeFixHeight + 2 * gunWallThickness + gunBodyTopSpace;
 gunBottomThickness = gunThickness - gunWallThickness - gunBodyTopSpace;
 gunTopThickness = gunWallThickness + gunBodyTopSpace;
 
+// gun body connector poles
+gunBodyConPoleWidth=5;
+gunBodyConPoleTopHoleDia=2;
+gunBodyConPoleTopHoleHeight=3;
+gunBodyConPolPositions = [
+  // bottom poles
+  [gunWallThickness,gunWallThickness],
+  [gunFrontLength / 2, gunWallThickness],
+  [gunFrontLength / 2 + gunBodyConPoleWidth, gunWallThickness],
+  [gunFrontLength - gunBodyConPoleWidth * 4, gunWallThickness],
+  [gunFrontLength  - gunBodyConPoleWidth * 3, gunWallThickness],
+  //top poles
+  [gunWallThickness + lensTubeFixWidth, gunHeight - gunWallThickness - gunBodyConPoleWidth],
+  [gunFrontLength / 2, gunHeight - gunWallThickness - gunBodyConPoleWidth],
+  [gunFrontLength / 2 + gunBodyConPoleWidth, gunHeight - gunWallThickness - gunBodyConPoleWidth]
+];
+
 // grip parameters
 gripWidth=50;
 gripHeight=100;
@@ -241,6 +258,20 @@ module displayHolder() {
   }
 }
 
+module gunBodyConPole() {
+  color("MediumSeaGreen") {    
+    difference() {
+      poleHeight = gunBottomThickness - gunWallThickness - gunBodyLidHeight;
+      cube(size=[gunBodyConPoleWidth, gunBodyConPoleWidth, poleHeight], center=false);  
+      translate([gunBodyConPoleWidth / 2,gunBodyConPoleWidth / 2,poleHeight - gunBodyConPoleTopHoleHeight]) {
+        cylinder(d=gunBodyConPoleTopHoleDia, h=gunBodyConPoleTopHoleHeight, center=false);
+      }
+    }   
+  }  
+}
+
+
+
 
 
 difference() {
@@ -264,6 +295,15 @@ translate([gripFrontOffset, -gripHeight + gripCornerRadius, 0]) {
 translate([gunFrontLength, 70, gunWallThickness]) {
   displayHolder();  
 }
+
+for (i=gunBodyConPolPositions) {
+  translate([i[0], i[1], gunWallThickness]) {
+    gunBodyConPole();
+  }
+}
+
+
+
 
 
 
