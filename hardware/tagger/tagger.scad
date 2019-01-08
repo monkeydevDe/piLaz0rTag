@@ -97,6 +97,7 @@ speakerHolderDia=speakerDiameter + 2 * speakerHolderWallThickness;
 speakerHolderScrewDia=1.5;
 speakerHolderScrewHeight=speakerHolderHeight / 2;
 speakerHolderScrewPoleDia=4*speakerHolderScrewDia;
+speakerGrillBarHeight = 3;
 
 // rotates the object on a point in itself for example to rotate on the half of the object
 module rotate_about_pt(a, pt) {
@@ -283,7 +284,6 @@ module gunBodyConPole() {
   }  
 }
 
-
 module speakerHolderTop() {
   color("Orange") {    
     cylinder(d=speakerHolderDia, h=speakerHolderWallThickness, center=false);
@@ -329,19 +329,46 @@ module speakerHolderScrewPole(poleHeight) {
   }
 }
 
+module speakerGrill() {
+  numberOfBarsToAdd = floor(speakerDiameter / (speakerGrillBarHeight * 2));  
+  
+  color("OrangeRed") {
+      translate([speakerDiameter / 2, speakerDiameter / 2, 0]) {
+      union() {
+        for (i=[0:numberOfBarsToAdd]) {
+          intersection() {
+            cylinder(d=speakerDiameter, h=gunWallThickness, center=false);
+            translate([-speakerDiameter / 2, -speakerDiameter / 2 + i * numberOfBarsToAdd, 0]) {
+              cube(size=[speakerDiameter, speakerGrillBarHeight, gunWallThickness], center=false);  
+            }
+          }  
+        }
+      }  
+    }
+  }
+}
+
 module renderAll() {
   translate([-100, 0, 0]) {
     speakerHolderTop();
   }
 
+ 
   difference() {
     gunBody();
+
+    // add speaker grill    
+    speakerGrillHolderOffset =  speakerHolderScrewPoleDia + speakerHolderWallThickness / 2;
+    translate([gunWallThickness + gunFrontLength + speakerGrillHolderOffset, (gunBackHeight - speakerHolderDia) / 2 + speakerGrillHolderOffset, 0]) {
+      speakerGrill();
+    }
     // cut out grip opening
     translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
       cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness + 20, gunBottomThickness - gunWallThickness], center=false);
     }
   }
 
+  
   // add esp32 standoff
   translate([gunFrontLength - gunWallThickness - esp32StandoffLength,gunWallThickness + 2,0]) {
     esp32Standoff();
