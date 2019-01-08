@@ -231,29 +231,39 @@ module gunBody() {
 
 module esp32Standoff() {
   color([255/255, 0, 0]) {
-    union() {
-      cube(size=[esp32StandoffLength, esp32StandoffHeight, esp32StandoffBaseHeight], center=false);  
-            
-      // create hole spacers
-      for (i=esp32StandoffHoles) {
-        translate([i[0],i[1], esp32StandoffBaseHeight]) {
-          difference() {
-            cylinder(d=esp32StandoffScrewHolderDia, h=esp32StandoffBaseSpace, center=false, $fn = 100);  
-            cylinder(d=esp32StandoffScrewHoleDia, h=esp32StandoffBaseSpace, center=false, $fn = 100);  
-          }
-        }        
-      }
-
-      // create pole spacers
-      for (i=esp32StandoffPoles) {
-        translate([i[0],i[1], esp32StandoffBaseHeight]) {
-          difference() {
-            cylinder(d=esp32StandoffScrewHolderDia, h=esp32StandoffBaseSpace, center=false, $fn = 100);              
-          }
-        }        
-      }
-    }
+    pcbStandOff(esp32StandoffLength, 
+      esp32StandoffHeight,
+      esp32StandoffBaseHeight,
+      esp32StandoffHoles,
+      esp32StandoffPoles,
+      esp32StandoffBaseSpace,
+      esp32StandoffScrewHolderDia,
+      esp32StandoffScrewHoleDia);
   }  
+}
+
+module pcbStandOff(length, height, baseHeight, standOffHoles, standoffPoles, space, dia, screwDia) {
+  union() {
+    cube(size=[length, height, baseHeight], center=false);  
+          
+    // create hole spacers
+    for (i=standOffHoles) {
+      translate([i[0],i[1], baseHeight]) {
+        difference() {
+          cylinder(d=dia, h=space, center=false, $fn = 100);  
+          cylinder(d=screwDia, h=space, center=false, $fn = 100);  
+        }
+      }        
+    }
+    // create pole spacers
+    for (i=standoffPoles) {
+      translate([i[0],i[1], baseHeight]) {
+        difference() {
+          cylinder(d=dia, h=space, center=false, $fn = 100);              
+        }
+      }        
+    }
+  }
 }
 
 module displayHolder() {
@@ -358,10 +368,11 @@ module renderAll() {
     gunBody();
 
     // add speaker grill    
-    speakerGrillHolderOffset =  speakerHolderScrewPoleDia / 2 + speakerHolderWallThickness;
+    /*speakerGrillHolderOffset =  speakerHolderScrewPoleDia / 2 + speakerHolderWallThickness;
     translate([gunWallThickness + gunFrontLength + speakerGrillHolderOffset, (gunBackHeight - speakerHolderDia) / 2 + speakerGrillHolderOffset, 0]) {
       speakerGrill();
-    }
+    }*/
+
     // cut out grip opening
     translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
       cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness + 20, gunBottomThickness - gunWallThickness], center=false);
