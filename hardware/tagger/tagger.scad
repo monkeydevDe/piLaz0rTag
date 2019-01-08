@@ -81,9 +81,18 @@ gunBodyConPolPositions = [
 
 // grip parameters
 gripWidth=50;
-gripHeight=100;
+gripHeight=120;
 gripFrontOffset=200;
 gripCornerRadius=5;
+gripAngle=15;
+
+// rotates the object on a point in itself for example to rotate on the half of the object
+module rotate_about_pt(a, pt) {
+    translate(pt)
+        rotate(a)
+            translate(-pt)
+                children();   
+}
 
 
 /**
@@ -118,10 +127,6 @@ module gunBodyFront() {
       cube(size=[gunFrontLength - gunBodyLidThickness * 2, gunHeight - gunBodyLidThickness * 2, gunBodyLidHeight], center=false);
     }
   }
-
-  
-
-
 }
 
 module gunBodyBack() {
@@ -149,35 +154,37 @@ module gunBodyBack() {
 }
 
 module gripBody() {
-  translate([gripCornerRadius, gripCornerRadius, gripCornerRadius]) {  
-    difference() {
-      minkowski() {
-        cube(size=[gripWidth - 2 * gripCornerRadius , gripHeight - gripCornerRadius, gunBottomThickness -  gripCornerRadius], center=false);
-        sphere(r=gripCornerRadius);
-      }
-
-      translate([gunWallThickness, gunWallThickness, gunWallThickness]) {
+  translate([0, 0, gripCornerRadius]) {
+  
+    rotate_about_pt(gripAngle,[0,gripHeight + gripCornerRadius,0]) {
+      difference() {
         minkowski() {
-          cube(size=[gripWidth - 2 * gripCornerRadius - 2 * gunWallThickness , gripHeight - gripCornerRadius - 2 * gunWallThickness , gunBottomThickness -  gripCornerRadius], center=false);
+          cube(size=[gripWidth - 2 * gripCornerRadius , gripHeight - gripCornerRadius, gunBottomThickness -  gripCornerRadius], center=false);
           sphere(r=gripCornerRadius);
         }
+  
+        translate([gunWallThickness, gunWallThickness, gunWallThickness]) {
+          minkowski() {
+            cube(size=[gripWidth - 2 * gripCornerRadius - 2 * gunWallThickness , gripHeight - gripCornerRadius - 2 * gunWallThickness , gunBottomThickness -  gripCornerRadius], center=false);
+            sphere(r=gripCornerRadius);
+          }
+        }
+  
+        // cut off the top
+        translate([-gripCornerRadius, - gripCornerRadius, gunBottomThickness - gripCornerRadius]) {
+          cube(size=[gripWidth, gripHeight + gripCornerRadius, gripCornerRadius], center=false);
+        }
+        rotate_about_pt(-gripAngle,[0,gripHeight - gripCornerRadius,0]) {
+          // cut of the cap
+          translate([-gripCornerRadius, gripHeight - gripCornerRadius * 2, -gripCornerRadius]) {
+            cube(size=[gripWidth + gripCornerRadius,  gripHeight, gunBottomThickness], center=false);
+          }   
+        }
+        // add lid to grip body
+        translate([-gripCornerRadius + gunWallThickness - gunBodyLidThickness,-gripCornerRadius + gunWallThickness - gunBodyLidThickness,-gripCornerRadius + gunBottomThickness - gunBodyLidHeight]) {
+          cube(size=[gripWidth - gunBodyLidThickness * 2, gripHeight - gunBodyLidThickness * 2, gunBodyLidHeight], center=false);
+        }    
       }
-
-
-      // cut off the top
-      translate([-gripCornerRadius, - gripCornerRadius, gunBottomThickness - gripCornerRadius]) {
-        cube(size=[gripWidth, gripHeight + gripCornerRadius, gripCornerRadius], center=false);
-      }
-
-      // cut of the cap
-      translate([-gripCornerRadius, gripHeight - gripCornerRadius * 2, -gripCornerRadius]) {
-        cube(size=[gripWidth,  gripCornerRadius * 2, gunBottomThickness], center=false);
-      } 
-
-      // add lid to front body
-      translate([-gripCornerRadius + gunWallThickness - gunBodyLidThickness,-gripCornerRadius + gunWallThickness - gunBodyLidThickness,-gripCornerRadius + gunBottomThickness - gunBodyLidHeight]) {
-        cube(size=[gripWidth - gunBodyLidThickness * 2, gripHeight - gunBodyLidThickness * 2, gunBodyLidHeight], center=false);
-      }    
     }
   }
 }
@@ -312,13 +319,14 @@ module speakerHolder() {
 }
 
 
-//speakerHolder();
+
+
 
 difference() {
   gunBody();
   // cut out grip opening
   translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
-    cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness, gunBottomThickness - gunWallThickness], center=false);
+    cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness + 20, gunBottomThickness - gunWallThickness], center=false);
   }
 }
 
@@ -326,10 +334,9 @@ translate([gunFrontLength - gunWallThickness - esp32StandoffLength,gunWallThickn
   esp32Standoff();
 }
 
-translate([gripFrontOffset, -gripHeight + gripCornerRadius, 0]) {
-  rotate([0, 0, 15]) {
-    gripBody();      
-  }
+
+translate([gripFrontOffset, -gripHeight + gripCornerRadius * 2, 0]) {
+  gripBody();      
 }
 
 translate([gunFrontLength, 70, gunWallThickness]) {
@@ -341,6 +348,10 @@ for (i=gunBodyConPolPositions) {
     gunBodyConPole();
   }
 }
+
+
+
+
 
 
 
