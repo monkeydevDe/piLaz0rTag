@@ -358,7 +358,7 @@ module renderAll() {
     gunBody();
 
     // add speaker grill    
-    speakerGrillHolderOffset =  speakerHolderScrewPoleDia + speakerHolderWallThickness / 2;
+    speakerGrillHolderOffset =  speakerHolderScrewPoleDia / 2 + speakerHolderWallThickness;
     translate([gunWallThickness + gunFrontLength + speakerGrillHolderOffset, (gunBackHeight - speakerHolderDia) / 2 + speakerGrillHolderOffset, 0]) {
       speakerGrill();
     }
