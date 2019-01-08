@@ -362,6 +362,64 @@ module speakerGrill() {
   }
 }
 
+// trigger variables
+triggerHeight=35;
+triggerFrontLength=18;
+triggerBackLength=18;
+triggerThickness=6;
+triggerPoleDia=5;
+triggerPoleSpace=0.5;
+triggerPoleRailDia=triggerPoleDia+triggerPoleSpace;
+triggerPoleRailFlesh=3;
+triggerSpringPinDia=2;
+triggerSpringPinLength=3;
+
+
+
+
+module trigger() {
+  color("Khaki") {
+    difference() {
+      cube(size=[triggerFrontLength, triggerHeight, triggerThickness], center=false);
+      translate([- triggerFrontLength / 2, triggerFrontLength, 0]) {
+        cylinder(d=triggerHeight, h=triggerThickness, center=false);  
+      }
+    }
+
+    translate([triggerFrontLength, 0, 0]) {
+      
+      // trigger back
+      difference() {
+        cube(size=[triggerBackLength, triggerHeight, triggerThickness], center=false);
+
+        hull() {
+          translate([triggerPoleDia / 2, triggerPoleDia / 2 + (triggerHeight - triggerPoleDia) / 2, 0]) {
+            cylinder(d=triggerPoleRailDia, h=triggerThickness, center=false); 
+
+            translate([triggerBackLength - triggerPoleRailDia - triggerPoleRailFlesh, 0, 0]) {
+              cylinder(d=triggerPoleRailDia, h=triggerThickness, center=false);   
+            }
+          }
+        }
+      }
+            
+      // spring pin
+      translate([triggerBackLength, triggerHeight / 2, triggerThickness / 2]) {
+        rotate([0, 90,0]) {
+          cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
+        }  
+      }
+      
+      
+    
+
+    }
+  }
+}
+
+
+trigger();
+
 module renderAll() {
   translate([-100, 0, 0]) {
     speakerHolderTop();
@@ -418,4 +476,4 @@ module renderAll() {
 }
 
 
-renderAll();
+//renderAll();
