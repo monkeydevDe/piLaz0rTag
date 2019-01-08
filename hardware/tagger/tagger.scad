@@ -61,6 +61,7 @@ gunBodyTopSpace = 3;
 gunThickness = lensTubeFixHeight + 2 * gunWallThickness + gunBodyTopSpace;
 gunBottomThickness = gunThickness - gunWallThickness - gunBodyTopSpace;
 gunTopThickness = gunWallThickness + gunBodyTopSpace;
+gunBackHeight =  gunHeight - displayHolderWidth - gunWallThickness;
 
 // gun body connector poles
 gunBodyConPoleWidth=5;
@@ -86,12 +87,23 @@ gripFrontOffset=200;
 gripCornerRadius=5;
 gripAngle=15;
 
+// speaker parameters
+speakerDiameter=40;
+speakerHeight=24;
+speakerHolderTopHeight=3;
+speakerHolderWallThickness=2;
+speakerHolderHeight=speakerHeight + speakerHolderTopHeight;
+speakerHolderDia=speakerDiameter + 2 * speakerHolderWallThickness;
+speakerHolderScrewDia=1.5;
+speakerHolderScrewHeight=speakerHolderHeight / 2;
+speakerHolderScrewPoleDia=4*speakerHolderScrewDia;
+
 // rotates the object on a point in itself for example to rotate on the half of the object
 module rotate_about_pt(a, pt) {
-    translate(pt)
-        rotate(a)
-            translate(-pt)
-                children();   
+  translate(pt)
+    rotate(a)
+      translate(-pt)
+        children();   
 }
 
 
@@ -129,8 +141,7 @@ module gunBodyFront() {
   }
 }
 
-module gunBodyBack() {
-  gunBackHeight =  gunHeight - displayHolderWidth - gunWallThickness;
+module gunBodyBack() {  
   union() {
     difference() {
       cube(size=[gunBackLength, gunBackHeight, gunBottomThickness], center=false);
@@ -200,8 +211,7 @@ module gunBody() {
         rotate([0, 90, 0]) {
           #cylinder(d=lensTubeDiameter, h=gunWallThickness, center=false);
         }  
-      }
-      
+      }      
     }
 
     // add the lens tube fixiation
@@ -211,8 +221,6 @@ module gunBody() {
         lensTubeFixiation();   
       }
     }
-
-    
 
     translate([gunFrontLength, 0, 0]) {
       gunBodyBack();   
@@ -224,8 +232,7 @@ module esp32Standoff() {
   color([255/255, 0, 0]) {
     union() {
       cube(size=[esp32StandoffLength, esp32StandoffHeight, esp32StandoffBaseHeight], center=false);  
-      
-      
+            
       // create hole spacers
       for (i=esp32StandoffHoles) {
         translate([i[0],i[1], esp32StandoffBaseHeight]) {
@@ -244,9 +251,7 @@ module esp32Standoff() {
           }
         }        
       }
-      
     }
-
   }  
 }
 
@@ -279,83 +284,90 @@ module gunBodyConPole() {
 }
 
 
-// speaker parameters
-speakerDiameter=25;
-speakerHeight=15;
-speakerHolderWallThickness=2;
-speakerHolderHeight=speakerHeight;
-speakerHolderDia=speakerDiameter + 2 * speakerHolderWallThickness;
-speakerHolderScrewDia=1.5;
-speakerHolderScrewHeight=speakerHolderHeight / 2;
-speakerHolderScrewPoleDia=2*speakerHolderScrewDia;
-
-
-
-module speakerHolder() {  
-  color("OrangeRed") {
-    difference() {
-      cylinder(d=speakerHolderDia, h=speakerHolderHeight, center=false);
-      cylinder(d=speakerDiameter, h=speakerHolderHeight,center=false);
+module speakerHolderTop() {
+  color("Orange") {    
+    cylinder(d=speakerHolderDia, h=speakerHolderWallThickness, center=false);
+    translate([0, 0, speakerHolderWallThickness]) {
+      cylinder(d=speakerDiameter, h=speakerHolderTopHeight, center=false);
     }
 
     translate([- speakerHolderDia / 2 - speakerHolderScrewDia / 2, 0, 0]) {
-      difference() {
-        cylinder(d=speakerHolderScrewPoleDia, h=speakerHolderHeight, center=false);  
-        translate([0,0,speakerHolderHeight - speakerHolderScrewHeight]) {
-          cylinder(d=speakerHolderScrewDia, h=speakerHolderScrewHeight, center=false);  
-        }
-      }
+      speakerHolderScrewPole(speakerHolderWallThickness);
     }
 
-    translate([+ speakerHolderDia / 2 + speakerHolderScrewDia / 2, 0, 0]) {
-      difference() {
-        cylinder(d=speakerHolderScrewPoleDia, h=speakerHolderHeight, center=false);  
-        translate([0,0,speakerHolderHeight - speakerHolderScrewHeight]) {
-          cylinder(d=speakerHolderScrewDia, h=speakerHolderScrewHeight, center=false);  
-        }
+    translate([speakerHolderDia / 2 + speakerHolderScrewDia / 2, 0, 0]) {
+      speakerHolderScrewPole(speakerHolderWallThickness  );
+    }    
+  }
+}
+
+module speakerHolder() { 
+  color("OrangeRed") {
+    translate([speakerHolderDia / 2 + speakerHolderScrewPoleDia / 2, speakerHolderDia / 2 + speakerHolderScrewPoleDia / 2, 0]) { 
+        difference() {
+        cylinder(d=speakerHolderDia, h=speakerHolderHeight, center=false);
+        cylinder(d=speakerDiameter, h=speakerHolderHeight,center=false);
+      }
+  
+      translate([- speakerHolderDia / 2 - speakerHolderScrewDia / 2, 0, 0]) {
+        speakerHolderScrewPole(speakerHolderHeight);
+      }
+  
+      translate([speakerHolderDia / 2 + speakerHolderScrewDia / 2, 0, 0]) {
+        speakerHolderScrewPole(speakerHolderHeight);
       }
     }
   }
 }
 
-
-
-
-
-difference() {
-  gunBody();
-  // cut out grip opening
-  translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
-    cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness + 20, gunBottomThickness - gunWallThickness], center=false);
+module speakerHolderScrewPole(poleHeight) {
+  difference() {
+    cylinder(d=speakerHolderScrewPoleDia, h=poleHeight, center=false);  
+    translate([0,0,poleHeight - speakerHolderScrewHeight]) {
+      cylinder(d=speakerHolderScrewDia, h=speakerHolderScrewHeight, center=false);  
+    }
   }
 }
 
-translate([gunFrontLength - gunWallThickness - esp32StandoffLength,gunWallThickness + 2,0]) {
-  esp32Standoff();
-}
+module renderAll() {
+  translate([-100, 0, 0]) {
+    speakerHolderTop();
+  }
 
+  difference() {
+    gunBody();
+    // cut out grip opening
+    translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
+      cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness + 20, gunBottomThickness - gunWallThickness], center=false);
+    }
+  }
 
-translate([gripFrontOffset, -gripHeight + gripCornerRadius * 2, 0]) {
-  gripBody();      
-}
+  // add esp32 standoff
+  translate([gunFrontLength - gunWallThickness - esp32StandoffLength,gunWallThickness + 2,0]) {
+    esp32Standoff();
+  }
 
-translate([gunFrontLength, 70, gunWallThickness]) {
-  displayHolder();  
-}
-
-for (i=gunBodyConPolPositions) {
-  translate([i[0], i[1], gunWallThickness]) {
-    gunBodyConPole();
+  // add speaker holder
+  translate([gunWallThickness + gunFrontLength, (gunBackHeight - speakerHolderDia) / 2, gunWallThickness]) {
+    speakerHolder();
+  }
+  
+  // add grip
+  translate([gripFrontOffset, -gripHeight + gripCornerRadius * 2, 0]) {
+    gripBody();      
+  }
+  
+  // add display holder
+  translate([gunFrontLength, 70, gunWallThickness]) {
+    displayHolder();  
+  }
+  
+  // add gun pole positions
+  for (i=gunBodyConPolPositions) {
+    translate([i[0], i[1], gunWallThickness]) {
+      gunBodyConPole();
+    }
   }
 }
 
-
-
-
-
-
-
-
-
-
-
+renderAll();
