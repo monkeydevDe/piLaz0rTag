@@ -368,13 +368,12 @@ triggerFrontLength=18;
 triggerBackLength=18;
 triggerThickness=6;
 triggerPoleDia=5;
+triggerPoleScrewDia=1.5;
 triggerPoleSpace=0.5;
 triggerPoleRailDia=triggerPoleDia+triggerPoleSpace;
 triggerPoleRailFlesh=3;
-triggerSpringPinDia=2;
+triggerSpringPinDia=triggerThickness;
 triggerSpringPinLength=3;
-
-
 
 
 module trigger() {
@@ -409,16 +408,52 @@ module trigger() {
           cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
         }  
       }
-      
-      
-    
-
     }
   }
 }
 
+// trigger guidance
+triggerGuidanceWallThickness=3;
+triggerGuidanceFlesh=0.5;
+triggerSpringSpace=5;
+triggerGuidanceLength=triggerBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
+triggerGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + triggerGuidanceFlesh;
 
-trigger();
+triggerGuidanceThickness=40;
+
+module triggerGuidance() {  
+  color("Moccasin") {
+    difference() {
+      cube(size=[triggerGuidanceLength, triggerGuidanceHeight, triggerGuidanceThickness], center=false);
+
+      translate([0, triggerGuidanceWallThickness + triggerGuidanceFlesh / 2, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh]) {
+        cube(size=[triggerBackLength + triggerSpringPinLength + triggerSpringSpace, triggerHeight + triggerGuidanceFlesh, triggerThickness + triggerGuidanceFlesh], center=false);   
+      }      
+    }
+    
+    // add spring pole
+    translate([triggerGuidanceLength - triggerSpringPinLength * 2 - triggerGuidanceWallThickness, triggerGuidanceHeight / 2, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh + triggerSpringPinDia / 2 + triggerGuidanceFlesh / 2]) {
+      rotate([0, 90, 0]) {
+        cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);  
+      }
+    }
+
+    // add trigger pole
+    translate([triggerPoleDia / 2, triggerGuidanceHeight / 2, triggerGuidanceThickness - triggerThickness]) {
+      difference() {
+        cylinder(d=triggerPoleDia, h=triggerThickness + triggerGuidanceFlesh, center=false);
+        cylinder(d=triggerPoleScrewDia, h=triggerThickness + triggerGuidanceFlesh, center=false);
+      }
+    }  
+  }  
+}
+
+triggerGuidance();
+
+translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness + triggerGuidanceFlesh / 2]) {
+  trigger();  
+}
+
 
 module renderAll() {
   translate([-100, 0, 0]) {
