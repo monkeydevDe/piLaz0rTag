@@ -52,6 +52,7 @@ esp32StandoffPoles = [[2,2], [2,23]];
 displayHolderWidth = displayPcbWidth + 4;
 displayHolderHeight = displayPcbHeight + 4;
 displayHolderBaseThickness = gunWallThickness;
+displayHolderPoleWidth=6;
 
 // gun parameters
 gunHeight=lensTubeFixLength + esp32StandoffHeight + 10;
@@ -267,16 +268,19 @@ module pcbStandOff(length, height, baseHeight, standOffHoles, standoffPoles, spa
 }
 
 module displayHolder() {
-  color([0/255, 0, 255/255]) {
-    difference() {
-      cube(size=[displayHolderBaseThickness + displayCutOutThickness,displayHolderWidth, displayHolderHeight ], center=false);
-
-      translate([displayHolderBaseThickness, (displayHolderWidth - displayCutOutWidth) / 2, (displayHolderHeight - displayCutOutHeight) / 2]) {
-        cube(size=[gunWallThickness,displayCutOutWidth,displayCutOutHeight], center=false);  
-      }
-
-      translate([0,(displayHolderWidth - displayPcbWidth) / 2, (displayHolderHeight - displayPcbHeight) / 2]) {
-        cube(size=[gunWallThickness,displayPcbWidth, displayPcbHeight], center=false);  
+  color("LightBlue") {
+    rotate([90, 0, 90]) {
+      union() {
+        for (i=[0:1]) {
+          for (j=[0:1]) {
+            intersection() {
+              cube(size=[displayPcbWidth,displayPcbHeight,gunWallThickness], center=false);  
+              translate([displayPcbWidth * i, displayPcbHeight * j, 0]) {
+                cylinder(r=displayHolderPoleWidth, h=gunWallThickness, center=false);    
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -377,6 +381,11 @@ module renderAll() {
     translate([gripFrontOffset + gunWallThickness, 0, gunWallThickness]) {
       cube(size=[gripWidth - 2 * gunWallThickness, gunWallThickness + 20, gunBottomThickness - gunWallThickness], center=false);
     }
+
+    // cut out the display
+    translate([gunFrontLength, gunHeight - displayPcbHeight - gunWallThickness, (gunBottomThickness - displayPcbWidth) / 2]) {
+      cube(size=[gunWallThickness, displayPcbHeight, displayPcbWidth], center=false);
+    }
   }
 
   
@@ -396,7 +405,7 @@ module renderAll() {
   }
   
   // add display holder
-  translate([gunFrontLength, 70, gunWallThickness]) {
+  translate([gunFrontLength, gunHeight - displayPcbHeight - gunWallThickness, (gunBottomThickness - displayPcbWidth) / 2]) {
     displayHolder();  
   }
   
@@ -407,5 +416,6 @@ module renderAll() {
     }
   }
 }
+
 
 renderAll();
