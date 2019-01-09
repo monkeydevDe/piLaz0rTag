@@ -448,6 +448,35 @@ module triggerGuidance() {
   }  
 }
 
+// receiver pcb
+receiverPcbHeight=10;
+receiverPcbWidth=20;
+receiverPcbFlesh=1.5;
+receiverPcbThickness=1.7;
+receiverPcbCutoutThickness=2*receiverPcbFlesh+receiverPcbThickness;
+receiverPcbCutoutWidth=receiverPcbWidth;
+receiverPcbCutoutHeight=gunBottomThickness - gunWallThickness - gunBodyLidHeight;
+
+
+
+module receiverWallHolder() {
+  color("DarkKhaki") {
+    difference() {
+      cube(size=[receiverPcbCutoutThickness, receiverPcbCutoutWidth, receiverPcbCutoutHeight], center=false);
+
+      translate([0, receiverPcbFlesh, (receiverPcbCutoutHeight - receiverPcbHeight) / 2]) {
+        cube(size=[receiverPcbCutoutThickness, receiverPcbWidth - 2 * receiverPcbFlesh,receiverPcbHeight], center=false);
+      }
+
+      translate([(receiverPcbCutoutThickness-receiverPcbThickness) / 2 , 0, receiverPcbCutoutHeight / 2 - receiverPcbHeight / 2]) {        
+        cube(size=[receiverPcbThickness, receiverPcbWidth, receiverPcbCutoutHeight / 2 + receiverPcbHeight / 2], center=false);  
+      }
+    }
+  }
+}
+
+//receiverWallHolder();
+
 module renderAll() {
   translate([-100, 0, 0]) {
     speakerHolderTop();
@@ -513,6 +542,12 @@ module renderAll() {
       gunBodyConPole();
     }
   }
+
+  // add receiver holder
+  translate([0, gunWallThickness + gunBodyConPoleWidth, gunWallThickness]) {
+    receiverWallHolder();  
+  }
+  
 }
 
 /*triggerGuidance();
