@@ -100,6 +100,27 @@ speakerHolderScrewHeight=speakerHolderHeight / 2;
 speakerHolderScrewPoleDia=4*speakerHolderScrewDia;
 speakerGrillBarHeight = 3;
 
+// trigger variables
+triggerHeight=35;
+triggerFrontLength=27;
+triggerBackLength=18;
+triggerThickness=6;
+triggerPoleDia=5;
+triggerPoleScrewDia=1.5;
+triggerPoleSpace=0.5;
+triggerPoleRailDia=triggerPoleDia+triggerPoleSpace;
+triggerPoleRailFlesh=3;
+triggerSpringPinDia=triggerThickness;
+triggerSpringPinLength=3;
+triggerSpringSpace=5;
+
+// trigger guidance
+triggerGuidanceWallThickness=3;
+triggerGuidanceFlesh=0.5;
+triggerGuidanceLength=triggerBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
+triggerGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + triggerGuidanceFlesh;
+triggerGuidanceThickness=10;
+
 // rotates the object on a point in itself for example to rotate on the half of the object
 module rotate_about_pt(a, pt) {
   translate(pt)
@@ -362,25 +383,12 @@ module speakerGrill() {
   }
 }
 
-// trigger variables
-triggerHeight=35;
-triggerFrontLength=18;
-triggerBackLength=18;
-triggerThickness=6;
-triggerPoleDia=5;
-triggerPoleScrewDia=1.5;
-triggerPoleSpace=0.5;
-triggerPoleRailDia=triggerPoleDia+triggerPoleSpace;
-triggerPoleRailFlesh=3;
-triggerSpringPinDia=triggerThickness;
-triggerSpringPinLength=3;
-
 
 module trigger() {
   color("Khaki") {
     difference() {
       cube(size=[triggerFrontLength, triggerHeight, triggerThickness], center=false);
-      translate([- triggerFrontLength / 2, triggerFrontLength, 0]) {
+      translate([- triggerHeight / 5, triggerHeight / 2, 0]) {
         cylinder(d=triggerHeight, h=triggerThickness, center=false);  
       }
     }
@@ -412,14 +420,6 @@ module trigger() {
   }
 }
 
-// trigger guidance
-triggerGuidanceWallThickness=3;
-triggerGuidanceFlesh=0.5;
-triggerSpringSpace=5;
-triggerGuidanceLength=triggerBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
-triggerGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + triggerGuidanceFlesh;
-
-triggerGuidanceThickness=40;
 
 module triggerGuidance() {  
   color("Moccasin") {
@@ -439,7 +439,7 @@ module triggerGuidance() {
     }
 
     // add trigger pole
-    translate([triggerPoleDia / 2, triggerGuidanceHeight / 2, triggerGuidanceThickness - triggerThickness]) {
+    translate([triggerPoleDia / 2, triggerGuidanceHeight / 2, triggerGuidanceThickness - triggerThickness -  triggerGuidanceFlesh]) {
       difference() {
         cylinder(d=triggerPoleDia, h=triggerThickness + triggerGuidanceFlesh, center=false);
         cylinder(d=triggerPoleScrewDia, h=triggerThickness + triggerGuidanceFlesh, center=false);
@@ -447,13 +447,6 @@ module triggerGuidance() {
     }  
   }  
 }
-
-triggerGuidance();
-
-translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness + triggerGuidanceFlesh / 2]) {
-  trigger();  
-}
-
 
 module renderAll() {
   translate([-100, 0, 0]) {
@@ -493,8 +486,20 @@ module renderAll() {
   }
   
   // add grip
-  translate([gripFrontOffset, -gripHeight + gripCornerRadius * 2, 0]) {
-    gripBody();      
+  difference() {
+    translate([gripFrontOffset, -gripHeight + gripCornerRadius * 2, 0]) {    
+      gripBody();      
+    }    
+
+    // cut out trigger hole    
+    translate([gunFrontLength - 15,  - (triggerHeight + triggerGuidanceFlesh), (gunBottomThickness - (triggerThickness + triggerGuidanceFlesh)) / 2]) {
+      cube(size=[20, triggerHeight + triggerGuidanceFlesh, triggerThickness + triggerGuidanceFlesh], center=false);  
+    }
+  }
+
+  // add trigger
+  translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceFlesh / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceFlesh / 2)) / 2]) {
+    trigger();
   }
   
   // add display holder
@@ -510,5 +515,10 @@ module renderAll() {
   }
 }
 
+/*triggerGuidance();
+translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh / 2]) {
+  trigger();  
+}*/
 
-//renderAll();
+
+renderAll();
