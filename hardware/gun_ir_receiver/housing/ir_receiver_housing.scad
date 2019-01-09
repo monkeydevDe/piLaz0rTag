@@ -1,5 +1,5 @@
 wallWidth=1;
-screwDia=3;
+screwDia=2;
 
 
 bottomHeight=1.5;
