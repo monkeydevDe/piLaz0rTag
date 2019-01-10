@@ -4,122 +4,10 @@
 */
 
 
-// detail of round surfaces
-$fn=100;
+include <config.scad>
 
-// lens tube dims
-lensTubeDiameter=45;
-lensTubeLength=200;
+include <trigger.scad>
 
-// lens tube fixiations dims 
-lensTubeFixWidth=10;
-lensTubeFixLengthFlesh=10;
-lensTubeFixLength=lensTubeDiameter + 2 * lensTubeFixLengthFlesh;
-lensTubeFixHeightFlesh=1;
-lensTubeFixHeight=lensTubeDiameter + 2 * lensTubeFixHeightFlesh;
-lensTubeGap=1.5;
-
-// esp32 pcb parameters
-esp32Height=25;
-esp32Length=57;
-
-// display parameters
-displayCutOutWidth=26;
-displayCutOutHeight=20;
-displayCutOutThickness=3;
-displayPcbWidth=26;
-displayPcbHeight=26;
-displayThickness=10;
-
-// gun wall thickness
-gunWallThickness=3;
-
-// lid
-gunBodyLidThickness= gunWallThickness / 2;
-gunBodyLidHeight = 1.5;
-
-// esp32 standoff
-esp32StandoffBaseHeight = gunWallThickness;
-esp32StandoffScrewHoleDia=2;
-esp32StandoffScrewHolderDia = esp32StandoffScrewHoleDia * 2;
-esp32StandoffLength = esp32Length ;
-esp32StandoffHeight = esp32Height;
-esp32StandoffBaseSpace=3;
-esp32StandoffHoles = [[55,2], [55,23]];
-esp32StandoffPoles = [[2,2], [2,23]];
-
-// display holder
-displayHolderWidth = displayPcbWidth + 4;
-displayHolderHeight = displayPcbHeight + 4;
-displayHolderBaseThickness = gunWallThickness;
-displayHolderPoleWidth=6;
-
-// gun parameters
-gunHeight=lensTubeFixLength + esp32StandoffHeight + 10;
-gunFrontLength = lensTubeLength + 10;
-gunBackLength = 150 + displayThickness;
-gunBodyTopSpace = 3;
-gunThickness = lensTubeFixHeight + 2 * gunWallThickness + gunBodyTopSpace;
-gunBottomThickness = gunThickness - gunWallThickness - gunBodyTopSpace;
-gunTopThickness = gunWallThickness + gunBodyTopSpace;
-gunBackHeight =  gunHeight - displayHolderWidth - gunWallThickness;
-
-// gun body connector poles
-gunBodyConPoleWidth=5;
-gunBodyConPoleTopHoleDia=2;
-gunBodyConPoleTopHoleHeight=3;
-gunBodyConPolPositions = [
-  // bottom poles
-  [gunWallThickness,gunWallThickness],
-  [gunFrontLength / 2, gunWallThickness],
-  [gunFrontLength / 2 + gunBodyConPoleWidth, gunWallThickness],
-  [gunFrontLength - gunBodyConPoleWidth * 4, gunWallThickness],
-  [gunFrontLength  - gunBodyConPoleWidth * 3, gunWallThickness],
-  //top poles
-  [gunWallThickness + lensTubeFixWidth, gunHeight - gunWallThickness - gunBodyConPoleWidth],
-  [gunFrontLength / 2, gunHeight - gunWallThickness - gunBodyConPoleWidth],
-  [gunFrontLength / 2 + gunBodyConPoleWidth, gunHeight - gunWallThickness - gunBodyConPoleWidth]
-];
-
-// grip parameters
-gripWidth=50;
-gripHeight=120;
-gripFrontOffset=200;
-gripCornerRadius=5;
-gripAngle=15;
-
-// speaker parameters
-speakerDiameter=40;
-speakerHeight=24;
-speakerHolderTopHeight=3;
-speakerHolderWallThickness=2;
-speakerHolderHeight=speakerHeight + speakerHolderTopHeight;
-speakerHolderDia=speakerDiameter + 2 * speakerHolderWallThickness;
-speakerHolderScrewDia=1.5;
-speakerHolderScrewHeight=speakerHolderHeight / 2;
-speakerHolderScrewPoleDia=4*speakerHolderScrewDia;
-speakerGrillBarHeight = 3;
-
-// trigger variables
-triggerHeight=35;
-triggerFrontLength=27;
-triggerBackLength=18;
-triggerThickness=6;
-triggerPoleDia=5;
-triggerPoleScrewDia=1.5;
-triggerPoleSpace=0.5;
-triggerPoleRailDia=triggerPoleDia+triggerPoleSpace;
-triggerPoleRailFlesh=3;
-triggerSpringPinDia=triggerThickness;
-triggerSpringPinLength=3;
-triggerSpringSpace=5;
-
-// trigger guidance
-triggerGuidanceWallThickness=3;
-triggerGuidanceFlesh=0.5;
-triggerGuidanceLength=triggerBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
-triggerGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + triggerGuidanceFlesh;
-triggerGuidanceThickness=10;
 
 // rotates the object on a point in itself for example to rotate on the half of the object
 module rotate_about_pt(a, pt) {
@@ -384,69 +272,7 @@ module speakerGrill() {
 }
 
 
-module trigger() {
-  color("Khaki") {
-    difference() {
-      cube(size=[triggerFrontLength, triggerHeight, triggerThickness], center=false);
-      translate([- triggerHeight / 5, triggerHeight / 2, 0]) {
-        cylinder(d=triggerHeight, h=triggerThickness, center=false);  
-      }
-    }
 
-    translate([triggerFrontLength, 0, 0]) {
-      
-      // trigger back
-      difference() {
-        cube(size=[triggerBackLength, triggerHeight, triggerThickness], center=false);
-
-        hull() {
-          translate([triggerPoleDia / 2, triggerPoleDia / 2 + (triggerHeight - triggerPoleDia) / 2, 0]) {
-            cylinder(d=triggerPoleRailDia, h=triggerThickness, center=false); 
-
-            translate([triggerBackLength - triggerPoleRailDia - triggerPoleRailFlesh, 0, 0]) {
-              cylinder(d=triggerPoleRailDia, h=triggerThickness, center=false);   
-            }
-          }
-        }
-      }
-            
-      // spring pin
-      translate([triggerBackLength, triggerHeight / 2, triggerThickness / 2]) {
-        rotate([0, 90,0]) {
-          cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
-        }  
-      }
-    }
-  }
-}
-
-
-module triggerGuidance() {  
-  color("Moccasin") {
-    difference() {
-      cube(size=[triggerGuidanceLength, triggerGuidanceHeight, triggerGuidanceThickness], center=false);
-
-      translate([0, triggerGuidanceWallThickness + triggerGuidanceFlesh / 2, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh]) {
-        cube(size=[triggerBackLength + triggerSpringPinLength + triggerSpringSpace, triggerHeight + triggerGuidanceFlesh, triggerThickness + triggerGuidanceFlesh], center=false);   
-      }      
-    }
-    
-    // add spring pole
-    translate([triggerGuidanceLength - triggerSpringPinLength * 2 - triggerGuidanceWallThickness, triggerGuidanceHeight / 2, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh + triggerSpringPinDia / 2 + triggerGuidanceFlesh / 2]) {
-      rotate([0, 90, 0]) {
-        cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);  
-      }
-    }
-
-    // add trigger pole
-    translate([triggerPoleDia / 2, triggerGuidanceHeight / 2, triggerGuidanceThickness - triggerThickness -  triggerGuidanceFlesh]) {
-      difference() {
-        cylinder(d=triggerPoleDia, h=triggerThickness + triggerGuidanceFlesh, center=false);
-        cylinder(d=triggerPoleScrewDia, h=triggerThickness + triggerGuidanceFlesh, center=false);
-      }
-    }  
-  }  
-}
 
 // receiver pcb
 receiverPcbHeight=10;
@@ -550,10 +376,7 @@ module renderAll() {
   
 }
 
-/*triggerGuidance();
-translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh / 2]) {
-  trigger();  
-}*/
 
+triggerDebug();
 
-renderAll();
+//renderAll();
