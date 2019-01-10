@@ -23,7 +23,7 @@ displayThickness=10;
 
 
 // gun wall thickness
-gunWallThickness=3;
+gunWallThickness=2;
 
 // vibration motor pcb
 vibrationPcbWidth=20;
