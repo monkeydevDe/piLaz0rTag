@@ -24,8 +24,15 @@ module trigger() {
         }
       }
             
-      // spring pin
+      // trigger pin
       translate([triggerBackLength, triggerHeight / 2, triggerThickness / 2]) {
+        rotate([0, 90,0]) {
+          cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
+        }  
+      }
+
+      // spring pin
+      translate([triggerBackLength, triggerHeight - (triggerSpringPinDia / 2), triggerThickness / 2]) {
         rotate([0, 90,0]) {
           cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
         }  
@@ -66,7 +73,7 @@ module triggerGuidance() {
     }
 
     // add trigger pole
-    translate([triggerPoleDia / 2 + triggerBackLength / 2, triggerGuidanceHeight / 2, triggerGuidanceBottomThickness]) {
+    translate([triggerPoleDia / 2, (triggerGuidanceHeight + triggerGuidanceFlesh) / 2, triggerGuidanceBottomThickness]) {
       difference() {
         cylinder(d=triggerPoleDia, h=triggerThickness, center=false);
         cylinder(d=triggerPoleScrewDia, h=triggerThickness, center=false);
@@ -77,7 +84,7 @@ module triggerGuidance() {
 
 // used for debugging the trigger
 module triggerDebug() {
-  triggerGuidance();
+  //triggerGuidance();
   translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh / 2]) {
     trigger();  
   }
