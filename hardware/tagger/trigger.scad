@@ -66,7 +66,7 @@ module triggerGuidance() {
     }
 
     // add trigger pole
-    translate([triggerPoleDia / 2 + triggerBackLength / 2, triggerGuidanceHeight / 2, triggerGuidanceBottomThickness]) {
+    translate([triggerPoleDia / 2, (triggerGuidanceHeight + triggerGuidanceFlesh) / 2, triggerGuidanceBottomThickness]) {
       difference() {
         cylinder(d=triggerPoleDia, h=triggerThickness, center=false);
         cylinder(d=triggerPoleScrewDia, h=triggerThickness, center=false);
@@ -79,6 +79,6 @@ module triggerGuidance() {
 module triggerDebug() {
   triggerGuidance();
   translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh / 2]) {
-    trigger();  
+ //   trigger();  
   }
 }
