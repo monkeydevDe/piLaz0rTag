@@ -13,10 +13,6 @@ lensTubeFixHeightFlesh=1;
 lensTubeFixHeight=lensTubeDiameter + 2 * lensTubeFixHeightFlesh;
 lensTubeGap=1.5;
 
-// esp32 pcb parameters
-esp32Height=25;
-esp32Length=57;
-
 // display parameters
 displayCutOutWidth=26;
 displayCutOutHeight=20;
@@ -25,19 +21,33 @@ displayPcbWidth=26;
 displayPcbHeight=26;
 displayThickness=10;
 
+
 // gun wall thickness
 gunWallThickness=3;
+
+// vibration motor pcb
+vibrationPcbWidth=20;
+vibrationPcbHeight=23;
+vibrationStandoffBaseSpace=2;
+vibrationStandoffScrewHoleDia=3;
+vibrationStandoffScrewHolderDia = vibrationStandoffScrewHoleDia * 1.5;
+vibrationStandoffHoles = [[vibrationStandoffScrewHolderDia / 2,vibrationPcbHeight - vibrationStandoffScrewHolderDia / 2], 
+                          [vibrationPcbWidth  - vibrationStandoffScrewHolderDia / 2,vibrationPcbHeight - vibrationStandoffScrewHolderDia / 2]];
+vibrationStandoffPoles = [[vibrationStandoffScrewHolderDia / 2,vibrationStandoffScrewHolderDia / 2], 
+                          [vibrationPcbWidth - vibrationStandoffScrewHolderDia / 2,vibrationStandoffScrewHolderDia / 2]];
+vibrationStandoffBaseHeight = gunWallThickness;
+
 
 // lid
 gunBodyLidThickness= gunWallThickness / 2;
 gunBodyLidHeight = 1.5;
 
 // esp32 standoff
+esp32Height=25;
+esp32Length=57;
 esp32StandoffBaseHeight = gunWallThickness;
 esp32StandoffScrewHoleDia=2;
 esp32StandoffScrewHolderDia = esp32StandoffScrewHoleDia * 2;
-esp32StandoffLength = esp32Length ;
-esp32StandoffHeight = esp32Height;
 esp32StandoffBaseSpace=3;
 esp32StandoffHoles = [[55,2], [55,23]];
 esp32StandoffPoles = [[2,2], [2,23]];
@@ -49,7 +59,7 @@ displayHolderBaseThickness = gunWallThickness;
 displayHolderPoleWidth=6;
 
 // gun parameters
-gunHeight=lensTubeFixLength + esp32StandoffHeight + 10;
+gunHeight=lensTubeFixLength + esp32Height + 10;
 gunFrontLength = lensTubeLength + 10;
 gunBackLength = 150 + displayThickness;
 gunBodyTopSpace = 3;

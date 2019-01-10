@@ -141,14 +141,27 @@ module gunBody() {
 
 module esp32Standoff() {
   color([255/255, 0, 0]) {
-    pcbStandOff(esp32StandoffLength, 
-      esp32StandoffHeight,
+    pcbStandOff(esp32Length, 
+      esp32Height,
       esp32StandoffBaseHeight,
       esp32StandoffHoles,
       esp32StandoffPoles,
       esp32StandoffBaseSpace,
       esp32StandoffScrewHolderDia,
       esp32StandoffScrewHoleDia);
+  }  
+}
+
+module vibratrionStandoff() {
+  color([255/255, 0, 0]) {
+    pcbStandOff(vibrationPcbWidth, 
+      vibrationPcbHeight,
+      vibrationStandoffBaseHeight,      
+      vibrationStandoffHoles,
+      vibrationStandoffPoles,
+      vibrationStandoffBaseSpace,
+      vibrationStandoffScrewHolderDia,
+      vibrationStandoffScrewHoleDia);
   }  
 }
 
@@ -331,7 +344,7 @@ module renderAll() {
 
   
   // add esp32 standoff
-  translate([gunFrontLength - gunWallThickness - esp32StandoffLength,gunWallThickness + 2,0]) {
+  translate([gunFrontLength - gunWallThickness - esp32Length,gunWallThickness + 2,0]) {
     esp32Standoff();
   }
 
@@ -353,9 +366,9 @@ module renderAll() {
   }
 
   // add trigger
-  translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceFlesh / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceFlesh / 2)) / 2]) {
+  /*translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceFlesh / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceFlesh / 2)) / 2]) {
     trigger();
-  }
+  }*/
   
   // add display holder
   translate([gunFrontLength, gunHeight - displayPcbHeight - gunWallThickness, (gunBottomThickness - displayPcbWidth) / 2]) {
@@ -373,10 +386,15 @@ module renderAll() {
   translate([0, gunWallThickness + gunBodyConPoleWidth, gunWallThickness]) {
     receiverWallHolder();  
   }
-  
+
+  // add vibration motor holder
+  rotate_about_pt([0,0, gripAngle],[vibrationPcbWidth / 2,vibrationPcbHeight / 2,0]) {
+    translate([gripFrontOffset, - gripHeight - gripHeight / 4, 0]) {    
+      vibratrionStandoff();    
+    }
+  }
 }
 
+//triggerDebug();
 
-triggerDebug();
-
-//renderAll();
+renderAll();
