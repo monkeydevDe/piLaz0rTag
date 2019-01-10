@@ -106,11 +106,11 @@ speakerGrillBarHeight = 3;
 
 
 // trigger switch 
-triggerSwitchHeight=19;
+triggerSwitchHeight=20;
 triggerSwitchWidth=10;
 triggerSwitchThickness=5;
 triggerSwitchScrewHoleDia=2;
-triggerSwitchScrewHoleHeightOffset=3;
+triggerSwitchScrewHoleHeightOffset=3.5;
 triggerSwitchScrewHoleBackOffset=1.5;
 triggerSwitchScrewHolesOffset=7;
 triggerSwitchScrewHolesHeight=2;

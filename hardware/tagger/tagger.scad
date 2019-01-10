@@ -395,6 +395,9 @@ module renderAll() {
   }
 }
 
-//triggerDebug();
+triggerDebug();
 
-renderAll();
+//renderAll();
+
+
+//esp32Standoff();
