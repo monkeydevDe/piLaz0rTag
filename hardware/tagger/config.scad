@@ -13,13 +13,6 @@ lensTubeFixHeightFlesh=1;
 lensTubeFixHeight=lensTubeDiameter + 2 * lensTubeFixHeightFlesh;
 lensTubeGap=1.5;
 
-// display parameters
-displayCutOutWidth=26;
-displayCutOutHeight=20;
-displayCutOutThickness=3;
-displayPcbWidth=26;
-displayPcbHeight=26;
-displayThickness=10;
 
 
 // gun wall thickness
@@ -52,11 +45,19 @@ esp32StandoffBaseSpace=3;
 esp32StandoffHoles = [[55,2], [55,23]];
 esp32StandoffPoles = [[2,2], [2,23]];
 
+// display parameters
+/*displayCutOutWidth=26;
+displayCutOutHeight=20;
+displayCutOutThickness=3;*/
+
+displayPcbWidth=27;
+displayPcbHeight=27;
+displayThickness=10;
+
 // display holder
-displayHolderWidth = displayPcbWidth + 4;
-displayHolderHeight = displayPcbHeight + 4;
-displayHolderBaseThickness = gunWallThickness;
 displayHolderPoleWidth=6;
+displayHolderScrewOffset=1;
+displayHolderScrewDia=2;
 
 // gun parameters
 gunHeight=lensTubeFixLength + esp32Height + 10;
@@ -66,7 +67,7 @@ gunBodyTopSpace = 3;
 gunThickness = lensTubeFixHeight + 2 * gunWallThickness + gunBodyTopSpace;
 gunBottomThickness = gunThickness - gunWallThickness - gunBodyTopSpace;
 gunTopThickness = gunWallThickness + gunBodyTopSpace;
-gunBackHeight =  gunHeight - displayHolderWidth - gunWallThickness;
+gunBackHeight =  gunHeight - displayPcbWidth - gunWallThickness;
 
 // gun body connector poles
 gunBodyConPoleWidth=5;
@@ -103,6 +104,14 @@ speakerHolderScrewDia=1.5;
 speakerHolderScrewHeight=speakerHolderHeight / 2;
 speakerHolderScrewPoleDia=4*speakerHolderScrewDia;
 speakerGrillBarHeight = 3;
+
+// receiver pcb
+receiverPcbHeight=20;
+receiverPcbWidth=20;
+receiverHolderScrewDia=2;
+receiverHolderScrewOffset=1;
+receiverHolderPoleWidth=6;
+receiverHolderRotation=[90, 0, 0];
 
 
 // trigger switch 

@@ -68,7 +68,7 @@ module gunBodyBack() {
     
     // display part  
     translate([0, gunBackHeight, 0]) {      
-      cube(size=[gunWallThickness, displayHolderWidth + gunWallThickness, gunBottomThickness], center=false);     
+      cube(size=[gunWallThickness, displayPcbWidth + gunWallThickness, gunBottomThickness], center=false);     
     }
     
   
@@ -189,22 +189,38 @@ module pcbStandOff(length, height, baseHeight, standOffHoles, standoffPoles, spa
   }
 }
 
-module displayHolder() {
-  color("LightBlue") {
-    rotate([90, 0, 90]) {
-      union() {
-        for (i=[0:1]) {
-          for (j=[0:1]) {
-            intersection() {
-              cube(size=[displayPcbWidth,displayPcbHeight,gunWallThickness], center=false);  
-              translate([displayPcbWidth * i, displayPcbHeight * j, 0]) {
-                cylinder(r=displayHolderPoleWidth, h=gunWallThickness, center=false);    
+
+module pcbWallCutOut(rot,width,height,thickness, poleWidth,screwDia, screwOffset) {
+  rotate(rot) {
+    union() {
+      for (i=[0:1]) {
+        for (j=[0:1]) {
+          intersection() {
+            cube(size=[width,height,thickness], center=false);  
+            translate([width * i, height * j, 0]) {
+              difference() {
+                cylinder(r=poleWidth, h=thickness, center=false);                                                  
+                translate([(screwDia / 2) + screwOffset - i * (2 * screwOffset + screwDia),(screwDia / 2) + screwOffset - j * (2 * screwOffset + screwDia), 0]) {
+                  cylinder(d=screwDia, h=thickness, center=false);                    
+                }
               }
-            }
+            }              
           }
         }
       }
     }
+  }
+}
+
+module displayHolder() {
+  color("LightBlue") {
+    pcbWallCutOut([90, 0, 90],
+        displayPcbWidth,
+        displayPcbHeight,
+        gunWallThickness, 
+        displayHolderPoleWidth,
+        displayHolderScrewDia, 
+        displayHolderScrewOffset);
   }
 }
 
@@ -284,37 +300,19 @@ module speakerGrill() {
   }
 }
 
-
-
-
-// receiver pcb
-receiverPcbHeight=10;
-receiverPcbWidth=20;
-receiverPcbFlesh=1.5;
-receiverPcbThickness=1.7;
-receiverPcbCutoutThickness=2*receiverPcbFlesh+receiverPcbThickness;
-receiverPcbCutoutWidth=receiverPcbWidth;
-receiverPcbCutoutHeight=gunBottomThickness - gunWallThickness - gunBodyLidHeight;
-
-
-
-module receiverWallHolder() {
+module receiverHolder() {
   color("DarkKhaki") {
-    difference() {
-      cube(size=[receiverPcbCutoutThickness, receiverPcbCutoutWidth, receiverPcbCutoutHeight], center=false);
-
-      translate([0, receiverPcbFlesh, (receiverPcbCutoutHeight - receiverPcbHeight) / 2]) {
-        cube(size=[receiverPcbCutoutThickness, receiverPcbWidth - 2 * receiverPcbFlesh,receiverPcbHeight], center=false);
-      }
-
-      translate([(receiverPcbCutoutThickness-receiverPcbThickness) / 2 , 0, receiverPcbCutoutHeight / 2 - receiverPcbHeight / 2]) {        
-        cube(size=[receiverPcbThickness, receiverPcbWidth, receiverPcbCutoutHeight / 2 + receiverPcbHeight / 2], center=false);  
-      }
-    }
+    pcbWallCutOut(receiverHolderRotation,
+        receiverPcbWidth,
+        receiverPcbHeight,
+        gunWallThickness, 
+        receiverHolderPoleWidth,
+        receiverHolderScrewDia, 
+        receiverHolderScrewOffset);
   }
 }
 
-//receiverWallHolder();
+
 
 module renderAll() {
   translate([-100, 0, 0]) {
@@ -339,6 +337,13 @@ module renderAll() {
     // cut out the display
     translate([gunFrontLength, gunHeight - displayPcbHeight - gunWallThickness, (gunBottomThickness - displayPcbWidth) / 2]) {
       cube(size=[gunWallThickness, displayPcbHeight, displayPcbWidth], center=false);
+    }
+
+    // cut out receiver holder
+    translate([gunWallThickness + lensTubeFixWidth + gunBodyConPoleWidth , gunHeight, (gunBottomThickness - receiverPcbWidth) / 2]) {
+      rotate(receiverHolderRotation) {
+        cube(size=[ receiverPcbWidth,receiverPcbHeight,gunWallThickness], center=false);  
+      }
     }
   }
 
@@ -383,8 +388,8 @@ module renderAll() {
   }
 
   // add receiver holder
-  translate([0, gunWallThickness + gunBodyConPoleWidth, gunWallThickness]) {
-    receiverWallHolder();  
+  translate([gunWallThickness + lensTubeFixWidth + gunBodyConPoleWidth , gunHeight, (gunBottomThickness - receiverPcbWidth) / 2]) {
+    receiverHolder();  
   }
 
   // add vibration motor holder
@@ -395,9 +400,11 @@ module renderAll() {
   }
 }
 
-triggerDebug();
+//triggerDebug();
 
-//renderAll();
+renderAll();
+
+//receiverHolder();
 
 
 //esp32Standoff();
