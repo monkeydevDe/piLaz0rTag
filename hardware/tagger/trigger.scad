@@ -104,36 +104,54 @@ module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, th
 }
 
 
+
+module triggerGuidance() {
+  buttonGuidance(triggerGuidanceWallThickness,
+    triggerGuidanceTolerance,
+    triggerGuidanceLength,
+    triggerGuidanceHeight,
+    triggerGuidanceBottomThickness,
+    triggerGuidanceThickness,
+    buttonPoleDia,
+    buttonPoleScrewDia);
+}
+
+module trigger() {  
+  button(triggerHeight,triggerFrontLength, triggerThickness, true);  
+}
+
+
+module reloadButtonGuidance() {
+  buttonGuidance(reloadBtnGuidanceWallThickness,
+    reloadBtnGuidanceTolerance,
+    reloadBtnGuidanceLength,
+    reloadBtnGuidanceHeight,
+    reloadBtnGuidanceBottomThickness,
+    reloadBtnGuidanceThickness,
+    buttonPoleDia,
+    buttonPoleScrewDia);
+}
+
+module reloadButton() {  
+  button(reloadButtonHeight,reloadButtonFrontLength, reloadButtonThickness, false);  
+}
+
 // used for debugging the trigger
 module triggerDebug() {
   render(){
-    buttonGuidance(triggerGuidanceWallThickness,
-      triggerGuidanceTolerance,
-      triggerGuidanceLength,
-      triggerGuidanceHeight,
-      triggerGuidanceBottomThickness,
-      triggerGuidanceThickness,
-      buttonPoleDia,
-      buttonPoleScrewDia);
+    triggerGuidance();
     translate([- triggerFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, triggerGuidanceWallThickness + triggerGuidanceTolerance, triggerGuidanceThickness - triggerThickness - triggerGuidanceTolerance / 2]) {
-      button(triggerHeight,triggerFrontLength, triggerThickness, true);  
-    }
+      trigger();  
+    }  
   }
 }
 
 // used for debugging the reload button
 module reloadDebug() {
   render() {
-    buttonGuidance(reloadBtnGuidanceWallThickness,
-      reloadBtnGuidanceTolerance,
-      reloadBtnGuidanceLength,
-      reloadBtnGuidanceHeight,
-      reloadBtnGuidanceBottomThickness,
-      reloadBtnGuidanceThickness,
-      buttonPoleDia,
-      buttonPoleScrewDia);
+    reloadButtonGuidance();
     translate([- reloadButtonFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance, reloadBtnGuidanceThickness - reloadButtonThickness - reloadBtnGuidanceTolerance / 2]) {
-      button(reloadButtonHeight,reloadButtonFrontLength, reloadButtonThickness, false);  
+      reloadButton();
     }  
   }
 }

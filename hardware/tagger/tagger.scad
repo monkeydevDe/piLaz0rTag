@@ -96,18 +96,39 @@ module gripBody() {
         translate([-gripCornerRadius, - gripCornerRadius, gunBottomThickness - gripCornerRadius]) {
           cube(size=[gripWidth, gripHeight + gripCornerRadius, gripCornerRadius], center=false);
         }
+
         rotate_about_pt(-gripAngle,[0,gripHeight - gripCornerRadius,0]) {
           // cut of the cap
           translate([-gripCornerRadius, gripHeight - gripCornerRadius * 2, -gripCornerRadius]) {
             cube(size=[gripWidth + gripCornerRadius,  gripHeight, gunBottomThickness], center=false);
           }   
         }
+
         // add lid to grip body
         translate([-gripCornerRadius + gunWallThickness - gunBodyLidThickness,-gripCornerRadius + gunWallThickness - gunBodyLidThickness,-gripCornerRadius + gunBottomThickness - gunBodyLidHeight]) {
           cube(size=[gripWidth - gunBodyLidThickness * 2, gripHeight - gunBodyLidThickness * 2, gunBodyLidHeight], center=false);
         }    
+
+        // cut out the reload button
+        translate([-gripCornerRadius + (gripWidth - reloadButtonHeight - reloadBtnGuidanceTolerance) / 2 , -gripCornerRadius, -gripCornerRadius + (gunBottomThickness - reloadButtonThickness - reloadBtnGuidanceTolerance) / 2]) {
+          cube([reloadButtonHeight + reloadBtnGuidanceTolerance,gunWallThickness+gripCornerRadius,reloadButtonThickness+reloadBtnGuidanceTolerance], center=false);  
+        }
+        
       }
-    }
+
+
+      
+      //rotate_about_pt([0,0,90],[reloadBtnGuidanceHeight / 2,reloadBtnGuidanceLength / 2,0]) {
+        translate([-gripCornerRadius + (gripWidth - reloadButtonHeight - reloadBtnGuidanceTolerance) / 2 , -gripCornerRadius, -gripCornerRadius + (gunBottomThickness - reloadButtonThickness) / 2 - reloadBtnGuidanceTolerance - reloadBtnGuidanceBottomThickness]) {
+          reloadButtonGuidance();  
+        }
+
+        translate([-gripCornerRadius + (gripWidth - reloadBtnGuidanceHeight) / 2, -gripCornerRadius + gunWallThickness, -gripCornerRadius + gunWallThickness]) { 
+          #cube(size=[reloadBtnGuidanceHeight,reloadBtnGuidanceLength, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2], center=false);
+        }
+      //}
+      
+    } // eo of rotate
   }
 }
 
@@ -300,7 +321,11 @@ module speakerGrill() {
   }
 }
 
-module receiverHolder() {
+
+/**
+* Holder for the ir receiver pcb
+*/
+module irReceiverHolder() {
   color("DarkKhaki") {
     pcbWallCutOut(receiverHolderRotation,
         receiverPcbWidth,
@@ -365,13 +390,13 @@ module renderAll() {
     }    
 
     // cut out trigger hole    
-    translate([gunFrontLength - 15,  - (triggerHeight + triggerGuidanceFlesh), (gunBottomThickness - (triggerThickness + triggerGuidanceFlesh)) / 2]) {
-      cube(size=[20, triggerHeight + triggerGuidanceFlesh, triggerThickness + triggerGuidanceFlesh], center=false);  
+    translate([gunFrontLength - 15,  - (triggerHeight + triggerGuidanceTolerance), (gunBottomThickness - (triggerThickness + triggerGuidanceTolerance)) / 2]) {
+      cube(size=[20, triggerHeight + triggerGuidanceTolerance, triggerThickness + triggerGuidanceTolerance], center=false);  
     }
   }
 
   // add trigger
-  translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceFlesh / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceFlesh / 2)) / 2]) {
+  translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceTolerance / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceTolerance / 2)) / 2]) {
     trigger();
   }
   
@@ -389,7 +414,7 @@ module renderAll() {
 
   // add receiver holder
   translate([gunWallThickness + lensTubeFixWidth + gunBodyConPoleWidth , gunHeight, (gunBottomThickness - receiverPcbWidth) / 2]) {
-    receiverHolder();  
+    irReceiverHolder();  
   }
 
   // add vibration motor holder
@@ -401,7 +426,11 @@ module renderAll() {
 }
 
 
-reloadDebug();
+//render() {
+  gripBody();      
+//}
+
+//reloadDebug();
 
 //triggerDebug();
 
