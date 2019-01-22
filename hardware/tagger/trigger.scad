@@ -1,50 +1,65 @@
-module trigger() {
+
+/**
+* button
+*/
+module button(height,frontLength,thickness,curved) {
   color("Khaki") {
     difference() {
-      cube(size=[triggerFrontLength, triggerHeight, triggerThickness], center=false);
-      translate([- triggerHeight / 5, triggerHeight / 2, 0]) {
-        cylinder(d=triggerHeight, h=triggerThickness, center=false);  
-      }
-    }
-
-    translate([triggerFrontLength, 0, 0]) {
-      
-      // trigger back
-      difference() {
-        cube(size=[triggerBackLength, triggerHeight, triggerThickness], center=false);
-
-        hull() {
-          translate([triggerPoleDia / 2, triggerPoleDia / 2 + (triggerHeight - triggerPoleDia) / 2, 0]) {
-            cylinder(d=triggerPoleRailDia, h=triggerThickness, center=false); 
-
-            translate([triggerBackLength - triggerPoleRailDia - triggerPoleRailFlesh, 0, 0]) {
-              cylinder(d=triggerPoleRailDia, h=triggerThickness, center=false);   
-            }
-          }
+      cube(size=[frontLength, height, thickness], center=false);
+      if(curved) {
+        translate([- height / 5, height / 2, 0]) {
+          cylinder(d=height, h=thickness, center=false);  
         }
       }
-            
-      // trigger pin
-      translate([triggerBackLength, triggerHeight / 2, triggerThickness / 2]) {
-        rotate([0, 90,0]) {
-          cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
-        }  
-      }
-
-      // spring pin
-      translate([triggerBackLength, triggerHeight - (triggerSpringPinDia / 2), triggerThickness / 2]) {
-        rotate([0, 90,0]) {
-          cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
-        }  
-      }
+    }
+    translate([frontLength, 0, 0]) {
+      buttonBack(height,buttonBackLength,reloadButtonThickness, buttonPoleDia, buttonPoleTolerance, buttonPoleRailFlesh);
     }
   }
 }
 
+
 /**
-* Guidance part of the trigger
+* The back part of a button
 */
-module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, thickness) {  
+module buttonBack(height,length,thickness, poleDia, poleTolerance, poleRailFlesh) {
+
+  poleRailDia=poleDia+poleTolerance;
+
+  // trigger back
+  difference() {
+    cube(size=[length, height, thickness], center=false);
+
+    // hole for the pole off the guidance    
+    hull() {
+      translate([poleDia / 2, poleDia / 2 + (height - poleDia) / 2, 0]) {
+        cylinder(d=poleRailDia, h=thickness, center=false); 
+        translate([length - poleRailDia - poleRailFlesh, 0, 0]) {
+          cylinder(d=poleRailDia, h=thickness, center=false);   
+        }
+      }
+    }
+  }
+            
+  // trigger pin
+  translate([length, height / 2, thickness / 2]) {
+    rotate([0, 90,0]) {
+      cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
+    }  
+  }
+
+  // spring pin
+  translate([length, height - (triggerSpringPinDia / 2), thickness / 2]) {
+    rotate([0, 90,0]) {
+      cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);    
+    }  
+  }
+}
+
+/**
+* Guidance part of a button
+*/
+module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, thickness, poleDia, poleScrewDia) {  
   color("Moccasin") {
 
     cutoutLength=length - wallThickness;
@@ -54,7 +69,7 @@ module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, th
     difference() {
       cube(size=[length, height, thickness], center=false);
       translate([0, wallThickness + tolerance / 2, bottomThickness]) {
-        cube(size=[cutoutLength, cutoutHeight, triggerThickness + tolerance], center=false);   
+        cube(size=[cutoutLength, cutoutHeight, cutoutThickness + tolerance], center=false);   
       }      
 
       // add cutout and holes for the micro switch
@@ -71,17 +86,18 @@ module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, th
     }
     
     // add spring pole
-    translate([length - triggerSpringPinLength - wallThickness, height - triggerSpringPinDia, bottomThickness + (triggerThickness + tolerance) / 2 ]) {
+    translate([length - triggerSpringPinLength - wallThickness, height - triggerSpringPinDia, bottomThickness + (thickness + tolerance) / 2 ]) {
       rotate([0, 90, 0]) {
         cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);  
       }
     }
 
     // add trigger pole
-    translate([triggerPoleDia / 2, (height + tolerance) / 2, bottomThickness]) {
+    poleHeight = thickness -  bottomThickness - tolerance;
+    translate([poleDia / 2, (height + tolerance) / 2, bottomThickness]) {
       difference() {
-        cylinder(d=triggerPoleDia, h=triggerThickness, center=false);
-        cylinder(d=triggerPoleScrewDia, h=triggerThickness, center=false);
+        cylinder(d=poleDia, h=poleHeight, center=false);
+        cylinder(d=poleScrewDia, h=poleHeight, center=false);
       }
     }
   }  
@@ -96,9 +112,11 @@ module triggerDebug() {
       triggerGuidanceLength,
       triggerGuidanceHeight,
       triggerGuidanceBottomThickness,
-      triggerGuidanceThickness);
-    translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceTolerance, triggerGuidanceThickness - triggerThickness - triggerGuidanceTolerance / 2]) {
-      trigger();  
+      triggerGuidanceThickness,
+      buttonPoleDia,
+      buttonPoleScrewDia);
+    translate([- triggerFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, triggerGuidanceWallThickness + triggerGuidanceTolerance, triggerGuidanceThickness - triggerThickness - triggerGuidanceTolerance / 2]) {
+      button(triggerHeight,triggerFrontLength, triggerThickness, true);  
     }
   }
 }
@@ -111,6 +129,11 @@ module reloadDebug() {
       reloadBtnGuidanceLength,
       reloadBtnGuidanceHeight,
       reloadBtnGuidanceBottomThickness,
-      reloadBtnGuidanceThickness);
+      reloadBtnGuidanceThickness,
+      buttonPoleDia,
+      buttonPoleScrewDia);
+    translate([- reloadButtonFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance, reloadBtnGuidanceThickness - reloadButtonThickness - reloadBtnGuidanceTolerance / 2]) {
+      button(reloadButtonHeight,reloadButtonFrontLength, reloadButtonThickness, false);  
+    }  
   }
 }

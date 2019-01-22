@@ -124,17 +124,12 @@ microSwitchScrewHoleBackOffset=1.5;
 microSwitchScrewHolesOffset=7;
 microSwitchScrewHolesHeight=2;
 
-
-// trigger variables
-triggerHeight=35;
-triggerFrontLength=27;
-triggerBackLength=18;
-triggerThickness=6;
-triggerPoleDia=5;
-triggerPoleScrewDia=3;
-triggerPoleSpace=0.5;
-triggerPoleRailDia=triggerPoleDia+triggerPoleSpace;
-triggerPoleRailFlesh=3;
+// button variables
+buttonBackLength=18;
+buttonPoleDia=5;
+buttonPoleScrewDia=3;
+buttonPoleTolerance=0.5;
+buttonPoleRailFlesh=3;
 triggerSpringPinDia=4;
 triggerSpringPinLength=3;
 triggerSpringSpace=5;
@@ -144,21 +139,34 @@ buttonGuidanceWallThickness=1.5;
 buttonGuidanceTolerance=0.5;
 buttonGuidanceBottomThickness=1.5;
 
+// trigger variables
+triggerHeight=35;
+triggerFrontLength=27;
+triggerThickness=6;
+
+
 // trigger guidance
 triggerGuidanceWallThickness=buttonGuidanceWallThickness;
 triggerGuidanceTolerance=buttonGuidanceTolerance;
-triggerGuidanceLength=triggerBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
+triggerGuidanceLength=buttonBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
 triggerGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + triggerGuidanceTolerance;
 triggerGuidanceBottomThickness=buttonGuidanceBottomThickness;
 triggerGuidanceThickness=triggerThickness+triggerGuidanceTolerance+triggerGuidanceBottomThickness;
 
+
+// reload button variables
+reloadButtonHeight=35;
+reloadButtonFrontLength=10;
+reloadButtonThickness=6;
+
+
 // reload button guidance
 reloadBtnGuidanceWallThickness=buttonGuidanceWallThickness;
 reloadBtnGuidanceTolerance=buttonGuidanceTolerance;
-reloadBtnGuidanceLength=triggerBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + triggerGuidanceWallThickness;
-reloadBtnGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + triggerGuidanceTolerance;
+reloadBtnGuidanceLength=buttonBackLength + triggerSpringPinLength * 2 + triggerSpringSpace + reloadBtnGuidanceWallThickness;
+reloadBtnGuidanceHeight=reloadButtonHeight + 2 * reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance;
 reloadBtnGuidanceBottomThickness=buttonGuidanceBottomThickness;
-reloadBtnGuidanceThickness=triggerThickness+triggerGuidanceTolerance+triggerGuidanceBottomThickness;
+reloadBtnGuidanceThickness=reloadButtonThickness+reloadBtnGuidanceTolerance+reloadBtnGuidanceBottomThickness;
 
 
 
