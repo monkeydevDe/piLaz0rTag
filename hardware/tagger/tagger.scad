@@ -371,9 +371,9 @@ module renderAll() {
   }
 
   // add trigger
-  /*translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceFlesh / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceFlesh / 2)) / 2]) {
+  translate([gunFrontLength - triggerFrontLength , - (triggerHeight + triggerGuidanceFlesh / 2), (gunBottomThickness - (triggerThickness - triggerGuidanceFlesh / 2)) / 2]) {
     trigger();
-  }*/
+  }
   
   // add display holder
   translate([gunFrontLength, gunHeight - displayPcbHeight - gunWallThickness, (gunBottomThickness - displayPcbWidth) / 2]) {
@@ -400,9 +400,13 @@ module renderAll() {
   }
 }
 
+
+reloadDebug();
+
 //triggerDebug();
 
-renderAll();
+
+//renderAll();
 
 //receiverHolder();
 

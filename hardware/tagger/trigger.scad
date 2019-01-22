@@ -44,36 +44,41 @@ module trigger() {
 /**
 * Guidance part of the trigger
 */
-module triggerGuidance() {  
+module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, thickness) {  
   color("Moccasin") {
+
+    cutoutLength=length - wallThickness;
+    cutoutHeight = height - 2 * wallThickness;
+    cutoutThickness = thickness + tolerance;
+
     difference() {
-      cube(size=[triggerGuidanceLength, triggerGuidanceHeight, triggerGuidanceThickness], center=false);
-      translate([0, triggerGuidanceWallThickness + triggerGuidanceFlesh / 2, triggerGuidanceBottomThickness]) {
-        cube(size=[triggerBackLength + 2* triggerSpringPinLength + triggerSpringSpace, triggerHeight + triggerGuidanceFlesh, triggerThickness + triggerGuidanceFlesh], center=false);   
+      cube(size=[length, height, thickness], center=false);
+      translate([0, wallThickness + tolerance / 2, bottomThickness]) {
+        cube(size=[cutoutLength, cutoutHeight, triggerThickness + tolerance], center=false);   
       }      
 
-      // add cutout and holes for the trigger switch
-      translate([triggerGuidanceLength - triggerSwitchWidth, 0, triggerGuidanceBottomThickness]) {
-        cube(size=[triggerSwitchWidth, triggerSwitchHeight, triggerGuidanceThickness - triggerGuidanceBottomThickness], center=false);
+      // add cutout and holes for the micro switch
+      translate([length - microSwitchWidth, 0, bottomThickness]) {
+        cube(size=[microSwitchWidth, microSwitchHeight, thickness - bottomThickness], center=false);
 
-        translate([triggerSwitchScrewHoleDia / 2 + triggerSwitchWidth - triggerSwitchScrewHoleDia - triggerSwitchScrewHoleBackOffset, triggerSwitchScrewHoleDia / 2 + triggerSwitchScrewHoleHeightOffset, -triggerSwitchScrewHolesHeight]) {
-          cylinder(d=triggerSwitchScrewHoleDia, h=triggerSwitchScrewHolesHeight, center=false);  
-          translate([0, triggerSwitchScrewHoleDia + triggerSwitchScrewHolesOffset, 0]) {
-            cylinder(d=triggerSwitchScrewHoleDia, h=triggerSwitchScrewHolesHeight, center=false);    
+        translate([microSwitchScrewHoleDia / 2 + microSwitchWidth - microSwitchScrewHoleDia - microSwitchScrewHoleBackOffset, microSwitchScrewHoleDia / 2 + microSwitchScrewHoleHeightOffset, -microSwitchScrewHolesHeight]) {
+          cylinder(d=microSwitchScrewHoleDia, h=microSwitchScrewHolesHeight, center=false);  
+          translate([0, microSwitchScrewHoleDia + microSwitchScrewHolesOffset, 0]) {
+            cylinder(d=microSwitchScrewHoleDia, h=microSwitchScrewHolesHeight, center=false);    
           }
         } 
       }
     }
     
     // add spring pole
-    translate([triggerGuidanceLength - triggerSpringPinLength - triggerGuidanceWallThickness, triggerGuidanceHeight - triggerSpringPinDia, triggerGuidanceBottomThickness + (triggerThickness + triggerGuidanceFlesh) / 2 ]) {
+    translate([length - triggerSpringPinLength - wallThickness, height - triggerSpringPinDia, bottomThickness + (triggerThickness + tolerance) / 2 ]) {
       rotate([0, 90, 0]) {
         cylinder(d=triggerSpringPinDia, h=triggerSpringPinLength, center=false);  
       }
     }
 
     // add trigger pole
-    translate([triggerPoleDia / 2, (triggerGuidanceHeight + triggerGuidanceFlesh) / 2, triggerGuidanceBottomThickness]) {
+    translate([triggerPoleDia / 2, (height + tolerance) / 2, bottomThickness]) {
       difference() {
         cylinder(d=triggerPoleDia, h=triggerThickness, center=false);
         cylinder(d=triggerPoleScrewDia, h=triggerThickness, center=false);
@@ -82,10 +87,30 @@ module triggerGuidance() {
   }  
 }
 
+
 // used for debugging the trigger
 module triggerDebug() {
-  //triggerGuidance();
-  translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceFlesh, triggerGuidanceThickness - triggerThickness - triggerGuidanceFlesh / 2]) {
-    trigger();  
+  render(){
+    buttonGuidance(triggerGuidanceWallThickness,
+      triggerGuidanceTolerance,
+      triggerGuidanceLength,
+      triggerGuidanceHeight,
+      triggerGuidanceBottomThickness,
+      triggerGuidanceThickness);
+    translate([- triggerFrontLength - triggerBackLength + triggerPoleRailFlesh + triggerSpringPinLength + triggerPoleDia, triggerGuidanceWallThickness + triggerGuidanceTolerance, triggerGuidanceThickness - triggerThickness - triggerGuidanceTolerance / 2]) {
+      trigger();  
+    }
+  }
+}
+
+// used for debugging the reload button
+module reloadDebug() {
+  render() {
+    buttonGuidance(reloadBtnGuidanceWallThickness,
+      reloadBtnGuidanceTolerance,
+      reloadBtnGuidanceLength,
+      reloadBtnGuidanceHeight,
+      reloadBtnGuidanceBottomThickness,
+      reloadBtnGuidanceThickness);
   }
 }
