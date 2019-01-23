@@ -157,17 +157,6 @@ F 3 "~" H 7300 2900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x02 PowerConnector
-U 1 1 5C053854
-P 3950 2400
-F 0 "PowerConnector" H 4030 2392 50  0000 L CNN
-F 1 "Conn_01x02" H 4030 2301 50  0000 L CNN
-F 2 "" H 3950 2400 50  0001 C CNN
-F 3 "~" H 3950 2400 50  0001 C CNN
-	1    3950 2400
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR?
 U 1 1 5C0538CC
 P 7100 3100
@@ -392,5 +381,103 @@ F 2 "" H 7200 1450 50  0001 C CNN
 F 3 "~" H 7200 1450 50  0001 C CNN
 	1    7200 1450
 	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x08 JQ6500
+U 1 1 5C387148
+P 3800 4950
+F 0 "JQ6500" H 3880 4942 50  0000 L CNN
+F 1 "Conn_01x08" H 3880 4851 50  0000 L CNN
+F 2 "" H 3800 4950 50  0001 C CNN
+F 3 "~" H 3800 4950 50  0001 C CNN
+	1    3800 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5C387275
+P 3600 5150
+F 0 "#PWR?" H 3600 4900 50  0001 C CNN
+F 1 "GND" V 3605 5022 50  0000 R CNN
+F 2 "" H 3600 5150 50  0001 C CNN
+F 3 "" H 3600 5150 50  0001 C CNN
+	1    3600 5150
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5C3872ED
+P 3600 5050
+F 0 "#PWR?" H 3600 4900 50  0001 C CNN
+F 1 "+5V" V 3615 5178 50  0000 L CNN
+F 2 "" H 3600 5050 50  0001 C CNN
+F 3 "" H 3600 5050 50  0001 C CNN
+	1    3600 5050
+	0    -1   -1   0   
+$EndComp
+NoConn ~ 3600 4950
+NoConn ~ 3600 4850
+$Comp
+L Connector_Generic:Conn_01x02 Speaker
+U 1 1 5C38789C
+P 2750 4750
+F 0 "Speaker" H 2670 4425 50  0000 C CNN
+F 1 "Conn_01x02" H 2670 4516 50  0000 C CNN
+F 2 "" H 2750 4750 50  0001 C CNN
+F 3 "~" H 2750 4750 50  0001 C CNN
+	1    2750 4750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2950 4650 3600 4650
+Wire Wire Line
+	2950 4750 3600 4750
+Text Label 3150 4650 0    50   ~ 0
+SPK+
+Text Label 3150 4750 0    50   ~ 0
+SPK-
+$Comp
+L Connector_Generic:Conn_01x14 Esp32Connector
+U 1 1 5C389F02
+P 2850 3150
+F 0 "Esp32Connector" H 2770 2225 50  0000 C CNN
+F 1 "Conn_01x14" H 2770 2316 50  0000 C CNN
+F 2 "" H 2850 3150 50  0001 C CNN
+F 3 "~" H 2850 3150 50  0001 C CNN
+	1    2850 3150
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 PowerConnector
+U 1 1 5C38A017
+P 3950 2400
+F 0 "PowerConnector" H 4030 2392 50  0000 L CNN
+F 1 "Screw_Terminal_01x02" H 4030 2301 50  0000 L CNN
+F 2 "" H 3950 2400 50  0001 C CNN
+F 3 "~" H 3950 2400 50  0001 C CNN
+	1    3950 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5C38AAB0
+P 3050 3750
+F 0 "#PWR?" H 3050 3500 50  0001 C CNN
+F 1 "GND" V 3055 3622 50  0000 R CNN
+F 2 "" H 3050 3750 50  0001 C CNN
+F 3 "" H 3050 3750 50  0001 C CNN
+	1    3050 3750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5C38AB27
+P 3050 3650
+F 0 "#PWR?" H 3050 3500 50  0001 C CNN
+F 1 "+3.3V" V 3065 3778 50  0000 L CNN
+F 2 "" H 3050 3650 50  0001 C CNN
+F 3 "" H 3050 3650 50  0001 C CNN
+	1    3050 3650
+	0    1    1    0   
 $EndComp
 $EndSCHEMATC
