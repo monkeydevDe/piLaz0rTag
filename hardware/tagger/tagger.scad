@@ -116,17 +116,22 @@ module gripBody() {
         
       }
 
+      // add reload button pole  
+      translate([-gripCornerRadius + (gripWidth - reloadBtnGuidanceHeight) / 2, -gripCornerRadius + gunWallThickness, -gripCornerRadius + gunWallThickness]) { 
+        translate([reloadBtnGuidanceHeight, 0, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2]) {
+          rotate([0, 0, 90]) {              
+            reloadButtonGuidance();  
+            
+            translate([- reloadButtonFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia,  reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance / 2, reloadBtnGuidanceBottomThickness + reloadBtnGuidanceTolerance / 2]) {
+              reloadButton();  
+            }
+            
+          }  
+        }  
 
+        cube(size=[reloadBtnGuidanceHeight,reloadBtnGuidanceLength, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2], center=false);
+      }
       
-      //rotate_about_pt([0,0,90],[reloadBtnGuidanceHeight / 2,reloadBtnGuidanceLength / 2,0]) {
-        translate([-gripCornerRadius + (gripWidth - reloadButtonHeight - reloadBtnGuidanceTolerance) / 2 , -gripCornerRadius, -gripCornerRadius + (gunBottomThickness - reloadButtonThickness) / 2 - reloadBtnGuidanceTolerance - reloadBtnGuidanceBottomThickness]) {
-          reloadButtonGuidance();  
-        }
-
-        translate([-gripCornerRadius + (gripWidth - reloadBtnGuidanceHeight) / 2, -gripCornerRadius + gunWallThickness, -gripCornerRadius + gunWallThickness]) { 
-          #cube(size=[reloadBtnGuidanceHeight,reloadBtnGuidanceLength, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2], center=false);
-        }
-      //}
       
     } // eo of rotate
   }
@@ -427,7 +432,7 @@ module renderAll() {
 
 
 //render() {
-  gripBody();      
+  //gripBody();      
 //}
 
 //reloadDebug();
@@ -435,7 +440,7 @@ module renderAll() {
 //triggerDebug();
 
 
-//renderAll();
+renderAll();
 
 //receiverHolder();
 

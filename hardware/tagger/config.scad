@@ -156,7 +156,7 @@ triggerGuidanceThickness=triggerThickness+triggerGuidanceTolerance+triggerGuidan
 
 // reload button variables
 reloadButtonHeight=35;
-reloadButtonFrontLength=10;
+reloadButtonFrontLength=2;
 reloadButtonThickness=6;
 
 
