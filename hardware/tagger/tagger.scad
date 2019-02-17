@@ -118,23 +118,40 @@ module gripBody() {
 
       // add reload button pole  
       translate([-gripCornerRadius + (gripWidth - reloadBtnGuidanceHeight) / 2, -gripCornerRadius + gunWallThickness, -gripCornerRadius + gunWallThickness]) { 
-        translate([reloadBtnGuidanceHeight, 0, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2]) {
-          rotate([0, 0, 90]) {              
-            reloadButtonGuidance();  
-            
+        
+        positionReloadBodysInGrip() {
+          reloadButtonGuidance();  
             translate([- reloadButtonFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia,  reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance / 2, reloadBtnGuidanceBottomThickness + reloadBtnGuidanceTolerance / 2]) {
               reloadButton();  
             }
-            
-          }  
-        }  
+        }
 
-        cube(size=[reloadBtnGuidanceHeight,reloadBtnGuidanceLength, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2], center=false);
+        difference() {  
+          cube(size=[reloadBtnGuidanceHeight,reloadBtnGuidanceLength, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2], center=false);
+          positionReloadBodysInGrip() {
+            translate([0, 0, -btnGuidanceFixScrewHeight]) {
+              buttonFixScrewPoleHoles(btnGuidanceFixScrewDia,btnGuidanceFixScrewHeight,triggerGuidanceFixScrewPositions);
+            }
+          }
+        }
       }
       
       
     } // eo of rotate
   }
+}
+
+/**
+* Postions the guidance and the fix screw holes in the grip
+*/
+module positionReloadBodysInGrip() {
+  
+    translate([reloadBtnGuidanceHeight, 0, (gunBottomThickness -gripCornerRadius) / 2 - reloadBtnGuidanceThickness / 2]) {
+      rotate([0, 0, 90]) { 
+        children();    
+      }
+    }   
+  
 }
 
 module gunBody() {
@@ -432,15 +449,15 @@ module renderAll() {
 
 
 //render() {
-  //gripBody();      
+//  gripBody();      
 //}
 
-reloadDebug();
+//reloadDebug();
 
 //triggerDebug();
 
 
-//renderAll();
+renderAll();
 
 //receiverHolder();
 

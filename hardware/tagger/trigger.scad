@@ -106,7 +106,7 @@ module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, th
 /**
 * Generates the screw holes for screwing the guidance at the pole
 */
-module buttonFixScrewHoles(screwHeadTopDia,screwHeadBottompDia,screwDia,screwHeight,headHeight,screwPositions) {
+module buttonFixScrewHoles(screwHeadTopDia,screwHeadBottompDia,headHeight,screwPositions) {
   for (screwPosition=screwPositions) {
     translate([screwPosition[0], screwPosition[1], 0]) {
       cylinder(d1=screwHeadBottompDia,d2=screwHeadTopDia, h=headHeight, center=false);
@@ -114,24 +114,48 @@ module buttonFixScrewHoles(screwHeadTopDia,screwHeadBottompDia,screwDia,screwHei
   }
 }
 
-
-
-module triggerGuidance() {
-  buttonGuidance(triggerGuidanceWallThickness,
-    triggerGuidanceTolerance,
-    triggerGuidanceLength,
-    triggerGuidanceHeight,
-    triggerGuidanceBottomThickness,
-    triggerGuidanceThickness,
-    buttonPoleDia,
-    buttonPoleScrewDia);
+/**
+* Generates the holes for screwing the guidance at the pole in the pole
+*/
+module buttonFixScrewPoleHoles(screwDia,screwHeight,screwPositions) {
+  for (screwPosition=screwPositions) {
+    translate([screwPosition[0], screwPosition[1], 0]) {
+      cylinder(d=screwDia, h=screwHeight, center=false);
+    }
+  }
 }
 
+/**
+* The triggerguidance
+*/
+module triggerGuidance() {
+  difference() {
+    buttonGuidance(triggerGuidanceWallThickness,
+      triggerGuidanceTolerance,
+      triggerGuidanceLength,
+      triggerGuidanceHeight,
+      triggerGuidanceBottomThickness,
+      triggerGuidanceThickness,
+      buttonPoleDia,
+      buttonPoleScrewDia);
+
+      buttonFixScrewHoles(btnGuidanceFixScrewHeadTopDia,
+        btnGuidanceFixScrewHeadBottompDia,        
+        triggerGuidanceBottomThickness,
+        triggerGuidanceFixScrewPositions);
+  }    
+}
+
+/**
+* The trigger
+*/
 module trigger() {  
   button(triggerHeight,triggerFrontLength, triggerThickness, true);  
 }
 
-
+/**
+* The reload button guidance
+*/
 module reloadButtonGuidance() { 
   difference() { 
     buttonGuidance(reloadBtnGuidanceWallThickness,
@@ -144,14 +168,15 @@ module reloadButtonGuidance() {
       buttonPoleScrewDia);
 
     buttonFixScrewHoles(btnGuidanceFixScrewHeadTopDia,
-      btnGuidanceFixScrewHeadBottompDia,
-      btnGuidanceFixScrewDia,
-      btnGuidanceFixScrewHeight,
+      btnGuidanceFixScrewHeadBottompDia,      
       reloadBtnGuidanceBottomThickness,
       reloadBtnGuidanceFixScrewPositions);
   }
 }
 
+/**
+* The reload button
+*/
 module reloadButton() {  
   button(reloadButtonHeight,reloadButtonFrontLength, reloadButtonThickness, false);  
 }
@@ -161,7 +186,7 @@ module triggerDebug() {
   render(){
     triggerGuidance();
     translate([- triggerFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, triggerGuidanceWallThickness + triggerGuidanceTolerance, triggerGuidanceThickness - triggerThickness - triggerGuidanceTolerance / 2]) {
-      trigger();  
+      //trigger();  
     }  
   }
 }
@@ -171,7 +196,7 @@ module reloadDebug() {
   render() {
     reloadButtonGuidance();
     translate([- reloadButtonFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance, reloadBtnGuidanceThickness - reloadButtonThickness - reloadBtnGuidanceTolerance / 2]) {
-      //reloadButton();
+      reloadButton();
     }  
   }
 }
