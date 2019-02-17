@@ -103,6 +103,17 @@ module buttonGuidance(wallThickness,tolerance,length,height, bottomThickness, th
   }  
 }
 
+/**
+* Generates the screw holes for screwing the guidance at the pole
+*/
+module buttonFixScrewHoles(screwHeadTopDia,screwHeadBottompDia,screwDia,screwHeight,headHeight,screwPositions) {
+  for (screwPosition=screwPositions) {
+    translate([screwPosition[0], screwPosition[1], 0]) {
+      cylinder(d1=screwHeadBottompDia,d2=screwHeadTopDia, h=headHeight, center=false);
+    }
+  }
+}
+
 
 
 module triggerGuidance() {
@@ -121,15 +132,24 @@ module trigger() {
 }
 
 
-module reloadButtonGuidance() {  
-  buttonGuidance(reloadBtnGuidanceWallThickness,
-    reloadBtnGuidanceTolerance,
-    reloadBtnGuidanceLength,
-    reloadBtnGuidanceHeight,
-    reloadBtnGuidanceBottomThickness,
-    reloadBtnGuidanceThickness,
-    buttonPoleDia,
-    buttonPoleScrewDia);
+module reloadButtonGuidance() { 
+  difference() { 
+    buttonGuidance(reloadBtnGuidanceWallThickness,
+      reloadBtnGuidanceTolerance,
+      reloadBtnGuidanceLength,
+      reloadBtnGuidanceHeight,
+      reloadBtnGuidanceBottomThickness,
+      reloadBtnGuidanceThickness,
+      buttonPoleDia,
+      buttonPoleScrewDia);
+
+    buttonFixScrewHoles(btnGuidanceFixScrewHeadTopDia,
+      btnGuidanceFixScrewHeadBottompDia,
+      btnGuidanceFixScrewDia,
+      btnGuidanceFixScrewHeight,
+      reloadBtnGuidanceBottomThickness,
+      reloadBtnGuidanceFixScrewPositions);
+  }
 }
 
 module reloadButton() {  
@@ -151,7 +171,7 @@ module reloadDebug() {
   render() {
     reloadButtonGuidance();
     translate([- reloadButtonFrontLength - buttonBackLength + buttonPoleRailFlesh + triggerSpringPinLength + buttonPoleDia, reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance, reloadBtnGuidanceThickness - reloadButtonThickness - reloadBtnGuidanceTolerance / 2]) {
-      reloadButton();
+      //reloadButton();
     }  
   }
 }

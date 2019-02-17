@@ -144,7 +144,6 @@ triggerHeight=35;
 triggerFrontLength=27;
 triggerThickness=6;
 
-
 // trigger guidance
 triggerGuidanceWallThickness=buttonGuidanceWallThickness;
 triggerGuidanceTolerance=buttonGuidanceTolerance;
@@ -153,11 +152,18 @@ triggerGuidanceHeight=triggerHeight + 2 * triggerGuidanceWallThickness + trigger
 triggerGuidanceBottomThickness=buttonGuidanceBottomThickness;
 triggerGuidanceThickness=triggerThickness+triggerGuidanceTolerance+triggerGuidanceBottomThickness;
 
-
 // reload button variables
 reloadButtonHeight=35;
 reloadButtonFrontLength=2;
 reloadButtonThickness=6;
+
+// button guidance fix screws
+btnGuidanceFixScrewHeadTopDia=3;
+btnGuidanceFixScrewHeadBottompDia=2;
+btnGuidanceFixScrewDia=2;
+btnGuidanceFixScrewHeight=3;
+btnGuidanceFixScrewOffset=btnGuidanceFixScrewHeadTopDia/2;
+
 
 
 // reload button guidance
@@ -167,6 +173,13 @@ reloadBtnGuidanceLength=buttonBackLength + triggerSpringPinLength * 2 + triggerS
 reloadBtnGuidanceHeight=reloadButtonHeight + 2 * reloadBtnGuidanceWallThickness + reloadBtnGuidanceTolerance;
 reloadBtnGuidanceBottomThickness=buttonGuidanceBottomThickness;
 reloadBtnGuidanceThickness=reloadButtonThickness+reloadBtnGuidanceTolerance+reloadBtnGuidanceBottomThickness;
+reloadBtnGuidanceFixScrewPositions = [
+                                       [buttonGuidanceWallThickness+btnGuidanceFixScrewOffset,buttonGuidanceWallThickness+btnGuidanceFixScrewHeadTopDia],
+                                       [buttonGuidanceWallThickness+btnGuidanceFixScrewOffset, reloadBtnGuidanceHeight-btnGuidanceFixScrewHeadTopDia],
+                                       [reloadBtnGuidanceLength-btnGuidanceFixScrewOffset*2-triggerSpringPinLength, reloadBtnGuidanceHeight-btnGuidanceFixScrewHeadTopDia],
+                                       [reloadBtnGuidanceLength-btnGuidanceFixScrewOffset*2-triggerSpringPinLength, buttonGuidanceWallThickness+btnGuidanceFixScrewHeadTopDia]
+
+                                     ];
 
 
 
