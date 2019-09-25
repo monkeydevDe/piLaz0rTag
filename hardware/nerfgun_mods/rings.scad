@@ -1,11 +1,11 @@
-bigRingRadius=50;
-bigRingHeight=70;
+bigRingRadius=40.5;
+bigRingHeight=40;
 
 
-outerWidth=10;
+outerWidth=5;
 
 smallRingRadius=20;
-smallRingOffset=bigRingRadius + smallRingRadius + 10;
+smallRingOffset=bigRingRadius + smallRingRadius +  2;
 smallRingHeight=20;
 
 
@@ -20,9 +20,9 @@ difference() {
   // create the hull
   hull() {    
 
-    translate([- (bigRingRadius + outerWidth + 40), -0.5, 0]) {
+    /*translate([- (bigRingRadius + outerWidth + 40), -0.5, 0]) {
       cube(size=[1, 1, bigRingHeight], center=false);  
-    }
+    }*/
     
 
     cylinder(r1=bigRingRadius + outerWidth * 2, r2=bigRingRadius,  h=bigRingHeight, center=false);    
