@@ -1,12 +1,27 @@
-bigRingRadius=40.5;
+bigRingRadius=20.25;
 bigRingHeight=40;
 
 
 outerWidth=5;
 
-smallRingRadius=20;
+smallRingRadius=10;
 smallRingOffset=bigRingRadius + smallRingRadius +  2;
 smallRingHeight=20;
+
+
+railTopOffset=2;
+railWidth=10;
+railHeight=5;
+railLowerHeight=5;
+railLowerWidth=5;
+
+railFixDepth=10;
+
+
+
+
+railFixHeight=railTopOffset + railHeight + railLowerHeight;
+railFixWidth=railWidth + 4;
 
 
 
@@ -37,4 +52,16 @@ difference() {
   translate([smallRingOffset, 0, 0]) {
       cylinder(r=smallRingRadius, h=bigRingHeight, center=false);  
     }  
+}
+
+translate([-bigRingRadius - outerWidth * 2, -railFixWidth / 2, -railFixDepth]) {
+  difference() {
+    cube(size=[railFixHeight, railFixWidth, railFixDepth], center=false);  
+    translate([railTopOffset, (railFixWidth - railWidth) / 2, 0]) {
+      cube(size=[railHeight, railWidth, railFixHeight], center=false);  
+      translate([railLowerHeight, railLowerWidth / 2, 0]) {
+        cube(size=[railLowerHeight, railLowerWidth, railFixDepth], center=false); 
+      }
+    }
+  }
 }
